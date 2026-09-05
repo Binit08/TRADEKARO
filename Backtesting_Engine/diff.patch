@@ -1,0 +1,1047 @@
+diff --git a/app/api/routes.py b/app/api/routes.py
+index 6380e71..462bdaa 100644
+--- a/app/api/routes.py
++++ b/app/api/routes.py
+@@ -382,10 +382,12 @@ def run_backtest(req: BacktestRequest):
+ import uuid
+ import asyncio
+ from app.core.paper_engine import PaperTradingEngine
+-
++from app.market_data.live_feed import LiveKiteFeed
++from app.market_data.binance_feed import BinanceLiveFeed
+ from app.execution.paper_simulator import PaperExecutionEngine
+ from app.session.session_manager import session_manager
+ from app.session.paper_trade_session import PaperTradeSession
++from app.ast.indicator_extractor import IndicatorExtractor
+ 
+ # Note: WebSocket subscribers are temporarily kept in a separate dict until EventBus is implemented
+ _WS_SUBSCRIBERS = {}
+@@ -405,7 +407,6 @@ async def run_paper_trade(req: PaperTradeRequest, request: Request):
+ 
+     # Initialize Feed and Execution
+     timeframe_mins = int(req.timeframe.replace("m", "")) if "m" in req.timeframe else 1
+-    
+     import json
+     with open("strategy_ast_dump.json", "w") as f:
+         json.dump(req.strategy_ast, f, indent=2)
+@@ -438,6 +439,28 @@ async def run_paper_trade(req: PaperTradeRequest, request: Request):
+     # The new adapter interface encapsulates the instrument_tokens/symbol_map mapping.
+     # In a fully fleshed out adapter, it will use `req.symbols` to resolve tokens internally.
+ 
++    configs = IndicatorExtractor.gather_indicator_configs(req.strategy_ast, [])
++    max_lookback = IndicatorExtractor.get_max_lookback(configs)
++    
++    if req.exchange and req.exchange.upper() == "CRYPTO":
++        feed = BinanceLiveFeed(
++            symbols=req.symbols,
++            timeframe_minutes=timeframe_mins,
++            session_id=session_id,
++            warmup_candles=max_lookback
++        )
++    else:
++        api_key = req.broker.credentials.get("api_key") if req.broker else ""
++        access_token = req.broker.credentials.get("access_token") if req.broker else ""
++        feed = LiveKiteFeed(
++            api_key=api_key,
++            access_token=access_token,
++            instrument_tokens=req.instrument_tokens,
++            symbol_map=req.symbol_map,
++            timeframe_minutes=timeframe_mins,
++            session_id=session_id,
++            warmup_candles=max_lookback
++        )
+     execution = PaperExecutionEngine(
+         qty=req.position_size,
+         multiplier=1.0,
+@@ -491,7 +514,9 @@ async def run_paper_trade(req: PaperTradeRequest, request: Request):
+                 symbols=req.symbols,
+                 strategy_config=req.strategy_ast
+             )
+-    
++            await db_session.commit()
++            
++
+     if is_recovery:
+         from app.db.database import AsyncSessionLocal
+         from app.persistence.repository import PaperTradingRepository
+@@ -555,10 +580,19 @@ async def get_paper_trade_history(session_id: str):
+     fills = redis_store.get_all_fills(session_id)
+     port_state = redis_store.get_latest_portfolio_state(session_id)
+     
++    # Map filled_price to price for frontend compatibility
++    processed_fills = []
++    for f in fills:
++        from dataclasses import asdict
++        f_dict = f if isinstance(f, dict) else asdict(f)
++        if "filled_price" in f_dict and "price" not in f_dict:
++            f_dict["price"] = f_dict["filled_price"]
++        processed_fills.append(f_dict)
++    
+     return {
+         "history": {
+             "candles": candles,
+-            "fills": fills,
++            "fills": processed_fills,
+             "portfolio": port_state
+         }
+     }
+@@ -609,7 +643,10 @@ async def paper_trade_stream(websocket: WebSocket, session_id: str):
+                 
+             if len(fills) > last_fill_idx:
+                 for f in fills[last_fill_idx:]:
+-                    updates.append({"type": "FILL_UPDATE", "data": asdict(f) if hasattr(f, "__dataclass_fields__") else f})
++                    f_dict = f if isinstance(f, dict) else asdict(f)
++                    if "filled_price" in f_dict and "price" not in f_dict:
++                        f_dict["price"] = f_dict["filled_price"]
++                    updates.append({"type": "FILL_UPDATE", "data": f_dict})
+                 last_fill_idx = len(fills)
+                 
+             if port:
+@@ -636,7 +673,7 @@ async def get_paper_trade_status(session_id: str):
+     if not hasattr(session, "portfolio") or not session.portfolio:
+         return {"status": "initializing"}
+         
+-    equity = session.portfolio.cash + session.portfolio.unrealized_pnl
++    equity = session.portfolio.get_equity()
+     active_positions_count = len([p for p in session.portfolio.positions.values() if p.qty != 0])
+     
+     portfolios_state = {
+diff --git a/app/api/server.py b/app/api/server.py
+index 41e3f00..3042dab 100644
+--- a/app/api/server.py
++++ b/app/api/server.py
+@@ -90,12 +90,17 @@ else:
+ 
+ from contextlib import asynccontextmanager
+ 
++from app.db.database import engine, Base
++import app.db.models  # Important: import models so Base knows about them
++
+ @asynccontextmanager
+ async def lifespan(app: FastAPI):
+     # Startup
++    async with engine.begin() as conn:
++        await conn.run_sync(Base.metadata.create_all)
++    print("Database tables created/verified.")
+     yield
+     # Shutdown
+-    from app.db.database import engine
+     await engine.dispose()
+     print("Database engine disposed.")
+ 
+@@ -103,19 +108,39 @@ app = FastAPI(title="Backtesting Engine API", lifespan=lifespan)
+ 
+ add_exception_handler(app)
+ 
+-class RequestIDMiddleware(BaseHTTPMiddleware):
++class RequestIDMiddleware:
+     """Middleware that injects an X-Request-ID header into log records and response headers."""
+-    async def dispatch(self, request: Request, call_next):
+-        request_id = request.headers.get("X-Request-ID", str(uuid.uuid4()))
++    def __init__(self, app):
++        self.app = app
++
++    async def __call__(self, scope, receive, send):
++        if scope["type"] not in ("http", "websocket"):
++            await self.app(scope, receive, send)
++            return
++
++        request_id = None
++        for name, value in scope.get("headers", []):
++            if name.lower() == b"x-request-id":
++                request_id = value.decode("latin1")
++                break
++        if not request_id:
++            request_id = str(uuid.uuid4())
++            
+         token = request_id_var.set(request_id)
+         try:
+-            response = await call_next(request)
+-            response.headers["X-Request-ID"] = request_id
+-            return response
++            async def send_wrapper(message):
++                if message["type"] == "http.response.start":
++                    headers = message.setdefault("headers", [])
++                    # Check if already present
++                    if not any(k.lower() == b"x-request-id" for k, v in headers):
++                        headers.append((b"x-request-id", request_id.encode("latin1")))
++                await send(message)
++                
++            await self.app(scope, receive, send_wrapper)
+         finally:
+             request_id_var.reset(token)
+ 
+-app.add_middleware(RequestIDMiddleware)
++# app.add_middleware(RequestIDMiddleware)
+ 
+ # Reject startup if the env var is unset
+ if "BACKTEST_API_TOKEN" not in os.environ and "PYTEST_CURRENT_TEST" not in os.environ:
+diff --git a/app/ast/loader.py b/app/ast/loader.py
+index b060b2f..3678aed 100644
+--- a/app/ast/loader.py
++++ b/app/ast/loader.py
+@@ -27,11 +27,28 @@ class StrategyLoader:
+     def load_from_json(self, raw_data: Dict[str, Any]) -> StrategyBundle:
+         """Parses the root JSON into a typed StrategyBundle."""
+         try:
+-            # 1. Basic validation
++            # Auto-wrap modern JSON payloads that don't have the explicit 'ast' and 'execution_context' wrappers
++            is_unwrapped = (
++                "ast" not in raw_data and 
++                (
++                    "operation" in raw_data or 
++                    raw_data.get("node_type") == "STRATEGY_ROOT" or 
++                    raw_data.get("type") == "STRATEGY_ROOT"
++                )
++            )
++            
++            if is_unwrapped:
++                raw_data = {
++                    "ast": raw_data,
++                    "execution_context": raw_data.get("execution_context", {})
++                }
++                
+             if "ast" not in raw_data:
+                 raise ValueError("Missing 'ast' root block.")
+             if "execution_context" not in raw_data:
+-                raise ValueError("Missing 'execution_context' block.")
++                # Provide an empty execution context if totally missing
++                raw_data["execution_context"] = {}
++                
+             schema_version = raw_data.get("schema_version", "1.0.0")
+             ctx_data = raw_data["execution_context"]
+             execution_context = self._parse_execution_context(ctx_data)
+@@ -79,7 +96,13 @@ class StrategyLoader:
+         if depth > 64:
+             raise ValueError("AST too deep")
+ 
+-        node_type = node.get("node_type", "").upper()
++        node_type = node.get("node_type", node.get("type", "")).upper()
++        
++        # If the payload is a Canonical JSON (has 'operation' key), treat it as a STRATEGY_ROOT
++        if not node_type and "operation" in node:
++            node_type = "STRATEGY_ROOT"
++            # Canonical JSON uses "operation" instead of "operation_nodes"
++            node["operation_nodes"] = node.get("operation", [])
+ 
+         if node_type == "STRATEGY_ROOT":
+             op_nodes = [self._parse_node(n, depth + 1, node_count) for n in node.get("operation_nodes", [])]
+@@ -125,12 +148,30 @@ class StrategyLoader:
+                 filter_nodes=filter_nodes
+             )
+ 
++        if not node_type and ("entry" in node or "exit" in node):
++            node_type = "OPERATION"
++            
+         if node_type == "OPERATION":
+-            entries = [self._parse_node(n, depth + 1, node_count) for n in node.get("entry_nodes", [])]
+-            exits = [self._parse_node(n, depth + 1, node_count) for n in node.get("exit_nodes", [])]
++            entry_list = node.get("entry_nodes", node.get("entry", []))
++            exit_list = node.get("exit_nodes", node.get("exit", []))
++            
++            entries = []
++            for n in entry_list:
++                parsed = self._parse_node(n, depth + 1, node_count)
++                if not isinstance(parsed, EntryNode):
++                    parsed = EntryNode(condition=parsed)
++                entries.append(parsed)
++                
++            exits = []
++            for n in exit_list:
++                parsed = self._parse_node(n, depth + 1, node_count)
++                if not isinstance(parsed, ExitNode):
++                    parsed = ExitNode(condition=parsed)
++                exits.append(parsed)
++                
+             return OperationNode(
+-                entry_nodes=[n for n in entries if isinstance(n, EntryNode)],
+-                exit_nodes=[n for n in exits if isinstance(n, ExitNode)]
++                entry_nodes=entries,
++                exit_nodes=exits
+             )
+ 
+         if node_type == "FILTER":
+@@ -166,8 +207,12 @@ class StrategyLoader:
+ 
+         if node_type in ("GREATER_THAN", "LESS_THAN", "EQUAL", "NOT_EQUAL", "GREATER_EQUAL", "LESS_EQUAL", "GREATER_THAN_EQUAL", "LESS_THAN_EQUAL"):
+             children = node.get("children", [])
++            # Map canonical JSON operand_1 and operand_2 to children
++            if not children and "operand_1" in node and "operand_2" in node:
++                children = [node["operand_1"], node["operand_2"]]
++                
+             if len(children) < 2:
+-                raise ValueError(f"{node_type} node requires 2 children.")
++                raise ValueError(f"{node_type} node requires 2 children or operands.")
+             op = node_type
+             if op == "LESS_THAN_EQUAL":
+                 op = "LESS_EQUAL"
+@@ -197,8 +242,12 @@ class StrategyLoader:
+ 
+         if node_type in ("CROSS_ABOVE", "CROSS_BELOW"):
+             children = node.get("children", [])
++            # Map canonical JSON operand_1 and operand_2 to children
++            if not children and "operand_1" in node and "operand_2" in node:
++                children = [node["operand_1"], node["operand_2"]]
++                
+             if len(children) < 2:
+-                raise ValueError(f"{node_type} node requires 2 children.")
++                raise ValueError(f"{node_type} node requires 2 children or operands.")
+             cross_type = "ABOVE" if node_type == "CROSS_ABOVE" else "BELOW"
+             # Some schemas use explicit cross_type, some just encode it in node_type
+             if "cross_type" in node:
+@@ -236,9 +285,9 @@ class StrategyLoader:
+             params = cfg.get("parameters", {})
+             period = params.get("period") or params.get("timeperiod")
+             config = IndicatorConfig(
+-                indicator_type=cfg.get("indicator_type", "UNKNOWN"),
++                indicator_type=cfg.get("indicator_type", node.get("indicator_id", "UNKNOWN")),
+                 period=int(period) if period is not None else None,
+-                output_property=cfg.get("output_property", "value"),
++                output_property=cfg.get("output_property", node.get("property", "value")),
+                 timeframe=cfg.get("timeframe", "1D"),
+                 parameters=params,
+                 input_node=self._parse_node(node.get("input_node"), depth + 1, node_count) if node.get("input_node") else None
+@@ -248,10 +297,10 @@ class StrategyLoader:
+                 lookback_periods=int(node.get("lookback_periods", 0))
+             )
+ 
+-        if node_type == "MARKET_REFERENCE":
++        if node_type in ("MARKET_REFERENCE", "MARKET_DATA"):
+             return MarketReferenceNode(
+                 data_type=node.get("data_type", "CLOSE").upper(),
+-                lookback_periods=int(node.get("lookback_periods", 0)),
++                lookback_periods=int(node.get("lookback_periods", node.get("lookback", 0))),
+                 timeframe=node.get("timeframe", "1D")
+             )
+             
+diff --git a/app/db/database.py b/app/db/database.py
+index a48eb2a..d7a4dff 100644
+--- a/app/db/database.py
++++ b/app/db/database.py
+@@ -10,7 +10,7 @@ DB_URL = os.getenv(
+     "DATABASE_URL",
+     os.getenv(
+         "SUPABASE_DB_URL",
+-        "postgresql://postgres:postgres@localhost:5432/postgres",
++        "sqlite+aiosqlite:///./test.db",
+     ),
+ )
+ 
+@@ -19,13 +19,23 @@ if DB_URL.startswith("postgresql://"):
+     DB_URL = DB_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
+ 
+ try:
++    kwargs = {
++        "echo": False,
++        "pool_pre_ping": True,
++        "pool_size": 20,
++        "max_overflow": 20
++    }
++    if "asyncpg" in DB_URL:
++        kwargs["connect_args"] = {"statement_cache_size": 0, "prepared_statement_cache_size": 0}
++    elif "sqlite" in DB_URL:
++        # SQLite does not support pool_size or max_overflow with the default NullPool in aiosqlite sometimes, 
++        # but SQLAlchemy might handle it. Let's remove them just in case.
++        kwargs.pop("pool_size", None)
++        kwargs.pop("max_overflow", None)
++        
+     engine = create_async_engine(
+         DB_URL,
+-        echo=False,
+-        pool_pre_ping=True,
+-        pool_size=20,
+-        max_overflow=20,
+-        connect_args={"statement_cache_size": 0, "prepared_statement_cache_size": 0}
++        **kwargs
+     )
+ except Exception as e:
+     logger.error(f"Failed to create async DB engine: {e}")
+diff --git a/app/domain/events.py b/app/domain/events.py
+index 1ee06cc..f0df01a 100644
+--- a/app/domain/events.py
++++ b/app/domain/events.py
+@@ -17,6 +17,7 @@ class TickEvent:
+     bid: Optional[float] = None
+     ask: Optional[float] = None
+     sequence_number: Optional[int] = None
++    is_warmup: bool = False
+ 
+ 
+ @dataclass(frozen=True)
+@@ -35,6 +36,7 @@ class CandleEvent:
+     volume: Optional[float] = None
+     sequence_number: Optional[int] = None
+     is_warmup: bool = False
++    is_completed: bool = True
+ 
+ 
+ @dataclass(frozen=True)
+@@ -48,6 +50,7 @@ class PortfolioUpdateEvent:
+     realized_pnl: float
+     total_equity: float
+     sequence_number: Optional[int] = None
++    is_warmup: bool = False
+ 
+ 
+ @dataclass(frozen=True)
+@@ -63,6 +66,7 @@ class PositionUpdateEvent:
+     unrealized_pnl: float
+     realized_pnl: float
+     sequence_number: Optional[int] = None
++    is_warmup: bool = False
+ 
+ 
+ @dataclass(frozen=True)
+diff --git a/app/market_data/aggregator.py b/app/market_data/aggregator.py
+index 2b3c2e8..aa2811f 100644
+--- a/app/market_data/aggregator.py
++++ b/app/market_data/aggregator.py
+@@ -15,8 +15,9 @@ class CandleAggregator:
+     def __init__(self, timeframe_minutes: int, on_candle: Callable[[CandleEvent], None]):
+         self.timeframe_minutes = timeframe_minutes
+         self.on_candle = on_candle
+-        self._current_candles: Dict[str, Dict[str, Any]] = {}
++        self._current_candles: Dict[str, dict] = {}
+         self._prev_cum_vol: Dict[str, float] = {}
++        self._last_emit_time: Dict[str, float] = {}
+         
+     def on_tick(self, tick: TickEvent) -> None:
+         """Process an incoming tick and emit a CandleEvent if the timeframe has elapsed."""
+@@ -38,6 +39,22 @@ class CandleAggregator:
+                 "volume": vol_delta,
+                 "start_time": now
+             }
++            # Emit in-progress candle
++            c = self._current_candles[symbol]
++            self.on_candle(CandleEvent(
++                event_id=str(uuid.uuid4()),
++                session_id=tick.session_id,
++                instrument_token=tick.instrument_token,
++                symbol=tick.symbol,
++                timeframe=f"{self.timeframe_minutes}m",
++                timestamp=c["start_time"],
++                open=c["open"],
++                high=c["high"],
++                low=c["low"],
++                close=c["close"],
++                volume=c["volume"],
++                is_completed=False
++            ))
+         else:
+             c = self._current_candles[symbol]
+             
+@@ -61,7 +78,8 @@ class CandleAggregator:
+                     high=c["high"],
+                     low=c["low"],
+                     close=c["close"],
+-                    volume=c["volume"]
++                    volume=c["volume"],
++                    is_completed=True
+                 )
+                 self.on_candle(completed_candle)
+                 
+@@ -71,11 +89,51 @@ class CandleAggregator:
+                     "high": ltp,
+                     "low": ltp,
+                     "close": ltp,
+-                    "volume": vol_delta,  # Or should it be 0 if it was included in the old? The test doesn't check the next candle's initial volume, but let's keep it as is.
++                    "volume": vol_delta,
+                     "start_time": now
+                 }
++                # Emit new in-progress candle
++                new_c = self._current_candles[symbol]
++                self.on_candle(CandleEvent(
++                    event_id=str(uuid.uuid4()),
++                    session_id=tick.session_id,
++                    instrument_token=tick.instrument_token,
++                    symbol=tick.symbol,
++                    timeframe=f"{self.timeframe_minutes}m",
++                    timestamp=new_c["start_time"],
++                    open=new_c["open"],
++                    high=new_c["high"],
++                    low=new_c["low"],
++                    close=new_c["close"],
++                    volume=new_c["volume"],
++                    is_completed=False
++                ))
+             else:
++                # Update the current in-progress candle
+                 c["high"] = max(c["high"], ltp)
+                 c["low"] = min(c["low"], ltp)
+                 c["close"] = ltp
+                 c["volume"] += vol_delta
++                
++                # Throttle emission of in-progress candles to max 1 per second
++                import time
++                current_time = time.time()
++                last_emit = self._last_emit_time.get(symbol, 0)
++                if current_time - last_emit >= 1.0:
++                    self.on_candle(CandleEvent(
++                        event_id=str(uuid.uuid4()),
++                        session_id=tick.session_id,
++                        instrument_token=tick.instrument_token,
++                        symbol=tick.symbol,
++                        timeframe=f"{self.timeframe_minutes}m",
++                        timestamp=c["start_time"],
++                        open=c["open"],
++                        high=c["high"],
++                        low=c["low"],
++                        close=c["close"],
++                        volume=c["volume"],
++                        is_completed=False
++                    ))
++                    self._last_emit_time[symbol] = current_time
++                
++
+diff --git a/app/market_data/binance_feed.py b/app/market_data/binance_feed.py
+new file mode 100644
+index 0000000..190de0e
+--- /dev/null
++++ b/app/market_data/binance_feed.py
+@@ -0,0 +1,180 @@
++
++import logging
++import time
++import json
++import uuid
++import queue
++import threading
++from datetime import datetime, timezone
++from typing import Iterator, Optional, Dict, Any, List, Callable
++import requests
++import websocket
++
++from app.data.market_event import MarketEvent
++from app.domain.events import TickEvent, CandleEvent
++
++logger = logging.getLogger(__name__)
++
++class BinanceLiveFeed:
++    """Live WebSocket feed using Binance Public API.
++    
++    Subscribes to Binance @kline_1m stream and yields `MarketEvent`
++    objects for crypto symbols (e.g. BTCUSDT) 24/7.
++    """
++    
++    def __init__(
++        self, 
++        symbols: List[str],
++        timeframe_minutes: int = 1,
++        session_id: str = "default_session",
++        warmup_candles: int = 100,
++        on_tick: Optional[Callable[[TickEvent], None]] = None,
++        on_candle: Optional[Callable[[CandleEvent], None]] = None
++    ):
++        self.symbols = [s.lower() for s in symbols]
++        self.raw_symbols = symbols
++        self.timeframe_minutes = timeframe_minutes
++        self.session_id = session_id
++        self.warmup_candles = warmup_candles
++        self.on_tick = on_tick
++        self.on_candle = on_candle
++        
++        self._ws = None
++        self._event_queue = queue.Queue()
++        self._running = False
++        self.current_time = None
++        self.current_event = None
++        
++        self._intervals = {
++            1: "1m",
++            3: "3m",
++            5: "5m",
++            15: "15m",
++            30: "30m",
++            60: "1h",
++            240: "4h",
++            1440: "1d"
++        }
++        self.interval = self._intervals.get(self.timeframe_minutes, "1m")
++        
++    def reset(self) -> None:
++        while not self._event_queue.empty():
++            self._event_queue.get()
++        self.current_time = None
++        self.current_event = None
++        
++    def start_background(self):
++        self._warmup_historical()
++        
++        self._running = True
++        
++        # Build Binance WS URL
++        streams = "/".join([f"{sym}@kline_{self.interval}" for sym in self.symbols])
++        ws_url = f"wss://stream.binance.com:9443/stream?streams={streams}"
++        
++        self._ws = websocket.WebSocketApp(
++            ws_url,
++            on_message=self._on_message,
++            on_error=self._on_error,
++            on_close=self._on_close,
++            on_open=self._on_open
++        )
++        
++        self._ws_thread = threading.Thread(target=self._ws.run_forever, daemon=True)
++        self._ws_thread.start()
++        
++    def _on_open(self, ws):
++        logger.info(f"BinanceLiveFeed connected to {self.symbols}")
++        
++    def _on_close(self, ws, close_status_code, close_msg):
++        logger.warning(f"BinanceLiveFeed closed: {close_msg}")
++        
++    def _on_error(self, ws, error):
++        logger.error(f"BinanceLiveFeed error: {error}")
++        
++    def _on_message(self, ws, message):
++        data = json.loads(message)
++        if "data" in data and "k" in data["data"]:
++            kline = data["data"]["k"]
++            symbol = kline["s"] # e.g. BTCUSDT
++            
++            # Emit tick for current price
++            ltp = float(kline["c"])
++            now = datetime.now(timezone.utc)
++            tick_event = TickEvent(
++                event_id=str(uuid.uuid4()),
++                session_id=self.session_id,
++                instrument_token=hash(symbol) % 1000000, # Mock token
++                symbol=symbol,
++                timestamp=now,
++                last_price=ltp,
++                volume=float(kline["v"])
++            )
++            if self.on_tick:
++                self.on_tick(tick_event)
++                
++            # If the kline is closed (completed), emit a MarketEvent
++            is_closed = kline["x"]
++            if is_closed:
++                dt = datetime.fromtimestamp(kline["t"] / 1000.0, tz=timezone.utc)
++                market_event = MarketEvent(
++                    symbol=symbol,
++                    timestamp=dt,
++                    open=float(kline["o"]),
++                    high=float(kline["h"]),
++                    low=float(kline["l"]),
++                    close=float(kline["c"]),
++                    volume=float(kline["v"])
++                )
++                self._event_queue.put(market_event)
++
++    def _warmup_historical(self):
++        if not self.on_candle or self.warmup_candles <= 0:
++            return
++            
++        logger.info(f"Warming up Binance feed with {self.warmup_candles} candles.")
++        for symbol in self.raw_symbols:
++            try:
++                url = f"https://api.binance.com/api/v3/klines?symbol={symbol.upper()}&interval={self.interval}&limit={self.warmup_candles}"
++                res = requests.get(url)
++                if res.status_code == 200:
++                    klines = res.json()
++                    for k in klines:
++                        dt = datetime.fromtimestamp(k[0] / 1000.0, tz=timezone.utc)
++                        candle = CandleEvent(
++                            event_id=str(uuid.uuid4()),
++                            session_id=self.session_id,
++                            instrument_token=hash(symbol.upper()) % 1000000,
++                            symbol=symbol.upper(),
++                            timeframe=f"{self.timeframe_minutes}m",
++                            timestamp=dt,
++                            open=float(k[1]),
++                            high=float(k[2]),
++                            low=float(k[3]),
++                            close=float(k[4]),
++                            volume=float(k[5]),
++                            is_warmup=True
++                        )
++                        self.on_candle(candle)
++                time.sleep(0.5)
++            except Exception as e:
++                logger.error(f"Binance warmup failed for {symbol}: {e}")
++
++    def stop(self):
++        self._running = False
++        if self._ws:
++            self._ws.close()
++
++    def stream(self) -> Iterator[MarketEvent]:
++        self.start_background()
++        try:
++            while self._running:
++                try:
++                    event = self._event_queue.get(timeout=1.0)
++                    self.current_event = event
++                    self.current_time = event.timestamp
++                    yield event
++                except queue.Empty:
++                    continue
++        finally:
++            self.stop()
+diff --git a/app/market_data/live_feed.py b/app/market_data/live_feed.py
+index 038edb8..3100e55 100644
+--- a/app/market_data/live_feed.py
++++ b/app/market_data/live_feed.py
+@@ -34,6 +34,7 @@ class LiveKiteFeed:
+         symbol_map: Dict[int, str],
+         timeframe_minutes: int = 1,
+         session_id: str = "default_session",
++        warmup_candles: int = 100,
+         on_tick: Optional[Callable[[TickEvent], None]] = None,
+         on_candle: Optional[Callable[[CandleEvent], None]] = None
+     ):
+@@ -52,6 +53,7 @@ class LiveKiteFeed:
+         self.symbol_map = symbol_map
+         self.timeframe_minutes = timeframe_minutes
+         self.session_id = session_id
++        self.warmup_candles = warmup_candles
+         self.on_tick = on_tick
+         self.on_candle = on_candle
+         
+@@ -186,7 +188,8 @@ class LiveKiteFeed:
+             kite.set_access_token(self.access_token)
+             
+             end_date = datetime.datetime.now()
+-            start_date = end_date - datetime.timedelta(days=5) # Sufficient for 200 min warmup
++            days_needed = max(2, int((self.warmup_candles * self.timeframe_minutes) / 375.0) + 1)
++            start_date = end_date - datetime.timedelta(days=days_needed)
+             
+             interval = f"{self.timeframe_minutes}minute"
+             if self.timeframe_minutes == 1:
+@@ -215,7 +218,8 @@ class LiveKiteFeed:
+                         high=r['high'],
+                         low=r['low'],
+                         close=r['close'],
+-                        volume=r['volume']
++                        volume=r['volume'],
++                        is_warmup=True
+                     )
+                     self.on_candle(candle)
+                 
+diff --git a/app/persistence/consumer.py b/app/persistence/consumer.py
+index 403ea21..4a5926f 100644
+--- a/app/persistence/consumer.py
++++ b/app/persistence/consumer.py
+@@ -60,12 +60,14 @@ class PersistenceConsumer:
+                         current_time = time.time()
+                         if current_time - last_snapshot_time >= self.snapshot_interval_sec:
+                             await repo.save_equity_snapshot(event)
++                            await session.commit()
+                             last_snapshot_time = current_time
+                     elif isinstance(event, TickEvent):
+                         # Update checkpoint
+                         # TickEvent doesn't carry timeframe, we'll assume "1m" or we can skip this if we only checkpoint candles.
+                         pass
+                 except Exception as e:
++                    await session.rollback()
+                     logger.error(f"Error in PersistenceConsumer: {e}")
+                 finally:
+                     self.queue.task_done()
+diff --git a/app/session/paper_trade_session.py b/app/session/paper_trade_session.py
+index ffd1640..53c8001 100644
+--- a/app/session/paper_trade_session.py
++++ b/app/session/paper_trade_session.py
+@@ -83,7 +83,9 @@ class PaperTradeSession:
+             )
+             
+             self.execution_simulator = PaperExecutionSimulator(
+-                on_fill=self._on_simulated_fill
++                on_fill=self._on_simulated_fill,
++                slippage_bps=0.0,
++                fee_rate=0.0
+             )
+             
+             self.strategy_engine = StrategyEngine(
+@@ -105,7 +107,7 @@ class PaperTradeSession:
+             )
+             
+             # 3. Wire Subscriptions
+-            self.event_bus.subscribe(CandleEvent, self.strategy_engine.on_candle)
++            self.event_bus.subscribe(CandleEvent, lambda e: self.strategy_engine.on_candle(e) if getattr(e, "is_completed", True) else None)
+             
+             # Start persistence consumer if loop is available
+             self.persistence_consumer = None
+@@ -214,6 +216,7 @@ class PaperTradeSession:
+                 async with AsyncSessionLocal() as session:
+                     repo = PaperTradingRepository(session)
+                     await repo.save_order_intent(intent)
++                    await session.commit()
+                     
+             try:
+                 future = asyncio.run_coroutine_threadsafe(save_intent(), self.loop)
+diff --git a/app/strategy/engine.py b/app/strategy/engine.py
+index 648c755..7e2f845 100644
+--- a/app/strategy/engine.py
++++ b/app/strategy/engine.py
+@@ -54,30 +54,43 @@ class StrategyEngine:
+             self._history[sym] = []
+             
+         history = self._history[sym]
+-        history.append(candle)
+         
+-        # Optimization: Cap history size to prevent memory leak.
+-        # Assuming maximum lookback is 200 bars for typical MAs.
+-        if len(history) > 300:
+-            history.pop(0)
++        # We need to construct a dataframe for the indicator engine
++        df_data_list = []
++        for c in history:
++            df_data_list.append({
++                "timestamp": c.timestamp,
++                "open": float(c.open),
++                "high": float(c.high),
++                "low": float(c.low),
++                "close": float(c.close),
++                "volume": float(c.volume)
++            })
+             
+-        # Reconstruct DataFrame for IndicatorEngine
+-        df = pd.DataFrame([{
+-            "timestamp": c.timestamp,
+-            "open": c.open,
+-            "high": c.high,
+-            "low": c.low,
+-            "close": c.close,
+-            "volume": c.volume
+-        } for c in history])
++        # Temporarily append the live in-progress candle for this evaluation
++        if not candle.is_completed:
++            df_data_list.append({
++                "timestamp": candle.timestamp,
++                "open": float(candle.open),
++                "high": float(candle.high),
++                "low": float(candle.low),
++                "close": float(candle.close),
++                "volume": float(candle.volume)
++            })
++        else:
++            history.append(candle)
++            
++            # Optimization: Cap history size to prevent memory leak.
++            # Assuming maximum lookback is 200 bars for typical MAs.
++            if len(history) > 200:
++                self._history[sym] = history[-200:]
++                
++        df = pd.DataFrame(df_data_list)
+         
+         # Compute indicators for this symbol
+         indicator_engine = self.indicators[sym]
+         indicator_engine.compute_all(df, self._indicator_configs)
+         
+-        if getattr(candle, "is_warmup", False):
+-            return
+-            
+         # Get the latest snapshot
+         current_idx = len(history) - 1
+         indicators_snapshot = indicator_engine.get_snapshot(current_idx)
+@@ -90,9 +103,24 @@ class StrategyEngine:
+             "CLOSE": float(candle.close),
+             "VOLUME": float(candle.volume or 0.0),
+         }
+-        
++
++        if getattr(candle, "is_warmup", False):
++            # Evaluate silently to populate SignalEngine's lookback history
++            try:
++                self.signal_engine.evaluate(
++                    strategy_ast=self.strategy_ast,
++                    indicators=indicators_snapshot,
++                    default=self.settings.default_signal,
++                    market_data=market_data,
++                    current_position_side=None
++                )
++            except Exception:
++                pass
++            return
++            
+         # Evaluate AST
+         try:
++            # Fetch current position side if callback is provided
+             current_pos = None
+             if self.get_current_position_side:
+                 current_pos = self.get_current_position_side(sym)
+@@ -108,14 +136,23 @@ class StrategyEngine:
+             logger.error(f"Strategy evaluation failed for {sym}: {e}")
+             return
+             
+-        if signal.signal in ("BUY", "SELL"):
++        sig_val = signal.signal.value
++        
++        # Determine if we should generate an intent (only one trade at a time)
++        should_trade = False
++        if sig_val == "BUY" and current_pos != "LONG":
++            should_trade = True
++        elif sig_val == "SELL" and current_pos != "SHORT":
++            should_trade = True
++            
++        if should_trade:
+             # Create OrderIntent
+             intent = OrderIntent(
+                 order_intent_id=str(uuid.uuid4()),
+                 session_id=self.session_id,
+                 symbol=sym,
+                 timestamp=datetime.now(timezone.utc),
+-                side=signal.signal,
++                side=sig_val,
+                 quantity=float(self.settings.position_size),
+                 order_type="MARKET",
+                 reason=signal.reason.get("intent", "STRATEGY_SIGNAL") if signal.reason else "STRATEGY_SIGNAL",
+diff --git a/debug_paper.py b/debug_paper.py
+deleted file mode 100644
+index e0dae84..0000000
+--- a/debug_paper.py
++++ /dev/null
+@@ -1,32 +0,0 @@
+-import asyncio
+-import traceback
+-from app.api.routes import run_paper_trade
+-from app.api.models import PaperTradeRequest, BrokerCredentials
+-from fastapi import Request
+-
+-async def main():
+-    req = PaperTradeRequest(
+-        symbols=["AAPL"],
+-        timeframe="1m",
+-        strategy_ast={"ast": {"node_type": "STRATEGY_ROOT", "operation_nodes": []}},
+-        instrument_tokens=[12345],
+-        symbol_map={12345: "AAPL"},
+-        initial_cash=100000.0,
+-        position_size_type="percent_equity",
+-        position_size=1.0,
+-        execution_mode="next_candle_open",
+-        broker=BrokerCredentials(broker_name="kite", credentials={})
+-    )
+-    
+-    try:
+-        # Pass a mock request object if needed
+-        class MockRequest:
+-            pass
+-            
+-        res = await run_paper_trade(req, MockRequest())
+-        print(res)
+-    except Exception as e:
+-        print("CRASH TRACEBACK:")
+-        traceback.print_exc()
+-
+-asyncio.run(main())
+diff --git a/hit_api.py b/hit_api.py
+deleted file mode 100644
+index 0dc367a..0000000
+--- a/hit_api.py
++++ /dev/null
+@@ -1,11 +0,0 @@
+-import requests
+-
+-# 1. Login to get token
+-try:
+-    token_url = "http://127.0.0.1:8002/api/v1/token"
+-    # Wait, the auth endpoint might be using OAuth2PasswordRequestForm
+-    data = {"username": "admin", "password": "password"} # Or whatever default is
+-    # If there's no DB, maybe I can just generate one using auth.py directly?
+-except Exception as e:
+-    pass
+-
+diff --git a/hit_api_2.py b/hit_api_2.py
+deleted file mode 100644
+index a7f4342..0000000
+--- a/hit_api_2.py
++++ /dev/null
+@@ -1,27 +0,0 @@
+-import requests
+-import os
+-url = "http://127.0.0.1:8002/api/v1/run_paper_trade"
+-headers = {
+-    "Authorization": f"Bearer {os.environ.get('BACKTEST_API_TOKEN')}"
+-}
+-payload = {
+-    "symbols": ["AAPL"],
+-    "timeframe": "1m",
+-    "strategy_ast": {
+-        "ast": {
+-            "node_type": "STRATEGY_ROOT",
+-            "operation_nodes": []
+-        }
+-    },
+-    "instrument_tokens": [12345],
+-    "symbol_map": {"12345": "AAPL"},
+-    "initial_cash": 100000.0,
+-    "position_size_type": "percent_equity",
+-    "position_size": 1.0,
+-    "execution_mode": "next_candle_open",
+-    "broker": {
+-        "broker_name": "kite",
+-        "credentials": {"api_key": "x", "access_token": "y"}
+-    }
+-}
+-requests.post(url, json=payload, headers=headers)
+diff --git a/requirements.txt b/requirements.txt
+index a930bc4..ea6f1a1 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -12,11 +12,7 @@ frozendict==2.4.7
+ h11==0.16.0
+ idna==3.15
+ narwhals==2.21.2
+-<<<<<<< HEAD
+-numpy
+-=======
+ numpy>=2.2.6,<2.3
+->>>>>>> d732071aac738803ea287a70c13f3f8d35baaae7
+ TA-Lib>=0.6.6
+ iniconfig==2.3.0
+ packaging==26.2
+@@ -40,7 +36,7 @@ uvicorn==0.47.0
+ win32_setctime==1.2.0
+ kiteconnect==5.1.0
+ pluggy==1.6.0
+-pytest==7.4.0
++pytest==8.4.0
+ openpyxl==3.1.5
+ cachetools==5.5.0
+ python-dotenv==1.1.1
+@@ -58,3 +54,4 @@ asyncpg
+ alembic
+ aiosqlite
+ greenlet
++websocket-client
+\ No newline at end of file
+diff --git a/strategy_ast_dump.json b/strategy_ast_dump.json
+index f0e8227..050d003 100644
+--- a/strategy_ast_dump.json
++++ b/strategy_ast_dump.json
+@@ -26,8 +26,8 @@
+   ],
+   "risk": {
+     "stop_loss": {
+-      "type": null,
+-      "value": null,
++      "type": "percentage",
++      "value": 1,
+       "reference": null,
+       "direction": null,
+       "atr_multiple": null,
+@@ -36,7 +36,7 @@
+     },
+     "take_profit": {
+       "type": "percentage",
+-      "value": 5,
++      "value": 1,
+       "target_indicator": null,
+       "price_level": null,
+       "risk_reward_ratio": null
+diff --git a/tests/test_ast_loader.py b/tests/test_ast_loader.py
+index bb97754..184da29 100644
+--- a/tests/test_ast_loader.py
++++ b/tests/test_ast_loader.py
+@@ -96,7 +96,8 @@ def test_missing_ast_raises_error():
+         loader.load_from_json({"execution_context": {}})
+ 
+ 
+-def test_missing_execution_context_raises_error():
++def test_missing_execution_context_provides_empty():
+     loader = StrategyLoader()
+-    with pytest.raises(ASTLoadError, match="Missing 'execution_context' block"):
++    # Missing execution_context shouldn't raise, but it will raise on the invalid AST
++    with pytest.raises(ASTLoadError, match="Unsupported node_type"):
+         loader.load_from_json({"ast": {}})

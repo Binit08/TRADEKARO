@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "deterministic_schema_definition.json",
+  "title": "Deterministic Execution Schema Validator",
+  "description": "Validation rules for the deterministic execution configuration used by the AST builder.",
+  "type": "object",
+  "required": ["execution_context"],
+  "additionalProperties": false,
+
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema draft reference."
+    },
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "required": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+
+    "execution_context": {
+      "type": "object",
+      "required": ["universe", "timeframe", "position_side", "stocks"],
+      "additionalProperties": true,
+
+      "properties": {
+        "universe": {
+          "type": "object",
+          "required": ["asset_class"],
+          "additionalProperties": false,
+          "properties": {
+            "index": {
+              "type": "string",
+              "description": "Market index symbol, if applicable."
+            },
+            "exchange": {
+              "type": "string",
+              "description": "Stock exchange code, if applicable."
+            },
+            "asset_class": {
+              "type": "string",
+              "description": "Asset class for the strategy.",
+              "enum": ["equity", "futures", "options", "commodity", "currency"]
+            }
+          }
+        },
+
+        "timeframe": {
+          "type": "string",
+          "description": "Chart timeframe for the strategy.",
+          "enum": ["1m", "2m", "5m", "15m", "30m", "1h", "1d", "1wk", "1mo"]
+        },
+
+        "position_side": {
+          "type": "string",
+          "description": "Allowed trade direction.",
+          "enum": ["LONG", "SHORT", "BOTH"]
+        },
+
+        "order_type": {
+          "type": "string",
+          "description": "Default order execution type.",
+          "enum": ["MAK", "LIMIT", "STOP", "STOP_LIMIT"]
+        },
+        
+        "stocks": {
+          "type": "array",
+          "description": "List of specific stock symbols to trade.",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

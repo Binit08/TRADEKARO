@@ -1,0 +1,425 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Strategy Parser Canonical Schema",
+  "description": "Validation schema for deterministic parsing of natural language trading strategies into canonical JSON.",
+  "type": "object",
+  "required": [
+    "signals",
+    "operation",
+    "risk"
+  ],
+  "properties": {
+    "signals": {
+      "description": "All technical indicators, signals, and external reference calculations required by the strategy.",
+      "type": "object",
+      "required": [
+        "indicators"
+      ],
+      "properties": {
+        "indicators": {
+          "description": "List of technical indicators referenced in the conditions (e.g., RSI, SMA, EMA, MACD).",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "params"
+            ],
+            "properties": {
+              "id": {
+                "description": "Unique string ID used to reference this indicator in conditions (e.g., 'indicator_1').",
+                "type": "string"
+              },
+              "name": {
+                "description": "The canonical name of the indicator (e.g., 'SMA', 'RSI', 'EMA', 'MACD', 'KNOXVILLE_DIVERGENCE').",
+                "type": "string"
+              },
+              "params": {
+                "description": "Configuration parameters for the indicator (e.g., {'period': 14, 'source': 'close'}).",
+                "type": "object"
+              },
+              "input_node": {
+                "description": "Optional arithmetic tree to use as custom input data instead of default price data.",
+                "$ref": "#/$defs/operand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "operation": {
+      "description": "The core trading rules, structured as list of entry and exit condition trees.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "entry",
+          "exit"
+        ],
+        "properties": {
+          "entry": {
+            "description": "Array of logical condition trees. If evaluated to true, an entry (buy/sell) signal is generated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/node"
+            }
+          },
+          "exit": {
+            "description": "Array of logical condition trees. If evaluated to true, an exit (close position) signal is generated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/node"
+            }
+          }
+        }
+      }
+    },
+    "risk": {
+      "description": "Risk management rules including stop losses, profit targets, trailing stops, and risk-reward constraints.",
+      "type": "object",
+      "required": [
+        "stop_loss",
+        "take_profit",
+        "trailing_stop",
+        "risk_reward"
+      ],
+      "properties": {
+        "stop_loss": {
+          "description": "Defines the stop loss rule (e.g., type: 'percentage', 'value', 'atr', 'indicator', or 'price_level').",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The stop loss type (e.g., 'percentage', 'value', 'atr', 'indicator', 'price_level').",
+              "type": ["string", "null"]
+            },
+            "value": {
+              "description": "The value associated with the stop loss type (e.g., 1.5 for a 1.5% stop loss).",
+              "type": ["number", "null"]
+            },
+            "reference": {
+              "description": "The reference point from which stop loss is calculated (e.g., 'entry_price', 'high', 'low').",
+              "type": ["string", "null"]
+            },
+            "direction": {
+              "description": "The trade direction constraint for the stop loss (e.g., 'long', 'short').",
+              "type": ["string", "null"]
+            },
+            "atr_multiple": {
+              "description": "The multiplier applied to the ATR (Average True Range) value if type is 'atr'.",
+              "type": ["number", "null"]
+            },
+            "price_level": {
+              "description": "A specific static price level at which to place the stop loss.",
+              "type": ["number", "null"]
+            },
+            "indicator_ref": {
+              "description": "A reference ID pointing to a technical indicator defining the stop level (e.g., 'indicator_1').",
+              "type": ["string", "null"]
+            }
+          }
+        },
+        "take_profit": {
+          "description": "Defines the take profit target rule (e.g., type: 'percentage', 'risk_reward_ratio', or 'indicator').",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The take profit target type (e.g., 'percentage', 'value', 'risk_reward_ratio', 'indicator', 'price_level').",
+              "type": ["string", "null"]
+            },
+            "value": {
+              "description": "The value associated with the target type (e.g., 3.0 for a 3% target).",
+              "type": ["number", "null"]
+            },
+            "target_indicator": {
+              "description": "A reference ID pointing to a technical indicator defining the target level (e.g., 'indicator_1').",
+              "type": ["string", "null"]
+            },
+            "price_level": {
+              "description": "A specific static price level at which to place the profit target.",
+              "type": ["number", "null"]
+            },
+            "risk_reward_ratio": {
+              "description": "The multiplier of the stop loss size to set the target (e.g., 2.0 for a 2:1 risk/reward target).",
+              "type": ["number", "null"]
+            }
+          }
+        },
+        "trailing_stop": {
+          "description": "Defines trailing stop rules, allowing stops to move dynamically as price advances.",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The trailing stop type (e.g., 'percentage', 'value', 'atr').",
+              "type": ["string", "null"]
+            },
+            "value": {
+              "description": "The value defining the trail size (e.g., 2.0 for a 2% trail).",
+              "type": ["number", "null"]
+            },
+            "trail_amount": {
+              "description": "The distance or value by which the stop loss trails the price.",
+              "type": ["number", "null"]
+            },
+            "reference": {
+              "description": "The reference point from which the trailing starts (e.g., 'entry_price', 'highest_high').",
+              "type": ["string", "null"]
+            },
+            "indicator_ref": {
+              "description": "A reference ID pointing to a technical indicator defining the trailing stop level.",
+              "type": ["string", "null"]
+            }
+          }
+        },
+        "risk_reward": {
+          "description": "Rules or constraints concerning the acceptable risk-to-reward ratio of a trade.",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The type of risk-reward definition (e.g., 'ratio', 'value').",
+              "type": ["string", "null"]
+            },
+            "ratio": {
+              "description": "The risk-to-reward ratio constraint value (e.g., 2.0 for a minimum 1:2 risk-reward).",
+              "type": ["number", "null"]
+            },
+            "value": {
+              "description": "A literal value associated with risk/reward configuration.",
+              "type": ["number", "null"]
+            }
+          }
+        },
+        "position_size": {
+          "description": "Defines position sizing rules.",
+          "type": "object",
+          "properties": {
+            "type": {
+              "description": "The position sizing type (e.g., 'percentage_risk', 'percentage_capital', 'fixed_quantity').",
+              "type": ["string", "null"]
+            },
+            "value": {
+              "description": "The value associated with the position sizing type.",
+              "type": ["number", "null"]
+            },
+            "max_size": {
+              "type": ["number", "null"]
+            },
+            "min_size": {
+              "type": ["number", "null"]
+            }
+          }
+        },
+        "portfolio_constraints": {
+          "description": "Portfolio-level risk constraints.",
+          "type": "object",
+          "properties": {
+            "max_drawdown": {
+              "type": ["number", "null"]
+            },
+            "max_drawdown_percent": {
+              "type": ["number", "null"]
+            },
+            "max_daily_loss": {
+              "type": ["number", "null"]
+            },
+            "max_loss_amount": {
+              "type": ["number", "null"]
+            },
+            "max_open_trades": {
+              "type": ["integer", "null"]
+            },
+            "max_trades": {
+              "type": ["integer", "null"]
+            },
+            "capital_allocation": {
+              "type": ["number", "null"]
+            },
+            "allocation_percent": {
+              "type": ["number", "null"]
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "node": {
+      "description": "A node in a logical conditions tree. It can be a logical operator grouping other nodes, or a direct comparison/crossover between two operands.",
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "lookback_periods"
+      ],
+      "properties": {
+        "id": {
+          "description": "A unique identifier for this condition node (e.g., 'condition_1').",
+          "type": "string"
+        },
+        "type": {
+          "description": "The logic or comparison operator: 'AND'/'OR' for grouping child nodes; 'GREATER_THAN', 'LESS_THAN', etc. for comparing operand_1 and operand_2; 'CROSS_ABOVE' or 'CROSS_BELOW' for crossover checks.",
+          "type": "string",
+          "enum": [
+            "AND",
+            "OR",
+            "NOT",
+            "GREATER_THAN",
+            "LESS_THAN",
+            "GREATER_THAN_EQUAL",
+            "LESS_THAN_EQUAL",
+            "EQUAL",
+            "NOT_EQUAL",
+            "CROSS_ABOVE",
+            "CROSS_BELOW",
+            "FOLLOWED_BY",
+            "SEQUENCE",
+            "TIME",
+            "DATE",
+            "SESSION",
+            "DAY_OF_WEEK"
+          ]
+        },
+        "children": {
+          "description": "Array of child nodes when type is logical (e.g., child conditions that must all be true for an 'AND' node).",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/node"
+          }
+        },
+        "operand_1": {
+          "description": "The first/left operand in a comparison or crossover check (e.g., the indicator value).",
+          "$ref": "#/$defs/operand"
+        },
+        "operand_2": {
+          "description": "The second/right operand in a comparison or crossover check (e.g., a constant value or another indicator).",
+          "$ref": "#/$defs/operand"
+        },
+        "lookback_periods": {
+          "description": "Number of historical bars/periods to check when evaluating this condition.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "direction": {
+          "description": "The direction to evaluate the sequence. BACKWARD or FORWARD.",
+          "type": ["string", "null"],
+          "enum": ["BACKWARD", "FORWARD"]
+        },
+        "count": {
+          "description": "The number of consecutive occurrences required for the sequence.",
+          "type": ["integer", "null"]
+        },
+        "condition": {
+          "description": "The logical condition to evaluate over the sequence.",
+          "$ref": "#/$defs/node"
+        },
+        "setup_condition": {
+          "description": "The condition that arms the state machine for FOLLOWED_BY nodes.",
+          "$ref": "#/$defs/node"
+        },
+        "trigger_condition": {
+          "description": "The condition that fires the state machine after being armed for FOLLOWED_BY nodes.",
+          "$ref": "#/$defs/node"
+        },
+        "max_bars_between": {
+          "description": "The maximum number of bars allowed between setup and trigger for FOLLOWED_BY nodes.",
+          "type": ["integer", "null"]
+        }
+      }
+    },
+    "operand": {
+      "description": "An individual term used inside a condition check. It can refer to an indicator, raw market data, a fixed constant, or a chart pattern.",
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "description": "The source type of the operand.",
+          "type": "string",
+          "enum": [
+            "indicator",
+            "market_data",
+            "constant",
+            "pattern",
+            "arithmetic"
+          ]
+        },
+        "operator": {
+          "description": "The arithmetic operator (only valid if type is 'arithmetic').",
+          "type": ["string", "null"],
+          "enum": ["ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "MIN", "MAX", "ABS", "add", "subtract", "multiply", "divide", "min", "max", "abs", null]
+        },
+        "operation": {
+          "description": "Alias for operator (only valid if type is 'arithmetic').",
+          "type": ["string", "null"],
+          "enum": ["ADD", "SUBTRACT", "MULTIPLY", "DIVIDE", "MIN", "MAX", "ABS", "add", "subtract", "multiply", "divide", "min", "max", "abs", null]
+        },
+        "operand_1": {
+          "description": "The first operand for the arithmetic operation.",
+          "$ref": "#/$defs/operand"
+        },
+        "operand_2": {
+          "description": "The second operand for the arithmetic operation.",
+          "$ref": "#/$defs/operand"
+        },
+        "indicator_id": {
+          "description": "The ID of the technical indicator referenced from the signals.indicators array (only valid if type is 'indicator').",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "property": {
+          "description": "The specific field/line of the indicator to check (e.g., 'value' for RSI; 'macd', 'signal', or 'histogram' for MACD).",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "data_type": {
+          "description": "The price or volume element to reference (only valid if type is 'market_data', e.g., 'CLOSE', 'OPEN', 'HIGH', 'LOW', 'VOLUME').",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "lookback": {
+          "description": "The index of the historical candle to look back (0 for the current candle, 1 for the previous candle, etc.).",
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "value": {
+          "description": "The literal numeric, string, or boolean value (only valid if type is 'constant').",
+          "type": [
+            "number",
+            "string",
+            "boolean",
+            "null"
+          ]
+        },
+        "pattern_type": {
+          "description": "The type of candlestick or structural chart pattern (only valid if type is 'pattern', e.g., 'DOJI', 'DOUBLE_BOTTOM').",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "parameters": {
+          "description": "Detection settings or arguments for finding the pattern.",
+          "type": "object"
+        },
+        "lookback_periods": {
+          "description": "Number of bars to look back when scanning for the specified pattern.",
+          "type": [
+            "integer",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

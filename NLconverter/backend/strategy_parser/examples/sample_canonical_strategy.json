@@ -1,0 +1,154 @@
+{
+  "compilation_status": {
+    "state": "success",
+    "blockers_count": 0,
+    "assumptions_count": 0,
+    "blocking_fields": []
+  },
+  "signals": {
+    "indicators": [
+      {
+        "id": "rsi_1",
+        "name": "RSI",
+        "params": {
+          "period": 14
+        },
+        "timeframe": "1d",
+        "parse_status": {
+          "state": "parsed",
+          "confidence": 1,
+          "message": "",
+          "raw_text": "RSI",
+          "blocker": null
+        }
+      },
+      {
+        "id": "macd_1",
+        "name": "MACD",
+        "params": {
+          "fast": 12,
+          "slow": 26,
+          "signal": 9
+        },
+        "timeframe": "1d",
+        "parse_status": {
+          "state": "parsed",
+          "confidence": 1,
+          "message": "",
+          "raw_text": "MACD histogram",
+          "blocker": null
+        }
+      }
+    ]
+  },
+  "conditions": {
+    "entry": {
+      "id": "entry_root",
+      "type": "AND",
+      "children": [
+        {
+          "id": "entry_rsi",
+          "type": "LESS_THAN",
+          "operand_1": {
+            "type": "indicator",
+            "indicator_id": "rsi_1",
+            "property": "value"
+          },
+          "operand_2": {
+            "type": "constant",
+            "value": 30
+          },
+          "parse_status": {
+            "state": "parsed",
+            "confidence": 1,
+            "message": "",
+            "raw_text": "RSI below 30",
+            "blocker": null
+          }
+        },
+        {
+          "id": "entry_macd",
+          "type": "CROSS_ABOVE",
+          "operand_1": {
+            "type": "indicator",
+            "indicator_id": "macd_1",
+            "property": "histogram"
+          },
+          "operand_2": {
+            "type": "constant",
+            "value": 0
+          },
+          "lookback_periods": 1,
+          "parse_status": {
+            "state": "parsed",
+            "confidence": 1,
+            "message": "",
+            "raw_text": "MACD histogram crosses above zero",
+            "blocker": null
+          }
+        }
+      ],
+      "parse_status": {
+        "state": "parsed",
+        "confidence": 1,
+        "message": "",
+        "raw_text": "Buy when RSI below 30 and MACD histogram crosses above zero",
+        "blocker": null
+      }
+    },
+    "exit": {
+      "id": "exit_root",
+      "type": "GREATER_THAN",
+      "operand_1": {
+        "type": "indicator",
+        "indicator_id": "rsi_1",
+        "property": "value"
+      },
+      "operand_2": {
+        "type": "constant",
+        "value": 70
+      },
+      "parse_status": {
+        "state": "parsed",
+        "confidence": 1,
+        "message": "",
+        "raw_text": "Sell when RSI above 70",
+        "blocker": null
+      }
+    }
+  },
+  "filters": [],
+  "risk": {
+    "stop_loss": {
+      "type": "PERCENTAGE",
+      "value": 2,
+      "reference": "entry_price",
+      "direction": null,
+      "atr_multiple": null,
+      "price_level": null,
+      "indicator_ref": null,
+      "trailing": false,
+      "parse_status": {
+        "state": "parsed",
+        "confidence": 1,
+        "message": "",
+        "raw_text": "2% stop loss",
+        "blocker": null
+      }
+    },
+    "take_profit": {
+      "type": "RISK_REWARD",
+      "value": null,
+      "target_indicator": null,
+      "price_level": null,
+      "risk_reward_ratio": 3,
+      "parse_status": {
+        "state": "parsed",
+        "confidence": 1,
+        "message": "",
+        "raw_text": "3:1 risk/reward take profit",
+        "blocker": null
+      }
+    }
+  }
+}

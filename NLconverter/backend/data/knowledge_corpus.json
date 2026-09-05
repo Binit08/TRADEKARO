@@ -1,0 +1,3926 @@
+[
+  {
+    "id": "ind_supertrend",
+    "type": "indicator",
+    "canonical_name": "Supertrend",
+    "aliases": [
+      "super trend",
+      "st indicator",
+      "supertrenda"
+    ],
+    "maps_to_field": "indicator.supertrend",
+    "embedding_text": "Supertrend: trend-following indicator using ATR-based bands that flip when price crosses them, used to confirm trend direction and reversals.",
+    "metadata": {
+      "category": "trend-following",
+      "parameters": {
+        "atr_period": 10,
+        "multiplier": 3
+      }
+    }
+  },
+  {
+    "id": "term_atm",
+    "type": "term",
+    "canonical_name": "At The Money",
+    "aliases": [
+      "atm",
+      "at-the-money"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "At The Money (ATM): A situation where an option's strike price is identical to the current market price of the underlying security. It is the point where an option has no intrinsic value, only time value.",
+    "metadata": {
+      "category": "options_terminology"
+    }
+  },
+  {
+    "id": "ind_awesome_oscillator",
+    "type": "indicator",
+    "canonical_name": "Awesome Oscillator",
+    "aliases": [
+      "ao",
+      "awesome oscillator indicator",
+      "ao momentum",
+      "bill williams awesome oscillator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Awesome Oscillator measures market momentum by calculating the difference between a 5-period and a 34-period simple moving average of the median price (the average of high and low). It is primarily used to confirm market trends and anticipate potential price reversals.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_kama",
+    "type": "indicator",
+    "canonical_name": "Kaufman's Adaptive Moving Average",
+    "aliases": [
+      "kama",
+      "kaufman adaptive moving average",
+      "kaufman indicator",
+      "kama moving average"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Kaufman's Adaptive Moving Average (KAMA) is a trend-following indicator that dynamically adjusts its sensitivity based on market volatility and noise. It closely tracks price movements during quiet periods and lags during high-volatility swings to help identify trends and turning points.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_ppo",
+    "type": "indicator",
+    "canonical_name": "Percentage Price Oscillator",
+    "aliases": [
+      "ppo",
+      "percentage price oscillator",
+      "ppo indicator",
+      "price oscillator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Percentage Price Oscillator (PPO) is a momentum indicator that calculates the difference between two moving averages, expressed as a percentage of the longer-term moving average. It is used to evaluate the strength and direction of a price trend by identifying the relationship between short-term and long-term price movements.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_pvo",
+    "type": "indicator",
+    "canonical_name": "Percentage Volume Oscillator",
+    "aliases": [
+      "pvo",
+      "percentage volume oscillator",
+      "volume momentum oscillator",
+      "pvo indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Percentage Volume Oscillator (PVO) is a momentum-based indicator that tracks volume trends by calculating the percentage difference between a short-term and a long-term moving average of trading volume. It helps traders identify shifts in volume momentum to confirm the strength of price trends.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_roc",
+    "type": "indicator",
+    "canonical_name": "Rate of Change",
+    "aliases": [
+      "roc",
+      "rate of change",
+      "momentum indicator",
+      "roc oscillator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Rate of Change (ROC) is a momentum oscillator that measures the percentage change in price between the current period and a specified number of periods ago. It fluctuates around a zero line to help identify trend direction, momentum strength, and potential overbought or oversold conditions.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_rsi",
+    "type": "indicator",
+    "canonical_name": "Relative Strength Index",
+    "aliases": [
+      "rsi",
+      "relative strength index",
+      "rs indicator",
+      "rsi momentum"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Relative Strength Index (RSI) measures the magnitude of recent price changes to evaluate the velocity and direction of market movements. It is widely used by traders to identify potential overbought or oversold conditions for a specific asset.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_stochrsi",
+    "type": "indicator",
+    "canonical_name": "Stochastic RSI",
+    "aliases": [
+      "stochrsi",
+      "stochastic relative strength index",
+      "stoch rsi oscillator",
+      "stochrsi indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Stochastic RSI is a momentum oscillator that applies the Stochastic formula to RSI values to create a more sensitive indicator tailored to a security's historical performance. It is designed to provide earlier signals than the standard Relative Strength Index by measuring the level of RSI relative to its high-low range over a specified period.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_stochastic_oscillator",
+    "type": "indicator",
+    "canonical_name": "Stochastic Oscillator",
+    "aliases": [
+      "stochastic",
+      "stoch",
+      "stoch oscillator",
+      "stochastic indicator",
+      "stochastics"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Stochastic Oscillator measures the position of a security's closing price relative to its high-low range over a specific lookback period. It is used to identify potential overbought or oversold conditions in a market.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_tsi",
+    "type": "indicator",
+    "canonical_name": "True Strength Index",
+    "aliases": [
+      "tsi",
+      "true strength indicator",
+      "tsi index",
+      "true strength"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The True Strength Index (TSI) is a momentum-based oscillator that identifies both trend direction and overbought or oversold market conditions. It utilizes double smoothing of price changes to reduce noise and highlight shifts in market momentum.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_ultimate_oscillator",
+    "type": "indicator",
+    "canonical_name": "Ultimate Oscillator",
+    "aliases": [
+      "uo",
+      "ultimate oscillator indicator",
+      "larry williams ultimate oscillator",
+      "uo indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Ultimate Oscillator is a momentum indicator developed by Larry Williams that captures market momentum by calculating a weighted average across three different timeframes. It utilizes Buying Pressure and True Range to provide a smoothed oscillator value ranging from 0 to 100.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_williams_r",
+    "type": "indicator",
+    "canonical_name": "Williams %R",
+    "aliases": [
+      "williams percent r",
+      "williams r",
+      "percent r",
+      "willr"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Williams %R is a momentum indicator that measures the relative position of the closing price within a specified look-back period by oscillating between 0 and -100. It identifies overbought conditions when readings range from 0 to -20 and oversold conditions when readings fall between -80 and -100.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_adx",
+    "type": "indicator",
+    "canonical_name": "Average Directional Movement Index",
+    "aliases": [
+      "adx",
+      "average directional index",
+      "dmi",
+      "directional movement indicator",
+      "adx indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Average Directional Movement Index (ADX) measures the strength of a price trend regardless of its direction by analyzing smoothed averages of directional movement. It is typically used alongside the Plus Directional Indicator (+DI) and Minus Directional Indicator (-DI) to identify both the trend's strength and direction.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_aroon",
+    "type": "indicator",
+    "canonical_name": "Aroon Indicator",
+    "aliases": [
+      "aroon",
+      "aroon oscillator",
+      "aroon up down",
+      "aroon trend indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Aroon indicator identifies trend changes by measuring the time elapsed between highs and lows over a specified look-back period. It consists of an Aroon Up and Aroon Down line, which help traders determine whether a market is trending or ranging.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_cci",
+    "type": "indicator",
+    "canonical_name": "Commodity Channel Index",
+    "aliases": [
+      "cci",
+      "commodity channel index",
+      "cci indicator",
+      "cci technical indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Commodity Channel Index (CCI) measures the deviation of a security's price from its statistical average to identify overbought and oversold conditions. High positive values indicate strong price performance above the average, while low negative values signal price weakness.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_dpo",
+    "type": "indicator",
+    "canonical_name": "Detrended Price Oscillator",
+    "aliases": [
+      "dpo",
+      "detrended price oscillator",
+      "dpo indicator",
+      "detrended price"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Detrended Price Oscillator (DPO) is a technical tool used to isolate short-term cycles in price data by removing the influence of long-term trends. It identifies overbought and oversold conditions by comparing the price to a past moving average, effectively filtering out trend movements.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_ema",
+    "type": "indicator",
+    "canonical_name": "Exponential Moving Average",
+    "aliases": [
+      "ema",
+      "exponential moving average",
+      "exp moving average",
+      "exponential average"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Exponential Moving Average (EMA) is a technical indicator that calculates the average of a data series over a specified window, giving more weight to recent price data than a simple moving average. It is commonly used to identify trends and reduce lag in market analysis.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_ichimoku",
+    "type": "indicator",
+    "canonical_name": "Ichimoku Kink\u014d Hy\u014d",
+    "aliases": [
+      "ichimoku",
+      "ichimoku cloud",
+      "ikh",
+      "ichimoku kinko hyo"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Ichimoku Kink\u014d Hy\u014d is a versatile technical analysis tool that defines support and resistance levels, identifies trend direction, and gauges momentum using multiple moving average lines. It provides a comprehensive 'cloud' visualization to help traders identify potential buy and sell signals based on price action relative to key historical highs and lows.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_kst",
+    "type": "indicator",
+    "canonical_name": "Know Sure Thing",
+    "aliases": [
+      "kst",
+      "kst oscillator",
+      "kst signal",
+      "know sure thing indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Know Sure Thing (KST) oscillator is a momentum-based indicator designed to identify major stock market cycle junctures by weighting different time spans. It utilizes smoothed rates of change to better reflect primary swings and dominant market trends.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_macd",
+    "type": "indicator",
+    "canonical_name": "Moving Average Convergence Divergence",
+    "aliases": [
+      "macd",
+      "moving average convergence divergence",
+      "macd indicator",
+      "macd oscillator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The MACD is a trend-following momentum indicator that identifies changes in the strength, direction, momentum, and duration of a trend by calculating the relationship between two moving averages of an asset's price.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_mass_index",
+    "type": "indicator",
+    "canonical_name": "Mass Index",
+    "aliases": [
+      "mi",
+      "mass index indicator",
+      "mass index technical indicator",
+      "mass indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Mass Index is a technical tool that analyzes the high-low price range to identify potential trend reversals. It specifically highlights range bulges, which indicate that volatility is expanding and a trend shift may be forthcoming.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_psar",
+    "type": "indicator",
+    "canonical_name": "Parabolic Stop and Reverse",
+    "aliases": [
+      "psar",
+      "parabolic sar",
+      "stop and reverse",
+      "sar indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Parabolic Stop and Reverse (SAR) is a trend-following indicator that plots dots above or below price bars to identify potential reversals in market direction. It utilizes an acceleration factor to adjust the sensitivity of the trailing stop as the trend progresses.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_sma",
+    "type": "indicator",
+    "canonical_name": "Simple Moving Average",
+    "aliases": [
+      "sma",
+      "simple moving average",
+      "simple ma",
+      "sma indicator",
+      "moving average"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Simple Moving Average (SMA) calculates the arithmetic mean of a given data series over a specified number of periods. It is widely used to smooth out price fluctuations and identify the underlying trend direction.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_stc",
+    "type": "indicator",
+    "canonical_name": "Schaff Trend Cycle",
+    "aliases": [
+      "stc",
+      "schaff trend",
+      "stc oscillator",
+      "schaff trend cycle indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Schaff Trend Cycle is an oscillator that identifies market trends and generates buy and sell signals based on the assumption that currency trends accelerate and decelerate in cyclical patterns. It combines elements of MACD and stochastic oscillators to provide a more responsive trend-following indicator.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_trix",
+    "type": "indicator",
+    "canonical_name": "Triple Exponentially Smoothed Moving Average",
+    "aliases": [
+      "trix",
+      "triple exponential moving average",
+      "trix indicator",
+      "triple smoothed moving average"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The TRIX indicator measures the percentage rate of change of a triple exponentially smoothed moving average. It is designed to filter out insignificant price movements by emphasizing momentum through long-term smoothing.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_vortex_indicator",
+    "type": "indicator",
+    "canonical_name": "Vortex Indicator",
+    "aliases": [
+      "vi",
+      "vortex indicator",
+      "vortex",
+      "vortex trend indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Vortex Indicator is a technical tool that uses two oscillators to capture positive and negative trend movements in price. It generates bullish signals when the positive trend line crosses above the negative trend line.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_wma",
+    "type": "indicator",
+    "canonical_name": "Weighted Moving Average",
+    "aliases": [
+      "wma",
+      "weighted moving average",
+      "weighted ma",
+      "wma indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Weighted Moving Average (WMA) is a trend-following indicator that calculates the average of a data series by assigning higher importance or weight to the most recent price points. It reduces the lag found in simple moving averages by giving more significance to current market activity.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_atr",
+    "type": "indicator",
+    "canonical_name": "Average True Range",
+    "aliases": [
+      "atr",
+      "average true range",
+      "volatility indicator",
+      "atr indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Average True Range (ATR) measures market volatility by calculating the degree of price movement over a specified period. It quantifies how strong price moves are by analyzing the range of price fluctuations, with larger ranges indicating higher volatility.",
+    "metadata": {
+      "category": "volatility"
+    }
+  },
+  {
+    "id": "ind_bollinger_bands",
+    "type": "indicator",
+    "canonical_name": "Bollinger Bands",
+    "aliases": [
+      "bollinger bands",
+      "bbands",
+      "bollinger",
+      "bb",
+      "bolinger bands"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Bollinger Bands measure market volatility and identify potential overbought or oversold conditions by plotting bands at a standard deviation level above and below a simple moving average. The indicator expands during periods of high volatility and contracts when volatility decreases.",
+    "metadata": {
+      "category": "volatility"
+    }
+  },
+  {
+    "id": "ind_donchian_channel",
+    "type": "indicator",
+    "canonical_name": "Donchian Channel",
+    "aliases": [
+      "donchian channels",
+      "donchian",
+      "dc",
+      "donchian channel indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Donchian Channel is a volatility-based indicator that identifies trend strength and potential breakouts by plotting the highest high and lowest low over a specified lookback period. It creates a channel that helps traders visualize market volatility and identify entry or exit points based on price extremes.",
+    "metadata": {
+      "category": "volatility"
+    }
+  },
+  {
+    "id": "ind_keltner_channel",
+    "type": "indicator",
+    "canonical_name": "Keltner Channel",
+    "aliases": [
+      "keltner channels",
+      "kc",
+      "keltner",
+      "keltner channel indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Keltner Channels are a trend-following volatility-based indicator that uses moving averages and Average True Range (ATR) to define price channels. These channels help traders identify potential reversals, breakouts, and overbought or oversold conditions based on the asset's price behavior relative to the established bands.",
+    "metadata": {
+      "category": "volatility"
+    }
+  },
+  {
+    "id": "ind_ulcer_index",
+    "type": "indicator",
+    "canonical_name": "Ulcer Index",
+    "aliases": [
+      "ui",
+      "ulcer index indicator",
+      "ulcer index technical indicator",
+      "ulcer index volatility"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Ulcer Index is a technical indicator that measures the depth and duration of price declines to assess investment risk. It quantifies downside risk by calculating the percentage drawdown of a security's price relative to its recent high over a specified window.",
+    "metadata": {
+      "category": "volatility"
+    }
+  },
+  {
+    "id": "ind_acc_dist_index",
+    "type": "indicator",
+    "canonical_name": "Accumulation/Distribution Index",
+    "aliases": [
+      "adi",
+      "accumulation distribution",
+      "accumulation distribution line",
+      "a/d indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Accumulation/Distribution Index (ADI) is a volume-based indicator designed to measure the cumulative flow of money into and out of an asset. It serves as a leading indicator by identifying discrepancies between price action and volume to signal potential trend reversals.",
+    "metadata": {
+      "category": "volume"
+    }
+  },
+  {
+    "id": "ind_chaikin_money_flow",
+    "type": "indicator",
+    "canonical_name": "Chaikin Money Flow",
+    "aliases": [
+      "cmf",
+      "chaikin money flow indicator",
+      "cmf indicator",
+      "money flow volume"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Chaikin Money Flow (CMF) measures the accumulation and distribution of an asset by calculating the volume-weighted average of price movement over a specified period. It provides insight into buying and selling pressure by analyzing the relationship between price and volume data.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_eom",
+    "type": "indicator",
+    "canonical_name": "Ease of Movement",
+    "aliases": [
+      "eom",
+      "emv",
+      "ease of movement indicator",
+      "ease of movement value"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Ease of Movement relates an asset's price change to its trading volume to assess the ease with which price moves. It is primarily used by traders to gauge the strength of a trend and identify potential market turning points.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_force_index",
+    "type": "indicator",
+    "canonical_name": "Force Index",
+    "aliases": [
+      "fi",
+      "force index indicator",
+      "force index oscillator",
+      "elder force index"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Force Index measures the strength of buying and selling pressure by combining price changes and trading volume. High positive values indicate strong upward momentum, while low negative values signal strong downward pressure.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_mfi",
+    "type": "indicator",
+    "canonical_name": "Money Flow Index",
+    "aliases": [
+      "mfi",
+      "money flow index",
+      "volume weighted rsi",
+      "mfi indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Money Flow Index is a volume-weighted oscillator that measures buying and selling pressure by comparing positive and negative money flow. It functions similarly to the Relative Strength Index but incorporates volume data to identify overbought or oversold conditions on a scale of 0 to 100.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_nvi",
+    "type": "indicator",
+    "canonical_name": "Negative Volume Index",
+    "aliases": [
+      "nvi",
+      "negative volume index",
+      "nvi indicator",
+      "neg volume index"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Negative Volume Index (NVI) is a cumulative technical indicator that focuses on days where trading volume decreases, helping to identify trends influenced by 'uninformed' traders. It is primarily used to track price movements during periods of low activity to confirm established market trends.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_obv",
+    "type": "indicator",
+    "canonical_name": "On-Balance Volume",
+    "aliases": [
+      "obv",
+      "on balance volume",
+      "on-balance volume indicator",
+      "cumulative volume indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "On-Balance Volume (OBV) is a momentum indicator that uses volume flow to predict changes in stock price. It tracks cumulative buying and selling pressure by adding volume on up days and subtracting it on down days.",
+    "metadata": {
+      "category": "volume"
+    }
+  },
+  {
+    "id": "ind_vpt",
+    "type": "indicator",
+    "canonical_name": "Volume-Price Trend",
+    "aliases": [
+      "vpt",
+      "volume price trend",
+      "vpt indicator",
+      "volume-price trend"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Volume-Price Trend (VPT) indicator tracks the relationship between price and volume by using a running cumulative sum of volume adjusted by the percentage change in price. It is used to identify the strength of price trends by analyzing whether volume flows are supporting upward or downward movements.",
+    "metadata": {
+      "category": "volume"
+    }
+  },
+  {
+    "id": "ind_vwap",
+    "type": "indicator",
+    "canonical_name": "Volume Weighted Average Price",
+    "aliases": [
+      "vwap",
+      "volume weighted average",
+      "volume-weighted average price",
+      "vwap indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Volume Weighted Average Price (VWAP) calculates the average price of an asset weighted by its trading volume throughout the current trading day. It provides traders with a benchmark to determine whether they are buying or selling at a fair price relative to the day's total market activity.",
+    "metadata": {
+      "category": "volume"
+    }
+  },
+  {
+    "id": "ind_cumulative_return",
+    "type": "indicator",
+    "canonical_name": "Cumulative Return",
+    "aliases": [
+      "cr",
+      "cumret",
+      "cumulative return indicator",
+      "cumulative performance"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Cumulative Return indicator measures the total percentage change in the price of an asset from a specific starting point over a given time period. It provides a view of the investment's historical growth or decline relative to its initial value.",
+    "metadata": {
+      "category": "performance"
+    }
+  },
+  {
+    "id": "ind_daily_log_return",
+    "type": "indicator",
+    "canonical_name": "Daily Log Return",
+    "aliases": [
+      "dlr",
+      "log return",
+      "logarithmic return",
+      "daily log returns"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Daily Log Return indicator calculates the natural logarithm of the ratio of current price to the previous price. It is commonly used in financial modeling because log returns are additive across time, making them mathematically convenient for time-series analysis.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_daily_return",
+    "type": "indicator",
+    "canonical_name": "Daily Return",
+    "aliases": [
+      "dr",
+      "daily return indicator",
+      "daily returns",
+      "pct change"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Daily Return indicator calculates the percentage change in an asset's closing price from one day to the next. It is a fundamental metric used to measure the daily price volatility and performance of a financial instrument.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_cdltwocrows",
+    "type": "pattern",
+    "canonical_name": "Two Crows",
+    "aliases": [
+      "2 Crows",
+      "CDLTWOCROWS",
+      "Two Crows Pattern",
+      "Bearish Two Crows"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Two Crows is a bearish reversal candlestick pattern consisting of three candles where a long green candle is followed by a small gap up that closes lower, and a third candle that moves further downward. It signals a potential exhaustion of an uptrend and the onset of selling pressure.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3blackcrows",
+    "type": "pattern",
+    "canonical_name": "Three Black Crows",
+    "aliases": [
+      "3 Black Crows",
+      "Three Black Crows Pattern",
+      "3BC",
+      "Three Crows"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Three Black Crows is a bearish reversal candlestick pattern consisting of three consecutive long-bodied candles that close lower than the previous one. It signals a potential shift in market sentiment from bullish to bearish as sellers gain control.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3inside",
+    "type": "pattern",
+    "canonical_name": "Three Inside Up/Down",
+    "aliases": [
+      "3 Inside Up/Down",
+      "Three Inside",
+      "Inside Three",
+      "CDL3INSIDE"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Three Inside Up/Down is a three-candle reversal pattern where the second candle is contained within the body of the first, followed by a third candle that confirms the breakout direction. It signals a potential change in trend, with the 'Up' version suggesting a bullish reversal and the 'Down' version suggesting a bearish reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3linestrike",
+    "type": "pattern",
+    "canonical_name": "Three-Line Strike",
+    "aliases": [
+      "3 Line Strike",
+      "Three Line Strike pattern",
+      "3-Line Strike reversal",
+      "ThreeLineStrike"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Three-Line Strike is a four-candle candlestick pattern that indicates a potential reversal of the current trend. It consists of three candles following the trend direction followed by a large counter-trend candle that closes beyond the range of the previous three, signaling a strong shift in market sentiment.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3outside",
+    "type": "pattern",
+    "canonical_name": "Three Outside Up/Down",
+    "aliases": [
+      "3 Outside Up",
+      "3 Outside Down",
+      "Three Outside",
+      "CDL3OUTSIDE"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Three Outside pattern is a three-candle reversal formation that occurs when a bullish or bearish engulfing pattern is followed by a third candle that confirms the direction of the trend. It signals a potential change in market momentum and is used to identify trend reversals.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3starsinthesouth",
+    "type": "pattern",
+    "canonical_name": "Three Stars In The South",
+    "aliases": [
+      "3 Stars In The South",
+      "Three Stars South",
+      "3SIS",
+      "3 Stars South pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Three Stars In The South is a three-candle bearish reversal pattern characterized by a sequence of declining marubozu-like candles with progressively smaller bodies and lower shadows. It typically signals a potential exhaustion of a downtrend and a shift toward bullish sentiment.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3whitesoldiers",
+    "type": "pattern",
+    "canonical_name": "Three Advancing White Soldiers",
+    "aliases": [
+      "Three White Soldiers",
+      "3 White Soldiers",
+      "cdl3whitesoldiers",
+      "3ws"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Three Advancing White Soldiers is a bullish reversal candlestick pattern consisting of three consecutive long-bodied candles that close higher than the previous day. It indicates a strong shift in market sentiment from bearish to bullish and suggests the beginning of an upward trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlabandonedbaby",
+    "type": "pattern",
+    "canonical_name": "Abandoned Baby",
+    "aliases": [
+      "Abandoned Baby pattern",
+      "CDLABANDONEDBABY",
+      "Abandoned Baby candlestick",
+      "tri-star reversal"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Abandoned Baby is a rare three-candle reversal pattern characterized by a gap between a star and two surrounding candles, signaling a potential exhaustion of the current price trend. It acts as a significant indicator for a reversal in market direction, with the 'baby' star typically isolated from the preceding and following price ranges.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdladvanceblock",
+    "type": "pattern",
+    "canonical_name": "Advance Block",
+    "aliases": [
+      "Advance Block Pattern",
+      "Adv Block",
+      "CDLADVANCEBLOCK",
+      "Advance Block Candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Advance Block is a three-candle bearish reversal pattern characterized by three consecutive rising candles with progressively smaller real bodies and longer upper shadows. It typically signals that the current bullish trend is losing momentum and may be nearing a potential reversal to the downside.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlbelt-hold",
+    "type": "pattern",
+    "canonical_name": "Belt-hold",
+    "aliases": [
+      "Belt Hold Line",
+      "Yorikiri",
+      "Belt-hold pattern",
+      "BeltHold"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Belt-hold is a single-candle reversal pattern characterized by a long body with little to no shadow on the side of the open, signaling a potential shift in market sentiment. A bullish belt-hold occurs at market lows, while a bearish belt-hold appears at market highs, indicating exhaustion of the prevailing trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlbreakaway",
+    "type": "pattern",
+    "canonical_name": "Breakaway",
+    "aliases": [
+      "Breakaway Pattern",
+      "cdlbreakaway",
+      "Breakaway Candlestick",
+      "BEA"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Breakaway is a five-candle reversal pattern that signals a potential shift in market direction. It typically indicates an exhausted trend where the final candle closes into the previous price gap, suggesting a breakout or trend reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlclosingmarubozu",
+    "type": "pattern",
+    "canonical_name": "Closing Marubozu",
+    "aliases": [
+      "Marubozu Close",
+      "Closing Marubozu candlestick",
+      "ClsMarubozu",
+      "Marubozu"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Closing Marubozu is a single-candle pattern where the candle has no shadow on the side of the close, indicating that the asset finished the period at its extreme high or low. It signals strong momentum in the direction of the close, suggesting that buyers or sellers maintained total control until the end of the session.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlconcealingbabyswallow",
+    "type": "pattern",
+    "canonical_name": "Concealing Baby Swallow",
+    "aliases": [
+      "CBS",
+      "Concealing Baby Swallow Pattern",
+      "Baby Swallow",
+      "Concealing Baby Swallow candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Concealing Baby Swallow is a four-candle bearish reversal pattern that typically occurs in a downtrend, signaling potential exhaustion of selling pressure. It is characterized by two consecutive falling candles followed by a third that closes within the second, and a final candle that completely engulfs the third.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlcounterattack",
+    "type": "pattern",
+    "canonical_name": "Counterattack",
+    "aliases": [
+      "CDLCOUNTERATTACK",
+      "Counterattack candlestick",
+      "Counterattack pattern",
+      "Counter attack"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Counterattack is a two-candle reversal pattern where a second candle closes at or near the same level as the previous candle's close after moving in the opposite direction. It signals a potential exhaustion of the current trend and a likely change in market momentum.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdldarkcloudcover",
+    "type": "pattern",
+    "canonical_name": "Dark Cloud Cover",
+    "aliases": [
+      "DCC",
+      "Dark Cloud",
+      "Dark-Cloud-Cover",
+      "Bearish Dark Cloud Cover"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Dark Cloud Cover is a two-candle bearish reversal pattern that occurs during an uptrend, where a strong bullish candle is followed by a bearish candle that opens above the prior close and closes below the midpoint of the prior candle's body. It signals a potential exhaustion of buying pressure and an impending shift toward a downtrend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_doji",
+    "type": "pattern",
+    "canonical_name": "Doji",
+    "aliases": [
+      "Doji Star",
+      "Doji Candle",
+      "Neutral Candle",
+      "Indecision Candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Doji is a candlestick pattern characterized by having an open and close price that are virtually identical, resulting in a very small body. It signals market indecision and potential trend reversal, as neither buyers nor sellers were able to gain control during the period.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdldojistar",
+    "type": "pattern",
+    "canonical_name": "Doji Star",
+    "aliases": [
+      "DojiStar",
+      "CDLDOJISTAR",
+      "Doji Star pattern",
+      "Doji gap"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Doji Star is a Japanese candlestick pattern consisting of a long-bodied candle followed by a doji that gaps in the direction of the preceding trend. It is considered a warning signal of a potential trend reversal, indicating market indecision.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdldragonflydoji",
+    "type": "pattern",
+    "canonical_name": "Dragonfly Doji",
+    "aliases": [
+      "D-Doji",
+      "Bullish Dragonfly",
+      "Dragonfly Candle",
+      "T-shaped doji"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Dragonfly Doji is a single-candle pattern that occurs when the open, high, and close prices are identical or very close, with a long lower shadow. It typically signals a potential market reversal, suggesting that buyers have entered the market to push prices back up after a significant downtrend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlengulfing",
+    "type": "pattern",
+    "canonical_name": "Engulfing Pattern",
+    "aliases": [
+      "Bullish Engulfing",
+      "Bearish Engulfing",
+      "Engulfing Candle",
+      "Engulfing"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Engulfing pattern is a two-candle reversal signal where the second candle's real body completely covers the body of the previous candle. A bullish version signals potential upward momentum, while a bearish version indicates a likely downward trend reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdleveningdojistar",
+    "type": "pattern",
+    "canonical_name": "Evening Doji Star",
+    "aliases": [
+      "Evening Doji",
+      "ED Star",
+      "Evening Doji Star pattern",
+      "Bearish Doji Star"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Evening Doji Star is a three-candlestick bearish reversal pattern that occurs at the top of an uptrend, featuring a large bullish candle followed by a doji that gaps higher, and finally a third bearish candle that gaps lower. It signals a potential exhaustion of buying pressure and a subsequent shift toward a downward trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdleveningstar",
+    "type": "pattern",
+    "canonical_name": "Evening Star",
+    "aliases": [
+      "Evening Star Pattern",
+      "Bearish Evening Star",
+      "Evening Star Reversal",
+      "Evening Star Candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Evening Star is a three-candle bearish reversal pattern that occurs at the peak of an uptrend, consisting of a large bullish candle, a small-bodied gap candle, and a large bearish candle. It signals a loss of buying momentum and a potential shift toward a downtrend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlgapsidesidewhite",
+    "type": "pattern",
+    "canonical_name": "Up/Down-gap side-by-side white lines",
+    "aliases": [
+      "Side-by-side white lines",
+      "Gapping side-by-side white lines",
+      "CDLGAPSIDESIDEWHITE",
+      "Side by side white candles"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Up/Down-gap side-by-side white lines is a candlestick pattern consisting of two white candles of similar size that appear after a gap in the direction of the prevailing trend. It acts as a continuation signal, suggesting that the current market momentum is likely to persist.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlgravestonedoji",
+    "type": "pattern",
+    "canonical_name": "Gravestone Doji",
+    "aliases": [
+      "Grave Stone Doji",
+      "Gravestone",
+      "Grave-stone Doji",
+      "Gravestone Candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Gravestone Doji is a bearish reversal candlestick pattern that occurs when the open, low, and close are identical or near each other at the bottom of the trading range, with a long upper shadow. It signals that buyers were unable to sustain upward momentum and that a potential trend reversal to the downside may follow.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhammer",
+    "type": "pattern",
+    "canonical_name": "Hammer",
+    "aliases": [
+      "Bullish Hammer",
+      "Hammer Candlestick",
+      "HMR",
+      "Hammer Pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Hammer is a bullish reversal candlestick pattern that occurs when a security trades significantly lower than its opening, but rallies later in the day to close near the opening price. It signals a potential bottom in a downtrend and suggests that buyers are gaining control.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhangingman",
+    "type": "pattern",
+    "canonical_name": "Hanging Man",
+    "aliases": [
+      "Hanging Man Candlestick",
+      "Hangingman",
+      "Bearish Hanging Man",
+      "Hanging Man Pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hanging Man is a bearish reversal candlestick pattern that occurs during an uptrend, characterized by a small body and a long lower shadow. It signals that sellers are beginning to overpower buyers, suggesting a potential exhaustion of the current upward momentum.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlharami",
+    "type": "pattern",
+    "canonical_name": "Harami Pattern",
+    "aliases": [
+      "Harami",
+      "Inside Bar",
+      "Japanese Harami",
+      "CDLHARAMI"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Harami pattern is a two-candle reversal indicator where the second smaller candle is completely contained within the body of the first larger candle. It signals a potential loss of momentum in the current trend and a possible upcoming trend reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlharamicross",
+    "type": "pattern",
+    "canonical_name": "Harami Cross Pattern",
+    "aliases": [
+      "Harami Cross",
+      "Bullish Harami Cross",
+      "Bearish Harami Cross",
+      "Haramicross"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Harami Cross is a two-candlestick pattern where a large candle is followed by a doji that is contained entirely within the previous candle's body. It signals a potential reversal in the prevailing trend due to market indecision.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhighwave",
+    "type": "pattern",
+    "canonical_name": "High-Wave Candle",
+    "aliases": [
+      "High Wave",
+      "High-Wave Candlestick",
+      "HighWave",
+      "High-Wave Pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The High-Wave candle is a candlestick pattern characterized by a small real body and long upper and lower shadows, indicating significant indecision in the market. It signals a potential period of consolidation or a possible reversal in the prevailing trend as neither bulls nor bears have established dominance.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhikkake",
+    "type": "pattern",
+    "canonical_name": "Hikkake Pattern",
+    "aliases": [
+      "Hikkake",
+      "Hikkake candlestick pattern",
+      "Inside day false breakout",
+      "Hikkake setup"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hikkake pattern is a complex candlestick formation that begins as an inside day and indicates a potential false breakout. It serves as a short-term trend reversal or continuation signal, depending on whether the price breaks out in the direction of the initial move or reverses.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhikkakemod",
+    "type": "pattern",
+    "canonical_name": "Modified Hikkake Pattern",
+    "aliases": [
+      "Mod Hikkake",
+      "Modified Hikkake",
+      "Hikkake Mod",
+      "CDLHIKKAKEMOD"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Modified Hikkake Pattern is a technical analysis formation that identifies potential reversals or continuations based on an initial inside day or range followed by a price breakout. It signals a shift in market sentiment when price closes outside the previous range, suggesting a tactical entry opportunity for traders.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhomingpigeon",
+    "type": "pattern",
+    "canonical_name": "Homing Pigeon",
+    "aliases": [
+      "CDLHOMINGPIGEON",
+      "Homing Pigeon Pattern",
+      "Bullish Homing Pigeon",
+      "HomingPigeon"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Homing Pigeon is a two-bar Japanese candlestick pattern where a smaller candle is contained within the body of a larger preceding candle of the same color. It is typically interpreted as a bullish reversal signal occurring during a downtrend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3identicalcrows",
+    "type": "pattern",
+    "canonical_name": "Identical Three Crows",
+    "aliases": [
+      "3 Identical Crows",
+      "Identical3Crows",
+      "Three Identical Crows Pattern",
+      "Identical Crows"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Identical Three Crows is a bearish reversal candlestick pattern consisting of three consecutive long-bodied red candles that open at the previous candle's close. It indicates significant selling pressure and signals a likely continuation of a downward trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlinneck",
+    "type": "pattern",
+    "canonical_name": "In-Neck Pattern",
+    "aliases": [
+      "inneck",
+      "in neck candlestick",
+      "in-neck formation",
+      "in-neck"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The In-Neck pattern is a two-candle bearish reversal formation where a small white candle closes slightly above the previous long black candle's closing price. It serves as a continuation signal for a downtrend, indicating that buyers are unable to push the price high enough to break the seller's momentum.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlinvertedhammer",
+    "type": "pattern",
+    "canonical_name": "Inverted Hammer",
+    "aliases": [
+      "inv hammer",
+      "invertedhammer",
+      "inverted-hammer",
+      "invhammer"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Inverted Hammer is a bullish reversal candlestick pattern that occurs at the bottom of a downtrend when the open, low, and close prices are near each other with a long upper shadow. It signals a potential exhaustion of selling pressure and a possible shift toward bullish momentum.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlkicking",
+    "type": "pattern",
+    "canonical_name": "Kicking",
+    "aliases": [
+      "CDLKICKING",
+      "Kicking Pattern",
+      "Marubozu Kicking",
+      "Kicking Candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Kicking pattern consists of two opposite-colored marubozu candlesticks that gap away from each other, indicating a sharp and significant reversal in trend. It is considered a strong signal of a trend change driven by a sudden shift in market sentiment.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlladderbottom",
+    "type": "pattern",
+    "canonical_name": "Ladder Bottom",
+    "aliases": [
+      "Ladder Bottom Pattern",
+      "cdlladderbottom",
+      "Ladder Bottom reversal",
+      "Ladder Bottom candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Ladder Bottom is a five-candle bullish reversal pattern characterized by three consecutive lower closes followed by a gap up and a final strong bullish candle. It signals a potential exhaustion of downward momentum and a likely shift toward a bullish trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdllongleggeddoji",
+    "type": "pattern",
+    "canonical_name": "Long Legged Doji",
+    "aliases": [
+      "LLD",
+      "Long-legged Doji",
+      "Rickshaw Man",
+      "Long Legged Doji candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Long Legged Doji is a single-candlestick pattern characterized by a very small real body and exceptionally long upper and lower shadows. It signals high market indecision and suggests that a potential trend reversal or significant shift in momentum may be forthcoming.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdllongline",
+    "type": "pattern",
+    "canonical_name": "Long Line Candle",
+    "aliases": [
+      "CDLLONGLINE",
+      "Long Body Candle",
+      "Long Candle",
+      "Extended Range Candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Long Line Candle is a candlestick pattern characterized by a single candle with a significantly larger body than the preceding candles. It signals strong market momentum and high conviction in the current direction, often indicating a potential breakout or continuation of a trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlmarubozu",
+    "type": "pattern",
+    "canonical_name": "Marubozu",
+    "aliases": [
+      "Marubozu candle",
+      "Full body candle",
+      "Marabozu",
+      "Bald candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Marubozu is a single-candlestick pattern characterized by a long body with little or no wicks, indicating strong, unidirectional momentum. A bullish Marubozu signals dominant buying pressure, while a bearish Marubozu indicates significant selling conviction.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlmatchinglow",
+    "type": "pattern",
+    "canonical_name": "Matching Low",
+    "aliases": [
+      "CDLMATCHINGLOW",
+      "Matching Low Pattern",
+      "Matching Low Candlestick",
+      "Matching Low Cdl"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Matching Low is a two-candle bullish reversal pattern where two consecutive candles close at the same low price. It suggests that selling pressure has exhausted itself, indicating a potential upward price reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlmathold",
+    "type": "pattern",
+    "canonical_name": "Mat Hold",
+    "aliases": [
+      "Mathold",
+      "Mat Hold Pattern",
+      "Bullish Mat Hold",
+      "CDLMATHOLD"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Mat Hold is a bullish continuation candlestick pattern that begins with a long white candle followed by a gap higher and a short decline, eventually breaking out to continue the upward trend. It signals that the existing bullish momentum is pausing temporarily before resuming its previous trajectory.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlmorningdojistar",
+    "type": "pattern",
+    "canonical_name": "Morning Doji Star",
+    "aliases": [
+      "MDS",
+      "Morning Doji Star Pattern",
+      "Bullish Morning Doji Star",
+      "Morning Doji"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Morning Doji Star is a three-candlestick bullish reversal pattern that typically appears at the end of a downtrend. It consists of a long bearish candle followed by a doji that gaps lower, and a final bullish candle that closes well into the body of the first candle, signaling a potential shift in market sentiment.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlmorningstar",
+    "type": "pattern",
+    "canonical_name": "Morning Star",
+    "aliases": [
+      "MorningStar",
+      "Morning Star Pattern",
+      "Bullish Morning Star",
+      "Morning Star Candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Morning Star is a three-candle bullish reversal pattern consisting of a long bearish candle, a small-bodied candle that gaps down, and a long bullish candle. It signals a potential shift in market sentiment from bearish to bullish following a downward price trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlonneck",
+    "type": "pattern",
+    "canonical_name": "On-Neck Pattern",
+    "aliases": [
+      "On Neck",
+      "On-Neck",
+      "On Neck Candlestick",
+      "On-Neck Formation"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The On-Neck pattern is a two-candle bearish reversal formation where a long bearish candle is followed by a smaller bullish candle that closes near the previous candle's low. It typically indicates that while there is minor buying pressure, the existing downtrend is likely to continue.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlpiercing",
+    "type": "pattern",
+    "canonical_name": "Piercing Pattern",
+    "aliases": [
+      "Piercing Line",
+      "Piercing Candlestick",
+      "Bullish Piercing",
+      "Piercing Patter"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Piercing Pattern is a two-candlestick bullish reversal signal that occurs during a downtrend, where a long bullish candle closes above the midpoint of the preceding long bearish candle. It indicates that selling pressure has exhausted and buyers have taken control, signaling a potential upward price movement.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlrickshawman",
+    "type": "pattern",
+    "canonical_name": "Rickshaw Man",
+    "aliases": [
+      "Rickshawman",
+      "Long-legged Doji",
+      "High-wave Doji",
+      "CDLRICKSHAWMAN"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Rickshaw Man is a specific type of long-legged Doji candlestick pattern characterized by a very long upper and lower shadow with a small real body centered in the middle. It signals extreme indecision in the market and often suggests a potential reversal or a transition period in the prevailing price trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3methods",
+    "type": "pattern",
+    "canonical_name": "Rising/Falling Three Methods",
+    "aliases": [
+      "Three Methods",
+      "Rising Three Methods",
+      "Falling Three Methods",
+      "3 Methods Pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Rising and Falling Three Methods are five-candle continuation patterns where a long candle is followed by three small counter-trend candles contained within the range of the first, concluding with another long candle in the original direction. These patterns signal a temporary consolidation phase within an existing trend, suggesting that the prevailing market direction will likely resume.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlseparatinglines",
+    "type": "pattern",
+    "canonical_name": "Separating Lines",
+    "aliases": [
+      "CDLSEPARATINGLINES",
+      "Separating Lines pattern",
+      "Bullish Separating Lines",
+      "Bearish Separating Lines"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Separating Lines pattern is a trend continuation signal consisting of two candlesticks of opposite colors that share the same opening price. It suggests that the current market trend is likely to persist as the price maintains its original directional momentum.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlshootingstar",
+    "type": "pattern",
+    "canonical_name": "Shooting Star",
+    "aliases": [
+      "CDLSHOOTINGSTAR",
+      "inverted hammer bearish",
+      "bearish shooting star",
+      "shooting star candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Shooting Star is a bearish reversal candlestick pattern that occurs at the top of an uptrend, characterized by a small real body and a long upper shadow. It signals that buyers failed to sustain higher prices, often indicating an impending downward trend reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlshortline",
+    "type": "pattern",
+    "canonical_name": "Short Line Candle",
+    "aliases": [
+      "CDLSHORTLINE",
+      "Short Line Candlestick",
+      "Short Line Pattern",
+      "Short Body Candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Short Line Candle is a candlestick pattern characterized by a relatively small real body compared to the surrounding price action, indicating a period of indecision or low volatility in the market. It often signals a potential pause in the current trend or a lack of strong conviction from either buyers or sellers.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlspinningtop",
+    "type": "pattern",
+    "canonical_name": "Spinning Top",
+    "aliases": [
+      "SpinningTop",
+      "CDLSPINNINGTOP",
+      "Spinning Top Candle",
+      "Neutral Spinning Top"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Spinning Top is a candlestick pattern characterized by a short real body centered between long upper and lower shadows, indicating market indecision. It signals a potential change in trend direction or a period of consolidation as buyers and sellers reach a temporary equilibrium.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlstalledpattern",
+    "type": "pattern",
+    "canonical_name": "Stalled Pattern",
+    "aliases": [
+      "Stalled Pattern",
+      "Deliberation Pattern",
+      "CDLSTALLEDPATTERN",
+      "Stalled candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Stalled Pattern is a bearish reversal signal characterized by three consecutive rising candles where the final candle has a small body that gaps away from the previous long white candle. It indicates that the prevailing bullish momentum is losing strength and a trend reversal may be imminent.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlsticksandwich",
+    "type": "pattern",
+    "canonical_name": "Stick Sandwich",
+    "aliases": [
+      "Stick Sandwich Pattern",
+      "CDLSTICKSANDWICH",
+      "Three Bar Sandwich"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Stick Sandwich is a three-bar reversal pattern characterized by a central bearish candle flanked by two bullish candles that close at the same price level. It signals a potential bullish reversal, suggesting that support has been established at the low of the middle candle.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdltakuri",
+    "type": "pattern",
+    "canonical_name": "Takuri (Dragonfly Doji with very long lower shadow)",
+    "aliases": [
+      "Takuri Line",
+      "Dragonfly Doji",
+      "Takuri Candle",
+      "Long-Legged Dragonfly"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Takuri is a Japanese candlestick pattern resembling a Dragonfly Doji characterized by an exceptionally long lower shadow and no upper shadow. It typically signals a potential bullish reversal at the end of a downtrend as it indicates that sellers pushed the price down significantly before buyers reclaimed the opening level.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdltasukigap",
+    "type": "pattern",
+    "canonical_name": "Tasuki Gap",
+    "aliases": [
+      "Tasuki Gap",
+      "CDLTASUKIGAP",
+      "Upward/Downward Tasuki Gap",
+      "Tasuki Gap Pattern",
+      "Gap Tasuki"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Tasuki Gap is a three-candle continuation pattern consisting of a gap in the direction of the trend followed by a closing candle that partially fills that gap. It typically signals that the current market trend is likely to persist.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlthrusting",
+    "type": "pattern",
+    "canonical_name": "Thrusting Pattern",
+    "aliases": [
+      "Thrusting Line",
+      "Thrusting Candlestick",
+      "Thrusting pattern indicator",
+      "CDLTHRUSTING"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Thrusting Pattern is a two-candlestick bearish continuation pattern where a small white candle closes near the midpoint of the previous long black candle. It signals that despite a minor attempt at a rally, bears remain in control of the downward trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdltristar",
+    "type": "pattern",
+    "canonical_name": "Tristar Pattern",
+    "aliases": [
+      "Tristar",
+      "CDLTRISTAR",
+      "Tri-Star pattern",
+      "Tristar candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Tristar pattern consists of three consecutive doji candles with a specific gap-based formation that suggests a potential market reversal. It serves as a visual indicator of market indecision, signaling that the current trend may be losing momentum and a pivot is imminent.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlunique3river",
+    "type": "pattern",
+    "canonical_name": "Unique 3 River",
+    "aliases": [
+      "Unique Three River",
+      "3 River Pattern",
+      "Unique 3-River Bottom",
+      "Unique Three River Candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Unique 3 River is a bullish reversal candlestick pattern consisting of three candles where a long down candle is followed by a lower opening but higher closing candle, and a final small bullish candle. It signals a potential exhaustion of downward momentum and an impending trend reversal to the upside.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlupsidegaptwocrows",
+    "type": "pattern",
+    "canonical_name": "Upside Gap Two Crows",
+    "aliases": [
+      "Upside Gap Two Crows Pattern",
+      "UGTTC",
+      "Two Crows",
+      "Upside Gap 2 Crows"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Upside Gap Two Crows is a three-candle bearish reversal pattern that occurs within an existing uptrend, featuring a large bullish candle followed by a gap up and two smaller bearish candles. It signals a potential exhaustion of upward momentum and a shift toward a bearish market correction.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlgapthreesides",
+    "type": "pattern",
+    "canonical_name": "Upside/Downside Gap Three Methods",
+    "aliases": [
+      "CDLGAPTHREESIDES",
+      "Gap Three Methods",
+      "Upside Downside Gap Three",
+      "Gap 3 Methods Pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Upside/Downside Gap Three Methods is a trend-continuation candlestick pattern consisting of three candles that suggests the existing trend will persist after a temporary pause. It involves a gap in the direction of the trend followed by a counter-trend candle that closes the gap, indicating a consolidation phase before the primary move resumes.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_dema",
+    "type": "indicator",
+    "canonical_name": "Double Exponential Moving Average",
+    "aliases": [
+      "DEMA",
+      "Double EMA",
+      "D-EMA",
+      "DEMA indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Double Exponential Moving Average (DEMA) is a technical indicator that reduces lag in moving averages by applying a double-smoothed exponential calculation. It is primarily used to identify trend direction and momentum changes while responding more quickly to price reversals than a standard EMA.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_tema",
+    "type": "indicator",
+    "canonical_name": "Triple Exponential Moving Average",
+    "aliases": [
+      "TEMA",
+      "Triple EMA",
+      "Triple Exponential Moving Average indicator",
+      "T-EMA"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Triple Exponential Moving Average (TEMA) is a trend-following indicator that reduces lag by applying a triple smoothing process to price data. It is primarily used to identify trend direction and potential reversals with greater responsiveness than a standard simple moving average.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_trima",
+    "type": "indicator",
+    "canonical_name": "Triangular Moving Average",
+    "aliases": [
+      "TRIMA",
+      "Triangle Moving Average",
+      "Triangular MA",
+      "TRIMA indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Triangular Moving Average (TRIMA) is a technical analysis indicator that calculates a double-smoothed moving average, applying more weight to the central data points. It is primarily used to identify trend direction and filter out market noise, appearing as a smoother, lag-prone line compared to standard simple moving averages.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_mama",
+    "type": "indicator",
+    "canonical_name": "MESA Adaptive Moving Average",
+    "aliases": [
+      "MAMA",
+      "MESA Adaptive Moving Average",
+      "MESA AMA",
+      "MESA indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The MESA Adaptive Moving Average (MAMA) is a trend-following indicator that dynamically adjusts its smoothing factor based on the Hilbert Transform of price data. It is designed to reduce lag in trending markets while remaining stable in ranging conditions, signaling trend direction through its relationship with the associated FAMA line.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_t3",
+    "type": "indicator",
+    "canonical_name": "Triple Exponential Moving Average",
+    "aliases": [
+      "T3",
+      "T3 Moving Average",
+      "Tillson T3",
+      "T3 MA"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Triple Exponential Moving Average (T3) is a sophisticated trend-following indicator that reduces lag and filters out market noise by applying a series of exponential moving averages multiple times. It is primarily used to identify the direction of a trend while providing smoother and more responsive signals than traditional moving averages.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_apo",
+    "type": "indicator",
+    "canonical_name": "Absolute Price Oscillator",
+    "aliases": [
+      "APO",
+      "Absolute Price Osc",
+      "APO indicator",
+      "Absolute Price Oscillator technical indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Absolute Price Oscillator is a momentum indicator calculated by the difference between two moving averages of different lengths. It signals trend direction and strength by showing when the shorter-term momentum crosses above or below the longer-term trend baseline.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_chandemomentumoscillator",
+    "type": "indicator",
+    "canonical_name": "Chande Momentum Oscillator",
+    "aliases": [
+      "CMO",
+      "Chande Momentum",
+      "Chande Oscillator",
+      "CMO indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Chande Momentum Oscillator is a technical indicator that calculates the difference between the sum of recent gains and the sum of recent losses, normalized to a range of -100 to +100. It is used to identify overbought conditions above +50 and oversold conditions below -50, signaling potential trend reversals or strength.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_dx",
+    "type": "indicator",
+    "canonical_name": "Directional Movement Index",
+    "aliases": [
+      "DX",
+      "Directional Movement",
+      "DMI-DX",
+      "Directional Index"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Directional Movement Index (DX) quantifies the strength of a financial instrument's trend by calculating the absolute difference between the plus and minus directional indicators. It is primarily used to identify the presence of a strong trend regardless of its direction.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_minusdi",
+    "type": "indicator",
+    "canonical_name": "Minus Directional Indicator",
+    "aliases": [
+      "MINUS_DI",
+      "-DI",
+      "Minus DI",
+      "Negative Directional Indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Minus Directional Indicator (MINUS_DI) is a component of the Directional Movement System that measures the strength of downward price movement. It is used to identify bearish trends and potential sell signals when it rises relative to the Plus Directional Indicator.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_minusdm",
+    "type": "indicator",
+    "canonical_name": "Minus Directional Movement",
+    "aliases": [
+      "MINUS_DM",
+      "Negative Directional Movement",
+      "MinusDM",
+      "DMI-",
+      "Minus Directional Indicator component"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Minus Directional Movement (MINUS_DM) indicator measures the downward price movement by calculating the difference between the current low and the previous low when the price drops. It is a core component of the Directional Movement System used to identify the strength and direction of a bearish trend.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_plusdi",
+    "type": "indicator",
+    "canonical_name": "Plus Directional Indicator",
+    "aliases": [
+      "PLUS_DI",
+      "Positive Directional Indicator",
+      "DI+",
+      "Plus DI"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Plus Directional Indicator (PLUS_DI) is a component of the Directional Movement System that measures the strength of upward price movement. It is typically used in conjunction with the Minus Directional Indicator (MINUS_DI) to identify trend direction and potential entry or exit points based on crossover signals.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_plus_dm",
+    "type": "indicator",
+    "canonical_name": "Plus Directional Movement",
+    "aliases": [
+      "PLUS_DM",
+      "Positive Directional Movement",
+      "Plus DI Movement",
+      "PlusDM"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Plus Directional Movement (PLUS_DM) measures the upward component of price movement by calculating the difference between the current high and the previous high when the upward move exceeds the downward move. It is a fundamental building block of the ADX indicator used to help identify the strength of an existing uptrend.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_hilberttransformdominantcycleperiod",
+    "type": "indicator",
+    "canonical_name": "Hilbert Transform - Dominant Cycle Period",
+    "aliases": [
+      "HT_DCPERIOD",
+      "Hilbert Period",
+      "Dominant Cycle Period",
+      "HT Cycle Period"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hilbert Transform - Dominant Cycle Period is a technical indicator that uses the Hilbert Transform to identify the wavelength of the underlying dominant cycle in a time series. It is primarily used to determine the frequency at which the market is oscillating, helping traders calibrate the look-back periods of other indicators.",
+    "metadata": {
+      "category": "cycle"
+    }
+  },
+  {
+    "id": "ind_hilberttransformdominantcyclephase",
+    "type": "indicator",
+    "canonical_name": "Hilbert Transform - Dominant Cycle Phase",
+    "aliases": [
+      "HT_DCPHASE",
+      "Hilbert Dominant Cycle Phase",
+      "Dominant Cycle Phase",
+      "HT Phase"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hilbert Transform - Dominant Cycle Phase is a technical analysis indicator that measures the current phase of the dominant cycle in a price series. It is used to identify cycle progression, providing insights into potential turning points and market timing based on periodic oscillations.",
+    "metadata": {
+      "category": "cycle"
+    }
+  },
+  {
+    "id": "ind_hilbertphasor",
+    "type": "indicator",
+    "canonical_name": "Hilbert Transform - Phasor Components",
+    "aliases": [
+      "HT_PHASOR",
+      "Hilbert Phasor",
+      "Phasor Components",
+      "Hilbert Transform Phasor"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hilbert Transform - Phasor Components indicator decomposes a price series into its instantaneous InPhase and Quadrature components to determine the underlying cyclical nature of the market. It is used to identify phase shifts and dominant cycle lengths, helping traders anticipate potential trend reversals or cyclical turning points.",
+    "metadata": {
+      "category": "cycle"
+    }
+  },
+  {
+    "id": "ind_hilbert_sinewave",
+    "type": "indicator",
+    "canonical_name": "Hilbert Transform - SineWave",
+    "aliases": [
+      "HT_SINE",
+      "Hilbert Sine Wave",
+      "Hilbert Transform Sine",
+      "HT_SINEWAVE"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hilbert Transform SineWave is a cycle indicator that uses the Hilbert Transform to isolate the cyclical component of a price series. It generates sine and lead sine waves to identify cycle turning points and market trend transitions.",
+    "metadata": {
+      "category": "cycle"
+    }
+  },
+  {
+    "id": "ind_ht_trendmode",
+    "type": "indicator",
+    "canonical_name": "Hilbert Transform - Trend vs Cycle Mode",
+    "aliases": [
+      "HT_TRENDMODE",
+      "Hilbert Transform Trend Cycle",
+      "Trend vs Cycle",
+      "HT Trend Mode"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hilbert Transform - Trend vs Cycle Mode indicator determines whether a market is currently in a trending state or a cyclical state based on analytical signal processing. It outputs a binary value of 1 for a trending market and 0 for a cyclical market, helping traders choose appropriate strategies for the current price behavior.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "tf_1m",
+    "type": "timeframe",
+    "canonical_name": "1 Minute Timeframe",
+    "aliases": [
+      "1m",
+      "1 minute",
+      "one minute",
+      "M1"
+    ],
+    "maps_to_field": "timeframe.1m",
+    "embedding_text": "1 Minute resolution (1m). Used for ultra short-term scalping and high-frequency intraday trading.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "1m"
+    }
+  },
+  {
+    "id": "tf_3m",
+    "type": "timeframe",
+    "canonical_name": "3 Minute Timeframe",
+    "aliases": [
+      "3m",
+      "3 minute",
+      "three minute",
+      "M3"
+    ],
+    "maps_to_field": "timeframe.3m",
+    "embedding_text": "3 Minute resolution (3m). Used for fast-paced intraday trading.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "3m"
+    }
+  },
+  {
+    "id": "tf_5m",
+    "type": "timeframe",
+    "canonical_name": "5 Minute Timeframe",
+    "aliases": [
+      "5m",
+      "5 minute",
+      "five minute",
+      "M5"
+    ],
+    "maps_to_field": "timeframe.5m",
+    "embedding_text": "5 Minute resolution (5m). A very popular lower timeframe for intraday entries and day trading.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "5m"
+    }
+  },
+  {
+    "id": "tf_15m",
+    "type": "timeframe",
+    "canonical_name": "15 Minute Timeframe",
+    "aliases": [
+      "15m",
+      "15 minute",
+      "fifteen minute",
+      "M15"
+    ],
+    "maps_to_field": "timeframe.15m",
+    "embedding_text": "15 Minute resolution (15m). A standard lower timeframe for intraday trading structure and session analysis.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "15m"
+    }
+  },
+  {
+    "id": "tf_30m",
+    "type": "timeframe",
+    "canonical_name": "30 Minute Timeframe",
+    "aliases": [
+      "30m",
+      "30 minute",
+      "thirty minute",
+      "M30"
+    ],
+    "maps_to_field": "timeframe.30m",
+    "embedding_text": "30 Minute resolution (30m). A bridging timeframe between short-term intraday and hourly macro structures.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "30m"
+    }
+  },
+  {
+    "id": "tf_1h",
+    "type": "timeframe",
+    "canonical_name": "1 Hour Timeframe",
+    "aliases": [
+      "1h",
+      "1 hour",
+      "hourly",
+      "60m",
+      "H1"
+    ],
+    "maps_to_field": "timeframe.1h",
+    "embedding_text": "1 Hour resolution (1h or 60m). A widely used timeframe for intraday trend identification and swing trade entries.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "1h"
+    }
+  },
+  {
+    "id": "tf_2h",
+    "type": "timeframe",
+    "canonical_name": "2 Hour Timeframe",
+    "aliases": [
+      "2h",
+      "2 hour",
+      "120m",
+      "H2"
+    ],
+    "maps_to_field": "timeframe.2h",
+    "embedding_text": "2 Hour resolution (2h or 120m). Used as a slightly higher timeframe filter for intraday trends.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "2h"
+    }
+  },
+  {
+    "id": "tf_4h",
+    "type": "timeframe",
+    "canonical_name": "4 Hour Timeframe",
+    "aliases": [
+      "4h",
+      "4 hour",
+      "240m",
+      "H4"
+    ],
+    "maps_to_field": "timeframe.4h",
+    "embedding_text": "4 Hour resolution (4h or 240m). A highly popular macro timeframe used to dictate overall trend direction for swing trading.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "4h"
+    }
+  },
+  {
+    "id": "tf_1d",
+    "type": "timeframe",
+    "canonical_name": "Daily Timeframe",
+    "aliases": [
+      "1d",
+      "1 day",
+      "daily",
+      "D",
+      "D1",
+      "end of day",
+      "eod"
+    ],
+    "maps_to_field": "timeframe.1d",
+    "embedding_text": "Daily resolution (1D). The most important macro timeframe for determining broad market structure and long-term trend.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "1d"
+    }
+  },
+  {
+    "id": "tf_1w",
+    "type": "timeframe",
+    "canonical_name": "Weekly Timeframe",
+    "aliases": [
+      "1w",
+      "1 week",
+      "weekly",
+      "W",
+      "W1"
+    ],
+    "maps_to_field": "timeframe.1w",
+    "embedding_text": "Weekly resolution (1W). A massive macro timeframe used for long-term investments and identifying major historical support/resistance levels.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "1w"
+    }
+  },
+  {
+    "id": "tf_1M",
+    "type": "timeframe",
+    "canonical_name": "Monthly Timeframe",
+    "aliases": [
+      "1M",
+      "1 month",
+      "monthly",
+      "MN"
+    ],
+    "maps_to_field": "timeframe.1M",
+    "embedding_text": "Monthly resolution (1M). Used almost exclusively for multi-year long-term macro analysis.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "1M"
+    }
+  },
+  {
+    "id": "tf_1y",
+    "type": "timeframe",
+    "canonical_name": "Yearly Timeframe",
+    "aliases": [
+      "1y",
+      "1 year",
+      "yearly",
+      "Y",
+      "YTD"
+    ],
+    "maps_to_field": "timeframe.1y",
+    "embedding_text": "Yearly resolution (1Y). Represents the highest-level macroeconomic view.",
+    "metadata": {
+      "category": "resolution",
+      "resolution": "1y"
+    }
+  },
+  {
+    "id": "term_htf",
+    "type": "term",
+    "canonical_name": "Higher Timeframe",
+    "aliases": [
+      "htf",
+      "higher timeframe",
+      "macro timeframe",
+      "higher tf"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Higher Timeframe (HTF): Refers to a macro chart resolution larger than the current execution timeframe, typically used for filtering trend direction.",
+    "metadata": {
+      "category": "timeframe_concept"
+    }
+  },
+  {
+    "id": "term_ltf",
+    "type": "term",
+    "canonical_name": "Lower Timeframe",
+    "aliases": [
+      "ltf",
+      "lower timeframe",
+      "micro timeframe",
+      "lower tf"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Lower Timeframe (LTF): Refers to a micro chart resolution smaller than the current execution timeframe, typically used for fine-tuning entries.",
+    "metadata": {
+      "category": "timeframe_concept"
+    }
+  },
+  {
+    "id": "term_mtf",
+    "type": "term",
+    "canonical_name": "Multiple Timeframe Analysis",
+    "aliases": [
+      "mtf",
+      "multiple timeframe analysis",
+      "multi timeframe"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Multiple Timeframe Analysis (MTF): The practice of referencing data from a higher timeframe while executing logic on a lower timeframe.",
+    "metadata": {
+      "category": "timeframe_concept"
+    }
+  },
+  {
+    "id": "term_intraday",
+    "type": "term",
+    "canonical_name": "Intraday",
+    "aliases": [
+      "intraday",
+      "day trading",
+      "intra-day",
+      "within the day"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Intraday: Refers broadly to trading activity or timeframes contained within a single trading day (e.g., 1m to 4h).",
+    "metadata": {
+      "category": "timeframe_concept"
+    }
+  },
+  {
+    "id": "term_swing",
+    "type": "term",
+    "canonical_name": "Swing Trading",
+    "aliases": [
+      "swing",
+      "swing trading",
+      "swing trader",
+      "multi-day"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Swing Trading: Refers broadly to trading activity or timeframes spanning multiple days or weeks, typically executing on 1H to 1D charts.",
+    "metadata": {
+      "category": "timeframe_concept"
+    }
+  },
+  {
+    "id": "term_scalp",
+    "type": "term",
+    "canonical_name": "Scalping",
+    "aliases": [
+      "scalp",
+      "scalping",
+      "scalper",
+      "ultra short term"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Scalping: Refers broadly to ultra-short-term trading activity seeking minor price changes, heavily utilizing the 1m to 5m timeframes.",
+    "metadata": {
+      "category": "timeframe_concept"
+    }
+  },
+  {
+    "id": "cp_head_and_shoulders",
+    "type": "chart_pattern",
+    "canonical_name": "Head and Shoulders",
+    "aliases": [
+      "h&s",
+      "head & shoulders"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Head and Shoulders: A bearish reversal chart pattern featuring a peak (shoulder), a higher peak (head), and a lower peak (shoulder) sharing a common neckline support.",
+    "metadata": {
+      "pattern_type": "reversal",
+      "sentiment": "bearish"
+    }
+  },
+  {
+    "id": "cp_inverse_head_and_shoulders",
+    "type": "chart_pattern",
+    "canonical_name": "Inverse Head and Shoulders",
+    "aliases": [
+      "inverse h&s",
+      "inverted head and shoulders"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Inverse Head and Shoulders: A bullish reversal chart pattern featuring three troughs, with the middle being the lowest, signaling a potential upside breakout above the neckline.",
+    "metadata": {
+      "pattern_type": "reversal",
+      "sentiment": "bullish"
+    }
+  },
+  {
+    "id": "cp_double_top",
+    "type": "chart_pattern",
+    "canonical_name": "Double Top",
+    "aliases": [
+      "double tops"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Double Top: A bearish reversal chart pattern characterized by two peaks at approximately the same price level, indicating resistance and a potential trend reversal.",
+    "metadata": {
+      "pattern_type": "reversal",
+      "sentiment": "bearish"
+    }
+  },
+  {
+    "id": "cp_double_bottom",
+    "type": "chart_pattern",
+    "canonical_name": "Double Bottom",
+    "aliases": [
+      "double bottoms"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Double Bottom: A bullish reversal chart pattern featuring two distinct lows at roughly the same level, signaling strong support and a potential upward reversal.",
+    "metadata": {
+      "pattern_type": "reversal",
+      "sentiment": "bullish"
+    }
+  },
+  {
+    "id": "cp_triple_top",
+    "type": "chart_pattern",
+    "canonical_name": "Triple Top",
+    "aliases": [
+      "triple tops"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Triple Top: A bearish reversal chart pattern with three peaks at the same resistance level, indicating exhaustion of buying pressure.",
+    "metadata": {
+      "pattern_type": "reversal",
+      "sentiment": "bearish"
+    }
+  },
+  {
+    "id": "cp_triple_bottom",
+    "type": "chart_pattern",
+    "canonical_name": "Triple Bottom",
+    "aliases": [
+      "triple bottoms"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Triple Bottom: A bullish reversal chart pattern with three lows at the same support level, showing strong buying interest preventing further decline.",
+    "metadata": {
+      "pattern_type": "reversal",
+      "sentiment": "bullish"
+    }
+  },
+  {
+    "id": "cp_rounding_bottom",
+    "type": "chart_pattern",
+    "canonical_name": "Rounding Bottom",
+    "aliases": [
+      "saucer bottom",
+      "rounding saucer"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Rounding Bottom: A bullish reversal chart pattern (saucer) that represents a gradual shift in market sentiment from bearish to bullish over a long period.",
+    "metadata": {
+      "pattern_type": "reversal",
+      "sentiment": "bullish"
+    }
+  },
+  {
+    "id": "cp_rounding_top",
+    "type": "chart_pattern",
+    "canonical_name": "Rounding Top",
+    "aliases": [
+      "saucer top"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Rounding Top: A bearish reversal chart pattern indicating a gradual shift from bullish to bearish sentiment forming a rounded peak.",
+    "metadata": {
+      "pattern_type": "reversal",
+      "sentiment": "bearish"
+    }
+  },
+  {
+    "id": "cp_ascending_triangle",
+    "type": "chart_pattern",
+    "canonical_name": "Ascending Triangle",
+    "aliases": [
+      "ascending triangles"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Ascending Triangle: A bullish continuation chart pattern defined by a flat upper resistance line and a rising lower support line.",
+    "metadata": {
+      "pattern_type": "continuation",
+      "sentiment": "bullish"
+    }
+  },
+  {
+    "id": "cp_descending_triangle",
+    "type": "chart_pattern",
+    "canonical_name": "Descending Triangle",
+    "aliases": [
+      "descending triangles"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Descending Triangle: A bearish continuation chart pattern defined by a flat lower support line and a falling upper resistance line.",
+    "metadata": {
+      "pattern_type": "continuation",
+      "sentiment": "bearish"
+    }
+  },
+  {
+    "id": "cp_symmetrical_triangle",
+    "type": "chart_pattern",
+    "canonical_name": "Symmetrical Triangle",
+    "aliases": [
+      "symmetrical triangles"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Symmetrical Triangle: A continuation chart pattern formed by converging trendlines, indicating consolidation before a breakout in the direction of the prior trend.",
+    "metadata": {
+      "pattern_type": "continuation",
+      "sentiment": "neutral"
+    }
+  },
+  {
+    "id": "cp_bull_flag",
+    "type": "chart_pattern",
+    "canonical_name": "Bull Flag",
+    "aliases": [
+      "bull flags",
+      "bullish flag"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Bull Flag: A bullish continuation chart pattern consisting of a strong upward price movement (flagpole) followed by a slight downward consolidation in a parallel channel.",
+    "metadata": {
+      "pattern_type": "continuation",
+      "sentiment": "bullish"
+    }
+  },
+  {
+    "id": "cp_bear_flag",
+    "type": "chart_pattern",
+    "canonical_name": "Bear Flag",
+    "aliases": [
+      "bear flags",
+      "bearish flag"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Bear Flag: A bearish continuation chart pattern featuring a sharp downward drop followed by a slight upward consolidation in a parallel channel.",
+    "metadata": {
+      "pattern_type": "continuation",
+      "sentiment": "bearish"
+    }
+  },
+  {
+    "id": "cp_bull_pennant",
+    "type": "chart_pattern",
+    "canonical_name": "Bull Pennant",
+    "aliases": [
+      "bullish pennant"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Bull Pennant: A bullish continuation chart pattern similar to a flag, but the consolidation phase forms a small symmetrical triangle rather than a channel.",
+    "metadata": {
+      "pattern_type": "continuation",
+      "sentiment": "bullish"
+    }
+  },
+  {
+    "id": "cp_bear_pennant",
+    "type": "chart_pattern",
+    "canonical_name": "Bear Pennant",
+    "aliases": [
+      "bearish pennant"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Bear Pennant: A bearish continuation chart pattern where a sharp drop is followed by a small symmetrical triangle consolidation before further downside.",
+    "metadata": {
+      "pattern_type": "continuation",
+      "sentiment": "bearish"
+    }
+  },
+  {
+    "id": "cp_rising_wedge",
+    "type": "chart_pattern",
+    "canonical_name": "Rising Wedge",
+    "aliases": [
+      "ascending wedge"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Rising Wedge: A bearish chart pattern (reversal or continuation) characterized by converging upward-sloping trendlines, indicating weakening upward momentum.",
+    "metadata": {
+      "pattern_type": "reversal",
+      "sentiment": "bearish"
+    }
+  },
+  {
+    "id": "cp_falling_wedge",
+    "type": "chart_pattern",
+    "canonical_name": "Falling Wedge",
+    "aliases": [
+      "descending wedge"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Falling Wedge: A bullish chart pattern (reversal or continuation) defined by converging downward-sloping trendlines, signaling diminishing selling pressure.",
+    "metadata": {
+      "pattern_type": "reversal",
+      "sentiment": "bullish"
+    }
+  },
+  {
+    "id": "cp_cup_and_handle",
+    "type": "chart_pattern",
+    "canonical_name": "Cup and Handle",
+    "aliases": [
+      "cup with handle"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Cup and Handle: A bullish continuation chart pattern resembling a teacup, where a rounded bottom (cup) is followed by a slight downward consolidation (handle) before a breakout.",
+    "metadata": {
+      "pattern_type": "continuation",
+      "sentiment": "bullish"
+    }
+  },
+  {
+    "id": "cp_rectangle_channel",
+    "type": "chart_pattern",
+    "canonical_name": "Rectangle Channel",
+    "aliases": [
+      "price channel",
+      "horizontal channel"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Rectangle Channel: A consolidation chart pattern where price bounces between parallel support and resistance lines before a breakout.",
+    "metadata": {
+      "pattern_type": "continuation",
+      "sentiment": "neutral"
+    }
+  },
+  {
+    "id": "exec_market_order",
+    "type": "execution_term",
+    "canonical_name": "Market Order",
+    "aliases": [
+      "market execution",
+      "at market",
+      "market price"
+    ],
+    "maps_to_field": "order_type",
+    "embedding_text": "Market Order: An order to buy or sell a security immediately at the best available current price. Prioritizes execution speed over price certainty. Typically maps to order_type='MARKET'.",
+    "metadata": {
+      "category": "order_type",
+      "type": "MARKET"
+    }
+  },
+  {
+    "id": "exec_limit_order",
+    "type": "execution_term",
+    "canonical_name": "Limit Order",
+    "aliases": [
+      "limit execution",
+      "at a limit",
+      "target entry price"
+    ],
+    "maps_to_field": "order_type",
+    "embedding_text": "Limit Order: An order to buy or sell a security at a specific target price or better. Prioritizes price over execution speed. Typically maps to order_type='LIMIT'.",
+    "metadata": {
+      "category": "order_type",
+      "type": "LIMIT"
+    }
+  },
+  {
+    "id": "exec_stop_loss",
+    "type": "execution_term",
+    "canonical_name": "Stop-Loss Order",
+    "aliases": [
+      "stop loss",
+      "sl",
+      "hard stop"
+    ],
+    "maps_to_field": "exit_conditions.stop_loss",
+    "embedding_text": "Stop-Loss Order: An order placed to exit a position once it reaches a certain price, strictly designed to cap a trader's loss on a position. Maps to exit_conditions.stop_loss.",
+    "metadata": {
+      "category": "exit_condition",
+      "type": "STOP_LOSS"
+    }
+  },
+  {
+    "id": "exec_take_profit",
+    "type": "execution_term",
+    "canonical_name": "Take Profit",
+    "aliases": [
+      "target order",
+      "profit target",
+      "tp",
+      "take-profit"
+    ],
+    "maps_to_field": "exit_conditions.take_profit",
+    "embedding_text": "Take Profit (Target Order): An order specifying the exact price at which to close out an open position to lock in a profit. Maps to exit_conditions.take_profit.",
+    "metadata": {
+      "category": "exit_condition",
+      "type": "TAKE_PROFIT"
+    }
+  },
+  {
+    "id": "exec_stop_limit",
+    "type": "execution_term",
+    "canonical_name": "Stop-Limit Order",
+    "aliases": [
+      "stop limit"
+    ],
+    "maps_to_field": "order_type",
+    "embedding_text": "Stop-Limit Order: An order combining the features of a stop order and a limit order. Once a trigger price is reached, it becomes a limit order that executes only at the specified limit price or better.",
+    "metadata": {
+      "category": "order_type",
+      "type": "STOP_LIMIT"
+    }
+  },
+  {
+    "id": "exec_trailing_stop",
+    "type": "execution_term",
+    "canonical_name": "Trailing Stop-Loss",
+    "aliases": [
+      "trailing stop",
+      "tsl",
+      "trail sl"
+    ],
+    "maps_to_field": "exit_conditions.trailing_stop",
+    "embedding_text": "Trailing Stop-Loss: A dynamic stop-loss order set at a percentage or absolute point distance below the market price that automatically adjusts upward as the price moves favorably.",
+    "metadata": {
+      "category": "exit_condition",
+      "type": "TRAILING_STOP"
+    }
+  },
+  {
+    "id": "exec_gtc",
+    "type": "execution_term",
+    "canonical_name": "Good 'Til Canceled (GTC)",
+    "aliases": [
+      "gtc",
+      "good till canceled"
+    ],
+    "maps_to_field": "time_in_force",
+    "embedding_text": "Good 'Til Canceled (GTC): A time-in-force designation indicating an order to buy or sell remains active indefinitely until it is filled or explicitly canceled by the trader.",
+    "metadata": {
+      "category": "time_in_force",
+      "type": "GTC"
+    }
+  },
+  {
+    "id": "exec_gtt",
+    "type": "execution_term",
+    "canonical_name": "Good Till Triggered (GTT)",
+    "aliases": [
+      "gtt",
+      "good 'til triggered"
+    ],
+    "maps_to_field": "order_type",
+    "embedding_text": "Good Till Triggered (GTT): A passive order kept dormant in the system until a trigger price is met, commonly used for long-term targets and stop-loss placements.",
+    "metadata": {
+      "category": "order_type",
+      "type": "GTT"
+    }
+  },
+  {
+    "id": "exec_ioc",
+    "type": "execution_term",
+    "canonical_name": "Immediate Or Cancel (IOC)",
+    "aliases": [
+      "ioc"
+    ],
+    "maps_to_field": "time_in_force",
+    "embedding_text": "Immediate Or Cancel (IOC): A time-in-force order requiring that all or part of the order be executed immediately. Any unfilled portion is automatically canceled.",
+    "metadata": {
+      "category": "time_in_force",
+      "type": "IOC"
+    }
+  },
+  {
+    "id": "exec_day_order",
+    "type": "execution_term",
+    "canonical_name": "Day Order",
+    "aliases": [
+      "day validity",
+      "valid for day"
+    ],
+    "maps_to_field": "time_in_force",
+    "embedding_text": "Day Order: An order that is only valid for the current trading session and automatically expires if unexecuted by the market close.",
+    "metadata": {
+      "category": "time_in_force",
+      "type": "DAY"
+    }
+  },
+  {
+    "id": "exec_fok",
+    "type": "execution_term",
+    "canonical_name": "Fill Or Kill (FOK)",
+    "aliases": [
+      "fok",
+      "fill or kill"
+    ],
+    "maps_to_field": "time_in_force",
+    "embedding_text": "Fill Or Kill (FOK): A strict execution order mandating the transaction be executed immediately in its entirety, otherwise it is canceled completely.",
+    "metadata": {
+      "category": "time_in_force",
+      "type": "FOK"
+    }
+  },
+  {
+    "id": "exec_bracket_order",
+    "type": "execution_term",
+    "canonical_name": "Bracket Order (BO)",
+    "aliases": [
+      "bracket order",
+      "bo"
+    ],
+    "maps_to_field": "order_type",
+    "embedding_text": "Bracket Order (BO): An advanced order type where an entry order is placed simultaneously with an initial stop-loss and a target take-profit order (bracketing the price).",
+    "metadata": {
+      "category": "order_type",
+      "type": "BRACKET"
+    }
+  },
+  {
+    "id": "exec_cover_order",
+    "type": "execution_term",
+    "canonical_name": "Cover Order (CO)",
+    "aliases": [
+      "cover order",
+      "co"
+    ],
+    "maps_to_field": "order_type",
+    "embedding_text": "Cover Order (CO): A specialized intraday order type combining a market/limit entry with a mandatory stop-loss order to cap risk.",
+    "metadata": {
+      "category": "order_type",
+      "type": "COVER"
+    }
+  },
+  {
+    "id": "exec_long",
+    "type": "execution_term",
+    "canonical_name": "Go Long",
+    "aliases": [
+      "long",
+      "buy to open",
+      "go long"
+    ],
+    "maps_to_field": "position_type",
+    "embedding_text": "Long (Go Long): Buying a security with the expectation that its price will rise to profit from upward momentum. Maps directly to position_type='LONG'.",
+    "metadata": {
+      "category": "position",
+      "type": "LONG"
+    }
+  },
+  {
+    "id": "exec_short",
+    "type": "execution_term",
+    "canonical_name": "Go Short",
+    "aliases": [
+      "short",
+      "sell to open",
+      "go short",
+      "short selling"
+    ],
+    "maps_to_field": "position_type",
+    "embedding_text": "Short (Go Short): Borrowing a security and selling it with the expectation that the price will fall, intending to buy it back cheaper. Maps directly to position_type='SHORT'.",
+    "metadata": {
+      "category": "position",
+      "type": "SHORT"
+    }
+  },
+  {
+    "id": "exec_square_off",
+    "type": "execution_term",
+    "canonical_name": "Square-Off",
+    "aliases": [
+      "close position",
+      "square off",
+      "exit position"
+    ],
+    "maps_to_field": "action",
+    "embedding_text": "Square-Off (Close Position): The process of entirely settling a transaction by buying or selling the exact opposite of an open position, bringing the net exposure to zero.",
+    "metadata": {
+      "category": "action",
+      "type": "CLOSE"
+    }
+  },
+  {
+    "id": "exec_hedge",
+    "type": "execution_term",
+    "canonical_name": "Hedge",
+    "aliases": [
+      "hedging"
+    ],
+    "maps_to_field": "strategy_type",
+    "embedding_text": "Hedge: A risk-management position intentionally taken to offset potential losses that may be incurred by a companion primary investment.",
+    "metadata": {
+      "category": "risk_management",
+      "type": "HEDGE"
+    }
+  },
+  {
+    "id": "exec_leverage",
+    "type": "execution_term",
+    "canonical_name": "Leverage",
+    "aliases": [
+      "margin trading"
+    ],
+    "maps_to_field": "position_sizing",
+    "embedding_text": "Leverage: Using broker-borrowed capital to significantly increase the potential return (and risk) of a position.",
+    "metadata": {
+      "category": "capital",
+      "type": "LEVERAGE"
+    }
+  },
+  {
+    "id": "exec_margin",
+    "type": "execution_term",
+    "canonical_name": "Margin",
+    "aliases": [
+      "margin requirement"
+    ],
+    "maps_to_field": "capital",
+    "embedding_text": "Margin: The required collateral that a trader must deposit with their broker to cover the credit risk of trading with leverage or holding short positions.",
+    "metadata": {
+      "category": "capital",
+      "type": "MARGIN"
+    }
+  },
+  {
+    "id": "exec_pyramiding",
+    "type": "execution_term",
+    "canonical_name": "Pyramiding",
+    "aliases": [
+      "scaling in",
+      "scale in",
+      "add to position"
+    ],
+    "maps_to_field": "position_sizing",
+    "embedding_text": "Pyramiding (Scaling In): The strategic process of increasing the size of an active position by adding partial entries as the trade becomes increasingly profitable.",
+    "metadata": {
+      "category": "position_management",
+      "type": "SCALE_IN"
+    }
+  },
+  {
+    "id": "exec_scaling_out",
+    "type": "execution_term",
+    "canonical_name": "Scaling Out",
+    "aliases": [
+      "scale out",
+      "partial profit",
+      "partial exit"
+    ],
+    "maps_to_field": "position_sizing",
+    "embedding_text": "Scaling Out: A risk-reduction strategy involving taking partial profits by closing fractional portions of an open position as the price moves favorably.",
+    "metadata": {
+      "category": "position_management",
+      "type": "SCALE_OUT"
+    }
+  },
+  {
+    "id": "exec_slippage",
+    "type": "execution_term",
+    "canonical_name": "Slippage",
+    "aliases": [
+      "execution slippage"
+    ],
+    "maps_to_field": "risk_management",
+    "embedding_text": "Slippage: The difference between the expected price of a trade entry/exit and the actual price at which the trade is executed, commonly occurring in volatile or illiquid markets.",
+    "metadata": {
+      "category": "execution_risk",
+      "type": "SLIPPAGE"
+    }
+  },
+  {
+    "id": "ind_nifty50",
+    "type": "market_structure",
+    "canonical_name": "Nifty 50",
+    "aliases": [
+      "nifty",
+      "nifty50",
+      "nse nifty"
+    ],
+    "maps_to_field": "asset",
+    "embedding_text": "Nifty 50: The benchmark index of the National Stock Exchange (NSE) representing the weighted average of 50 of the largest Indian companies. Maps to asset='NIFTY'.",
+    "metadata": {
+      "category": "index",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_banknifty",
+    "type": "market_structure",
+    "canonical_name": "Bank Nifty",
+    "aliases": [
+      "banknifty",
+      "nifty bank",
+      "bank index"
+    ],
+    "maps_to_field": "asset",
+    "embedding_text": "Bank Nifty: A highly volatile sector index representing the 12 most liquid Indian banking stocks. The most heavily traded index in the Indian F&O segment. Maps to asset='BANKNIFTY'.",
+    "metadata": {
+      "category": "index",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_finnifty",
+    "type": "market_structure",
+    "canonical_name": "FinNifty",
+    "aliases": [
+      "finnifty",
+      "nifty financial services"
+    ],
+    "maps_to_field": "asset",
+    "embedding_text": "FinNifty: Nifty Financial Services index tracking banks, NBFCs, and insurance companies. Maps to asset='FINNIFTY'.",
+    "metadata": {
+      "category": "index",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_sensex",
+    "type": "market_structure",
+    "canonical_name": "Sensex",
+    "aliases": [
+      "bse sensex"
+    ],
+    "maps_to_field": "asset",
+    "embedding_text": "Sensex: The benchmark index of the Bombay Stock Exchange (BSE), comprising 30 established Indian companies.",
+    "metadata": {
+      "category": "index",
+      "market": "BSE"
+    }
+  },
+  {
+    "id": "ind_spot_price",
+    "type": "market_structure",
+    "canonical_name": "Spot Price",
+    "aliases": [
+      "spot",
+      "cash price",
+      "underlying price"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Spot Price: The actual underlying cash market price of an asset (e.g., the Nifty 50 index value) as opposed to the future contract price.",
+    "metadata": {
+      "category": "pricing",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_india_vix",
+    "type": "market_structure",
+    "canonical_name": "India VIX",
+    "aliases": [
+      "vix",
+      "india volatility index"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "India VIX: The Volatility Index based on the NIFTY Index Option prices. A higher VIX implies higher expected volatility and inflated option premiums over the next 30 days.",
+    "metadata": {
+      "category": "index",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_cash_market",
+    "type": "execution_term",
+    "canonical_name": "Cash Market",
+    "aliases": [
+      "equity delivery",
+      "cash segment",
+      "delivery"
+    ],
+    "maps_to_field": "segment",
+    "embedding_text": "Cash Market (Equity Delivery): Buying stocks with the intent to hold them for more than a day. Requires 100% capital upfront. Maps to segment='CASH' or 'CASH_DELIVERY'.",
+    "metadata": {
+      "category": "segment",
+      "type": "CASH"
+    }
+  },
+  {
+    "id": "ind_cnc",
+    "type": "execution_term",
+    "canonical_name": "CNC (Cash N Carry)",
+    "aliases": [
+      "cnc",
+      "cash and carry"
+    ],
+    "maps_to_field": "segment",
+    "embedding_text": "CNC (Cash N Carry): The standard Indian broker order designation for delivery-based equity investing where shares are delivered to the Demat account. Maps to segment='CNC'.",
+    "metadata": {
+      "category": "order_product",
+      "type": "CNC"
+    }
+  },
+  {
+    "id": "ind_mis",
+    "type": "execution_term",
+    "canonical_name": "MIS (Margin Intraday Square-off)",
+    "aliases": [
+      "mis",
+      "intraday product"
+    ],
+    "maps_to_field": "segment",
+    "embedding_text": "Intraday (MIS): Margin Intraday Square-off. Highly leveraged trades that must be squared off manually or automatically by the broker before market close (usually 3:15 PM - 3:20 PM IST). Maps to segment='MIS'.",
+    "metadata": {
+      "category": "order_product",
+      "type": "MIS"
+    }
+  },
+  {
+    "id": "ind_fno",
+    "type": "execution_term",
+    "canonical_name": "F&O",
+    "aliases": [
+      "futures and options",
+      "derivatives segment",
+      "fno"
+    ],
+    "maps_to_field": "segment",
+    "embedding_text": "F&O (Futures & Options): The derivatives market segment in India. Maps to segment='F&O'.",
+    "metadata": {
+      "category": "segment",
+      "type": "F_AND_O"
+    }
+  },
+  {
+    "id": "ind_amo",
+    "type": "execution_term",
+    "canonical_name": "AMO (After Market Order)",
+    "aliases": [
+      "amo",
+      "after market order"
+    ],
+    "maps_to_field": "time_in_force",
+    "embedding_text": "AMO (After Market Order): Orders placed after the normal trading session ends (post 3:30 PM IST) to be executed on the next trading day.",
+    "metadata": {
+      "category": "order_type",
+      "type": "AMO"
+    }
+  },
+  {
+    "id": "ind_lot_size",
+    "type": "market_structure",
+    "canonical_name": "Lot Size",
+    "aliases": [
+      "lot",
+      "contract size"
+    ],
+    "maps_to_field": "position_sizing",
+    "embedding_text": "Lot Size: The strictly defined minimum number of units that can be traded in a single Indian F&O contract. Trades must be multiples of the lot size.",
+    "metadata": {
+      "category": "derivatives",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_weekly_expiry",
+    "type": "market_structure",
+    "canonical_name": "Weekly Expiry",
+    "aliases": [
+      "weekly options",
+      "weekly expiry"
+    ],
+    "maps_to_field": "expiry",
+    "embedding_text": "Weekly Expiry: F&O contracts (predominantly Index options) that expire every week. Expiry days vary by index (e.g., Nifty on Thursday, Bank Nifty on Wednesday, FinNifty on Tuesday).",
+    "metadata": {
+      "category": "derivatives",
+      "type": "EXPIRY"
+    }
+  },
+  {
+    "id": "ind_monthly_expiry",
+    "type": "market_structure",
+    "canonical_name": "Monthly Expiry",
+    "aliases": [
+      "monthly options",
+      "monthly expiry",
+      "month end expiry"
+    ],
+    "maps_to_field": "expiry",
+    "embedding_text": "Monthly Expiry: Derivative contracts expiring on the last Thursday of every month. Applies to both Index and Stock derivatives in India.",
+    "metadata": {
+      "category": "derivatives",
+      "type": "EXPIRY"
+    }
+  },
+  {
+    "id": "ind_ce",
+    "type": "market_structure",
+    "canonical_name": "CE (Call European)",
+    "aliases": [
+      "ce",
+      "call option",
+      "calls"
+    ],
+    "maps_to_field": "instrument_type",
+    "embedding_text": "CE (Call European): The standard designation for Call options in India (e.g., NIFTY 22000 CE).",
+    "metadata": {
+      "category": "derivatives",
+      "type": "CALL"
+    }
+  },
+  {
+    "id": "ind_pe",
+    "type": "market_structure",
+    "canonical_name": "PE (Put European)",
+    "aliases": [
+      "pe",
+      "put option",
+      "puts"
+    ],
+    "maps_to_field": "instrument_type",
+    "embedding_text": "PE (Put European): The standard designation for Put options in India (e.g., BANKNIFTY 48000 PE).",
+    "metadata": {
+      "category": "derivatives",
+      "type": "PUT"
+    }
+  },
+  {
+    "id": "ind_option_premium",
+    "type": "market_structure",
+    "canonical_name": "Option Premium",
+    "aliases": [
+      "premium"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Option Premium: The price paid by the buyer to the seller to acquire the CE or PE contract.",
+    "metadata": {
+      "category": "derivatives",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_otm_itm_atm",
+    "type": "market_structure",
+    "canonical_name": "Moneyness (OTM/ITM/ATM)",
+    "aliases": [
+      "otm",
+      "itm",
+      "atm",
+      "out of the money",
+      "in the money",
+      "at the money"
+    ],
+    "maps_to_field": "strike_selection",
+    "embedding_text": "OTM / ITM / ATM: Out-of-the-Money, In-the-Money, and At-the-Money option strikes relative to the current spot price.",
+    "metadata": {
+      "category": "derivatives",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_circuit_limits",
+    "type": "market_structure",
+    "canonical_name": "Circuit Limits",
+    "aliases": [
+      "upper circuit",
+      "lower circuit",
+      "circuit breaker",
+      "uc",
+      "lc"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Circuit Limits (Upper/Lower Circuit): Daily price bands (e.g., 5%, 10%, 20%) set by the exchange to curb extreme volatility. Trading halts if a stock hits a circuit. Note: Stocks in the F&O segment do not have hard daily circuits.",
+    "metadata": {
+      "category": "market_mechanics",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_pre_open",
+    "type": "market_structure",
+    "canonical_name": "Pre-Open Session",
+    "aliases": [
+      "pre open",
+      "pre market"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Pre-Open Session: A 15-minute window from 9:00 AM to 9:15 AM IST used for price discovery to absorb overnight news volatility before normal trading begins on NSE/BSE.",
+    "metadata": {
+      "category": "market_mechanics",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_post_closing",
+    "type": "market_structure",
+    "canonical_name": "Post-Closing Session",
+    "aliases": [
+      "post close",
+      "after market close"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Post-Closing Session: A 20-minute window from 3:40 PM to 4:00 PM IST where trades can be placed at the calculated closing price on NSE/BSE.",
+    "metadata": {
+      "category": "market_mechanics",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_freak_trade",
+    "type": "market_structure",
+    "canonical_name": "Freak Trade",
+    "aliases": [
+      "freak trades",
+      "fat finger"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Freak Trade: An abnormal, instantaneous, and extreme price spike or crash (often by hundreds of points in options) usually caused by low liquidity or fat-finger errors, reversing within seconds in the Indian market.",
+    "metadata": {
+      "category": "market_mechanics",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_short_covering",
+    "type": "market_structure",
+    "canonical_name": "Short Covering",
+    "aliases": [
+      "short cover",
+      "covering"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Short Covering: Buying back borrowed securities to close an open short position, often causing rapid upward price spikes in the Indian markets.",
+    "metadata": {
+      "category": "market_mechanics",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "ind_long_unwinding",
+    "type": "market_structure",
+    "canonical_name": "Long Unwinding",
+    "aliases": [
+      "unwinding"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Long Unwinding: Selling of long positions by traders looking to exit, often triggering rapid downward momentum in the Indian markets.",
+    "metadata": {
+      "category": "market_mechanics",
+      "market": "NSE"
+    }
+  },
+  {
+    "id": "opt_call",
+    "type": "derivatives_term",
+    "canonical_name": "Call Option",
+    "aliases": [
+      "call",
+      "calls",
+      "call option"
+    ],
+    "maps_to_field": "instrument_type",
+    "embedding_text": "Call Option (Call): A derivative contract giving the buyer the right, but not the obligation, to buy the underlying asset at a specified strike price. Maps to instrument_type='CALL'.",
+    "metadata": {
+      "category": "derivatives",
+      "type": "CALL"
+    }
+  },
+  {
+    "id": "opt_put",
+    "type": "derivatives_term",
+    "canonical_name": "Put Option",
+    "aliases": [
+      "put",
+      "puts",
+      "put option"
+    ],
+    "maps_to_field": "instrument_type",
+    "embedding_text": "Put Option (Put): A derivative contract giving the buyer the right, but not the obligation, to sell the underlying asset at a specified strike price. Maps to instrument_type='PUT'.",
+    "metadata": {
+      "category": "derivatives",
+      "type": "PUT"
+    }
+  },
+  {
+    "id": "opt_strike_price",
+    "type": "derivatives_term",
+    "canonical_name": "Strike Price",
+    "aliases": [
+      "strike",
+      "strikes"
+    ],
+    "maps_to_field": "strike_selection",
+    "embedding_text": "Strike Price: The pre-determined price at which the underlying asset can be bought (call) or sold (put) when exercising the contract.",
+    "metadata": {
+      "category": "derivatives",
+      "type": "STRIKE"
+    }
+  },
+  {
+    "id": "opt_expiration",
+    "type": "derivatives_term",
+    "canonical_name": "Expiration Date",
+    "aliases": [
+      "expiry",
+      "expiration"
+    ],
+    "maps_to_field": "expiry",
+    "embedding_text": "Expiration Date: The exact date and time when an option contract becomes void and ceases to exist.",
+    "metadata": {
+      "category": "derivatives",
+      "type": "EXPIRATION"
+    }
+  },
+  {
+    "id": "opt_premium",
+    "type": "derivatives_term",
+    "canonical_name": "Option Premium",
+    "aliases": [
+      "premium",
+      "option price"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Option Premium: The current market price of an option contract paid by the buyer to the seller.",
+    "metadata": {
+      "category": "derivatives",
+      "type": "PREMIUM"
+    }
+  },
+  {
+    "id": "opt_underlying",
+    "type": "derivatives_term",
+    "canonical_name": "Underlying Asset",
+    "aliases": [
+      "underlying",
+      "spot asset"
+    ],
+    "maps_to_field": "asset",
+    "embedding_text": "Underlying Asset: The financial instrument (stock, index, commodity) on which the derivative's value is derived.",
+    "metadata": {
+      "category": "derivatives",
+      "type": "UNDERLYING"
+    }
+  },
+  {
+    "id": "opt_itm",
+    "type": "derivatives_term",
+    "canonical_name": "In-The-Money",
+    "aliases": [
+      "itm",
+      "in the money"
+    ],
+    "maps_to_field": "strike_selection",
+    "embedding_text": "In-The-Money (ITM): An option that possesses intrinsic value (e.g., a Call where the strike is below the current market price).",
+    "metadata": {
+      "category": "moneyness",
+      "type": "ITM"
+    }
+  },
+  {
+    "id": "opt_otm",
+    "type": "derivatives_term",
+    "canonical_name": "Out-Of-The-Money",
+    "aliases": [
+      "otm",
+      "out of the money"
+    ],
+    "maps_to_field": "strike_selection",
+    "embedding_text": "Out-Of-The-Money (OTM): An option that consists purely of extrinsic (time) value and no intrinsic value.",
+    "metadata": {
+      "category": "moneyness",
+      "type": "OTM"
+    }
+  },
+  {
+    "id": "opt_atm",
+    "type": "derivatives_term",
+    "canonical_name": "At-The-Money",
+    "aliases": [
+      "atm",
+      "at the money"
+    ],
+    "maps_to_field": "strike_selection",
+    "embedding_text": "At-The-Money (ATM): An option where the strike price is exactly identical to the current spot price of the underlying asset.",
+    "metadata": {
+      "category": "moneyness",
+      "type": "ATM"
+    }
+  },
+  {
+    "id": "opt_oi",
+    "type": "derivatives_term",
+    "canonical_name": "Open Interest",
+    "aliases": [
+      "oi",
+      "open interest"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Open Interest (OI): The total number of outstanding derivative contracts that have not yet been settled or closed out by traders.",
+    "metadata": {
+      "category": "market_data",
+      "type": "OI"
+    }
+  },
+  {
+    "id": "opt_pcr",
+    "type": "derivatives_term",
+    "canonical_name": "Put-Call Ratio",
+    "aliases": [
+      "pcr",
+      "put call ratio"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Put-Call Ratio (PCR): A sentiment indicator calculated by dividing put volume (or OI) by call volume (or OI). A high PCR indicates bearish sentiment.",
+    "metadata": {
+      "category": "market_data",
+      "type": "PCR"
+    }
+  },
+  {
+    "id": "opt_iv",
+    "type": "derivatives_term",
+    "canonical_name": "Implied Volatility",
+    "aliases": [
+      "iv",
+      "implied volatility"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Implied Volatility (IV): A forward-looking metric estimating the market's expectation of future price fluctuations, heavily influencing option premiums.",
+    "metadata": {
+      "category": "market_data",
+      "type": "IV"
+    }
+  },
+  {
+    "id": "opt_hv",
+    "type": "derivatives_term",
+    "canonical_name": "Historical Volatility",
+    "aliases": [
+      "hv",
+      "historical volatility",
+      "realized volatility"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Historical Volatility (HV): A backward-looking statistical measure of the actual dispersion of returns over a specific past timeframe.",
+    "metadata": {
+      "category": "market_data",
+      "type": "HV"
+    }
+  },
+  {
+    "id": "opt_max_pain",
+    "type": "derivatives_term",
+    "canonical_name": "Max Pain",
+    "aliases": [
+      "max pain",
+      "option pain"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Max Pain: The specific strike price at which the highest number of open options contracts (both calls and puts) would expire worthless, maximizing losses for option buyers.",
+    "metadata": {
+      "category": "market_data",
+      "type": "MAX_PAIN"
+    }
+  },
+  {
+    "id": "opt_delta",
+    "type": "derivatives_term",
+    "canonical_name": "Delta",
+    "aliases": [
+      "delta",
+      "option delta"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Delta (Option Greek): Measures the expected change in an option's premium for every $1 movement in the underlying asset's price. Also acts as a proxy for the probability of expiring ITM.",
+    "metadata": {
+      "category": "greeks",
+      "type": "DELTA"
+    }
+  },
+  {
+    "id": "opt_gamma",
+    "type": "derivatives_term",
+    "canonical_name": "Gamma",
+    "aliases": [
+      "gamma",
+      "option gamma"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Gamma (Option Greek): The rate of change of an option's Delta for a $1 move in the underlying asset. Highest for ATM options.",
+    "metadata": {
+      "category": "greeks",
+      "type": "GAMMA"
+    }
+  },
+  {
+    "id": "opt_theta",
+    "type": "derivatives_term",
+    "canonical_name": "Theta",
+    "aliases": [
+      "theta",
+      "time decay"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Theta (Time Decay): Measures the rate at which an option's premium loses value as time passes (value lost per day).",
+    "metadata": {
+      "category": "greeks",
+      "type": "THETA"
+    }
+  },
+  {
+    "id": "opt_vega",
+    "type": "derivatives_term",
+    "canonical_name": "Vega",
+    "aliases": [
+      "vega",
+      "option vega"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Vega (Option Greek): Measures the sensitivity of an option's premium to a 1% absolute change in Implied Volatility (IV).",
+    "metadata": {
+      "category": "greeks",
+      "type": "VEGA"
+    }
+  },
+  {
+    "id": "opt_rho",
+    "type": "derivatives_term",
+    "canonical_name": "Rho",
+    "aliases": [
+      "rho",
+      "option rho"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Rho (Option Greek): Measures the expected change in an option's premium for a 1% change in the risk-free interest rate.",
+    "metadata": {
+      "category": "greeks",
+      "type": "RHO"
+    }
+  },
+  {
+    "id": "opt_strat_long_straddle",
+    "type": "options_strategy",
+    "canonical_name": "Long Straddle",
+    "aliases": [
+      "long straddle",
+      "straddle",
+      "buy straddle"
+    ],
+    "maps_to_field": "strategy_type",
+    "embedding_text": "Long Straddle: A volatility options strategy involving buying a Call and a Put at the exact same ATM strike and expiration, profiting from explosive directional movement.",
+    "metadata": {
+      "category": "multi_leg_strategy",
+      "type": "STRADDLE"
+    }
+  },
+  {
+    "id": "opt_strat_short_straddle",
+    "type": "options_strategy",
+    "canonical_name": "Short Straddle",
+    "aliases": [
+      "short straddle",
+      "sell straddle"
+    ],
+    "maps_to_field": "strategy_type",
+    "embedding_text": "Short Straddle: A neutral options strategy involving selling a Call and a Put at the same ATM strike, profiting from tight consolidation and time decay (Theta).",
+    "metadata": {
+      "category": "multi_leg_strategy",
+      "type": "STRADDLE_SHORT"
+    }
+  },
+  {
+    "id": "opt_strat_strangle",
+    "type": "options_strategy",
+    "canonical_name": "Strangle",
+    "aliases": [
+      "strangle",
+      "long strangle",
+      "short strangle"
+    ],
+    "maps_to_field": "strategy_type",
+    "embedding_text": "Strangle: An options strategy similar to a Straddle, but utilizes OTM Call and Put strikes, requiring a larger price movement but costing less capital.",
+    "metadata": {
+      "category": "multi_leg_strategy",
+      "type": "STRANGLE"
+    }
+  },
+  {
+    "id": "opt_strat_iron_condor",
+    "type": "options_strategy",
+    "canonical_name": "Iron Condor",
+    "aliases": [
+      "iron condor",
+      "condor"
+    ],
+    "maps_to_field": "strategy_type",
+    "embedding_text": "Iron Condor: A four-leg, limited-risk, non-directional options strategy involving two sold OTM options (a call and a put) protected by two further-OTM bought options, profiting from low volatility.",
+    "metadata": {
+      "category": "multi_leg_strategy",
+      "type": "IRON_CONDOR"
+    }
+  },
+  {
+    "id": "opt_strat_bull_call_spread",
+    "type": "options_strategy",
+    "canonical_name": "Bull Call Spread",
+    "aliases": [
+      "bull call spread",
+      "call debit spread"
+    ],
+    "maps_to_field": "strategy_type",
+    "embedding_text": "Bull Call Spread (Debit Spread): A bullish options strategy involving buying a Call and simultaneously selling a higher-strike Call to offset the cost.",
+    "metadata": {
+      "category": "multi_leg_strategy",
+      "type": "BULL_CALL_SPREAD"
+    }
+  },
+  {
+    "id": "opt_strat_bear_put_spread",
+    "type": "options_strategy",
+    "canonical_name": "Bear Put Spread",
+    "aliases": [
+      "bear put spread",
+      "put debit spread"
+    ],
+    "maps_to_field": "strategy_type",
+    "embedding_text": "Bear Put Spread (Debit Spread): A bearish options strategy involving buying a Put and simultaneously selling a lower-strike Put.",
+    "metadata": {
+      "category": "multi_leg_strategy",
+      "type": "BEAR_PUT_SPREAD"
+    }
+  },
+  {
+    "id": "opt_strat_butterfly",
+    "type": "options_strategy",
+    "canonical_name": "Butterfly Spread",
+    "aliases": [
+      "butterfly",
+      "butterfly spread"
+    ],
+    "maps_to_field": "strategy_type",
+    "embedding_text": "Butterfly Spread: A limited-risk, multi-leg options strategy combining bull and bear spreads, utilizing three different strike prices to profit from a highly specific price target.",
+    "metadata": {
+      "category": "multi_leg_strategy",
+      "type": "BUTTERFLY"
+    }
+  },
+  {
+    "id": "opt_strat_covered_call",
+    "type": "options_strategy",
+    "canonical_name": "Covered Call",
+    "aliases": [
+      "covered call",
+      "cc"
+    ],
+    "maps_to_field": "strategy_type",
+    "embedding_text": "Covered Call: An income-generating strategy involving holding a long position in the underlying asset while simultaneously selling OTM Call options against it.",
+    "metadata": {
+      "category": "multi_leg_strategy",
+      "type": "COVERED_CALL"
+    }
+  },
+  {
+    "id": "pa_support",
+    "type": "price_action",
+    "canonical_name": "Support",
+    "aliases": [
+      "support",
+      "support level",
+      "floor"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Support: A historical price level where a downtrend tends to pause or reverse due to a heavy concentration of demand (buying interest).",
+    "metadata": {
+      "category": "structure",
+      "type": "SUPPORT"
+    }
+  },
+  {
+    "id": "pa_resistance",
+    "type": "price_action",
+    "canonical_name": "Resistance",
+    "aliases": [
+      "resistance",
+      "resistance level",
+      "ceiling"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Resistance: A historical price level where an uptrend tends to pause or reverse due to a heavy concentration of supply (selling pressure).",
+    "metadata": {
+      "category": "structure",
+      "type": "RESISTANCE"
+    }
+  },
+  {
+    "id": "pa_supply_zone",
+    "type": "price_action",
+    "canonical_name": "Supply Zone",
+    "aliases": [
+      "supply zone",
+      "supply area",
+      "distribution zone"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Supply Zone: A broader structural area on the chart where selling pressure previously overwhelmed buying pressure, often associated with institutional selling.",
+    "metadata": {
+      "category": "structure",
+      "type": "SUPPLY"
+    }
+  },
+  {
+    "id": "pa_demand_zone",
+    "type": "price_action",
+    "canonical_name": "Demand Zone",
+    "aliases": [
+      "demand zone",
+      "demand area",
+      "accumulation zone"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Demand Zone: A broader structural area on the chart where buying pressure previously overwhelmed selling pressure, often associated with institutional accumulation.",
+    "metadata": {
+      "category": "structure",
+      "type": "DEMAND"
+    }
+  },
+  {
+    "id": "pa_pivot_point",
+    "type": "price_action",
+    "canonical_name": "Pivot Point",
+    "aliases": [
+      "pivot point",
+      "pivots",
+      "pivot"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Pivot Point: Key price levels mathematically derived from the previous period's high, low, and close prices, used to project intraday support and resistance.",
+    "metadata": {
+      "category": "structure",
+      "type": "PIVOT"
+    }
+  },
+  {
+    "id": "pa_higher_high_low",
+    "type": "price_action",
+    "canonical_name": "Higher High / Higher Low",
+    "aliases": [
+      "higher high",
+      "higher low",
+      "hh",
+      "hl",
+      "uptrend structure"
+    ],
+    "maps_to_field": "trend_identification",
+    "embedding_text": "Higher High (HH) & Higher Low (HL): The fundamental structural definition of an active Uptrend, where each successive price peak is higher than the last, and each trough is higher than the last.",
+    "metadata": {
+      "category": "trend",
+      "type": "UPTREND_STRUCTURE"
+    }
+  },
+  {
+    "id": "pa_lower_high_low",
+    "type": "price_action",
+    "canonical_name": "Lower High / Lower Low",
+    "aliases": [
+      "lower high",
+      "lower low",
+      "lh",
+      "ll",
+      "downtrend structure"
+    ],
+    "maps_to_field": "trend_identification",
+    "embedding_text": "Lower High (LH) & Lower Low (LL): The fundamental structural definition of an active Downtrend, where each successive price peak and trough is lower than the previous one.",
+    "metadata": {
+      "category": "trend",
+      "type": "DOWNTREND_STRUCTURE"
+    }
+  },
+  {
+    "id": "pa_trendline",
+    "type": "price_action",
+    "canonical_name": "Trendline",
+    "aliases": [
+      "trend line",
+      "trendline"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Trendline: A diagonal line connecting successive pivot highs or pivot lows, visually representing the prevailing momentum and dynamic support/resistance of an asset.",
+    "metadata": {
+      "category": "trend",
+      "type": "TRENDLINE"
+    }
+  },
+  {
+    "id": "pa_consolidation",
+    "type": "price_action",
+    "canonical_name": "Consolidation",
+    "aliases": [
+      "consolidation",
+      "range bound",
+      "sideways",
+      "choppy"
+    ],
+    "maps_to_field": "trend_identification",
+    "embedding_text": "Consolidation (Range-bound): A market phase where price oscillates sideways between defined support and resistance boundaries with no clear directional trend.",
+    "metadata": {
+      "category": "trend",
+      "type": "CONSOLIDATION"
+    }
+  },
+  {
+    "id": "pa_choppy",
+    "type": "price_action",
+    "canonical_name": "Choppy Market",
+    "aliases": [
+      "choppy market",
+      "whipsaw",
+      "erratic market"
+    ],
+    "maps_to_field": "trend_identification",
+    "embedding_text": "Choppy Market (Whipsaw): A highly volatile, erratic market environment lacking clear directional momentum, notorious for triggering false signals and stop-losses.",
+    "metadata": {
+      "category": "trend",
+      "type": "CHOPPY"
+    }
+  },
+  {
+    "id": "pa_breakout",
+    "type": "price_action",
+    "canonical_name": "Breakout",
+    "aliases": [
+      "breakout",
+      "breaking out"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Breakout: When price decisively moves above a resistance level or out of a consolidation pattern, typically on increased volume, signaling the start of upward momentum.",
+    "metadata": {
+      "category": "momentum",
+      "type": "BREAKOUT"
+    }
+  },
+  {
+    "id": "pa_breakdown",
+    "type": "price_action",
+    "canonical_name": "Breakdown",
+    "aliases": [
+      "breakdown",
+      "breaking down"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Breakdown: When price decisively moves below a support level, signaling the start or continuation of downward momentum.",
+    "metadata": {
+      "category": "momentum",
+      "type": "BREAKDOWN"
+    }
+  },
+  {
+    "id": "pa_pullback",
+    "type": "price_action",
+    "canonical_name": "Pullback",
+    "aliases": [
+      "pullback",
+      "retracement",
+      "dip",
+      "pull back"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Pullback (Retracement / Dip): A temporary, counter-trend price reversal occurring within the context of a larger prevailing trend, often used as an entry opportunity.",
+    "metadata": {
+      "category": "momentum",
+      "type": "PULLBACK"
+    }
+  },
+  {
+    "id": "pa_throwback",
+    "type": "price_action",
+    "canonical_name": "Throwback",
+    "aliases": [
+      "throwback",
+      "retest support"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Throwback (Retest): Occurs immediately after a breakout when the price temporarily drops back down to 'retest' the prior resistance level (which now acts as new support) before continuing upward.",
+    "metadata": {
+      "category": "momentum",
+      "type": "THROWBACK"
+    }
+  },
+  {
+    "id": "pa_pullup",
+    "type": "price_action",
+    "canonical_name": "Pullup",
+    "aliases": [
+      "pullup",
+      "retest resistance"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Pullup (Retest): Occurs immediately after a breakdown when the price temporarily rallies up to 'retest' the prior support level (which now acts as new resistance) before continuing downward.",
+    "metadata": {
+      "category": "momentum",
+      "type": "PULLUP"
+    }
+  },
+  {
+    "id": "pa_gap_up",
+    "type": "price_action",
+    "canonical_name": "Gap Up",
+    "aliases": [
+      "gap up",
+      "gapping up"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Gap Up: When an asset opens at a price significantly higher than its previous session's close, leaving a void on the chart with no trading activity in between.",
+    "metadata": {
+      "category": "mechanics",
+      "type": "GAP_UP"
+    }
+  },
+  {
+    "id": "pa_gap_down",
+    "type": "price_action",
+    "canonical_name": "Gap Down",
+    "aliases": [
+      "gap down",
+      "gapping down"
+    ],
+    "maps_to_field": "conditions",
+    "embedding_text": "Gap Down: When an asset opens at a price significantly lower than its previous session's close.",
+    "metadata": {
+      "category": "mechanics",
+      "type": "GAP_DOWN"
+    }
+  }
+]

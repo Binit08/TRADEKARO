@@ -1,0 +1,774 @@
+[
+  {
+    "id": "ind_awesome_oscillator",
+    "type": "indicator",
+    "canonical_name": "Awesome Oscillator",
+    "aliases": [
+      "ao",
+      "awesome oscillator indicator",
+      "ao momentum",
+      "bill williams awesome oscillator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Awesome Oscillator measures market momentum by calculating the difference between a 5-period and a 34-period simple moving average of the median price (the average of high and low). It is primarily used to confirm market trends and anticipate potential price reversals.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_indicator_mixin",
+    "type": "indicator",
+    "canonical_name": "Indicator Mixin",
+    "aliases": [
+      "indicator mixin",
+      "base indicator",
+      "mixin indicator",
+      "indicator base class"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Indicator Mixin serves as a base utility class designed to provide shared functionality and structural architecture for financial technical indicators within the library. It standardizes the implementation of indicator logic to ensure consistent behavior across various derived analytical tools.",
+    "metadata": {
+      "category": "utility"
+    }
+  },
+  {
+    "id": "ind_kama",
+    "type": "indicator",
+    "canonical_name": "Kaufman's Adaptive Moving Average",
+    "aliases": [
+      "kama",
+      "kaufman adaptive moving average",
+      "kaufman indicator",
+      "kama moving average"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Kaufman's Adaptive Moving Average (KAMA) is a trend-following indicator that dynamically adjusts its sensitivity based on market volatility and noise. It closely tracks price movements during quiet periods and lags during high-volatility swings to help identify trends and turning points.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_ppo",
+    "type": "indicator",
+    "canonical_name": "Percentage Price Oscillator",
+    "aliases": [
+      "ppo",
+      "percentage price oscillator",
+      "ppo indicator",
+      "price oscillator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Percentage Price Oscillator (PPO) is a momentum indicator that calculates the difference between two moving averages, expressed as a percentage of the longer-term moving average. It is used to evaluate the strength and direction of a price trend by identifying the relationship between short-term and long-term price movements.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_pvo",
+    "type": "indicator",
+    "canonical_name": "Percentage Volume Oscillator",
+    "aliases": [
+      "pvo",
+      "percentage volume oscillator",
+      "volume momentum oscillator",
+      "pvo indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Percentage Volume Oscillator (PVO) is a momentum-based indicator that tracks volume trends by calculating the percentage difference between a short-term and a long-term moving average of trading volume. It helps traders identify shifts in volume momentum to confirm the strength of price trends.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_roc",
+    "type": "indicator",
+    "canonical_name": "Rate of Change",
+    "aliases": [
+      "roc",
+      "rate of change",
+      "momentum indicator",
+      "roc oscillator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Rate of Change (ROC) is a momentum oscillator that measures the percentage change in price between the current period and a specified number of periods ago. It fluctuates around a zero line to help identify trend direction, momentum strength, and potential overbought or oversold conditions.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_rsi",
+    "type": "indicator",
+    "canonical_name": "Relative Strength Index",
+    "aliases": [
+      "rsi",
+      "relative strength index",
+      "rs indicator",
+      "rsi momentum"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Relative Strength Index (RSI) measures the magnitude of recent price changes to evaluate the velocity and direction of market movements. It is widely used by traders to identify potential overbought or oversold conditions for a specific asset.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_stochrsi",
+    "type": "indicator",
+    "canonical_name": "Stochastic RSI",
+    "aliases": [
+      "stochrsi",
+      "stochastic relative strength index",
+      "stoch rsi oscillator",
+      "stochrsi indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Stochastic RSI is a momentum oscillator that applies the Stochastic formula to RSI values to create a more sensitive indicator tailored to a security's historical performance. It is designed to provide earlier signals than the standard Relative Strength Index by measuring the level of RSI relative to its high-low range over a specified period.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_stochastic_oscillator",
+    "type": "indicator",
+    "canonical_name": "Stochastic Oscillator",
+    "aliases": [
+      "stochastic",
+      "stoch",
+      "stoch oscillator",
+      "stochastic indicator",
+      "stochastics"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Stochastic Oscillator measures the position of a security's closing price relative to its high-low range over a specific lookback period. It is used to identify potential overbought or oversold conditions in a market.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_tsi",
+    "type": "indicator",
+    "canonical_name": "True Strength Index",
+    "aliases": [
+      "tsi",
+      "true strength indicator",
+      "tsi index",
+      "true strength"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The True Strength Index (TSI) is a momentum-based oscillator that identifies both trend direction and overbought or oversold market conditions. It utilizes double smoothing of price changes to reduce noise and highlight shifts in market momentum.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_ultimate_oscillator",
+    "type": "indicator",
+    "canonical_name": "Ultimate Oscillator",
+    "aliases": [
+      "uo",
+      "ultimate oscillator indicator",
+      "larry williams ultimate oscillator",
+      "uo indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Ultimate Oscillator is a momentum indicator developed by Larry Williams that captures market momentum by calculating a weighted average across three different timeframes. It utilizes Buying Pressure and True Range to provide a smoothed oscillator value ranging from 0 to 100.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_williams_r",
+    "type": "indicator",
+    "canonical_name": "Williams %R",
+    "aliases": [
+      "williams percent r",
+      "williams r",
+      "percent r",
+      "willr"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Williams %R is a momentum indicator that measures the relative position of the closing price within a specified look-back period by oscillating between 0 and -100. It identifies overbought conditions when readings range from 0 to -20 and oversold conditions when readings fall between -80 and -100.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_adx",
+    "type": "indicator",
+    "canonical_name": "Average Directional Movement Index",
+    "aliases": [
+      "adx",
+      "average directional index",
+      "dmi",
+      "directional movement indicator",
+      "adx indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Average Directional Movement Index (ADX) measures the strength of a price trend regardless of its direction by analyzing smoothed averages of directional movement. It is typically used alongside the Plus Directional Indicator (+DI) and Minus Directional Indicator (-DI) to identify both the trend's strength and direction.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_aroon",
+    "type": "indicator",
+    "canonical_name": "Aroon Indicator",
+    "aliases": [
+      "aroon",
+      "aroon oscillator",
+      "aroon up down",
+      "aroon trend indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Aroon indicator identifies trend changes by measuring the time elapsed between highs and lows over a specified look-back period. It consists of an Aroon Up and Aroon Down line, which help traders determine whether a market is trending or ranging.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_cci",
+    "type": "indicator",
+    "canonical_name": "Commodity Channel Index",
+    "aliases": [
+      "cci",
+      "commodity channel index",
+      "cci indicator",
+      "cci technical indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Commodity Channel Index (CCI) measures the deviation of a security's price from its statistical average to identify overbought and oversold conditions. High positive values indicate strong price performance above the average, while low negative values signal price weakness.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_dpo",
+    "type": "indicator",
+    "canonical_name": "Detrended Price Oscillator",
+    "aliases": [
+      "dpo",
+      "detrended price oscillator",
+      "dpo indicator",
+      "detrended price"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Detrended Price Oscillator (DPO) is a technical tool used to isolate short-term cycles in price data by removing the influence of long-term trends. It identifies overbought and oversold conditions by comparing the price to a past moving average, effectively filtering out trend movements.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_ema",
+    "type": "indicator",
+    "canonical_name": "Exponential Moving Average",
+    "aliases": [
+      "ema",
+      "exponential moving average",
+      "exp moving average",
+      "exponential average"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Exponential Moving Average (EMA) is a technical indicator that calculates the average of a data series over a specified window, giving more weight to recent price data than a simple moving average. It is commonly used to identify trends and reduce lag in market analysis.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_ichimoku",
+    "type": "indicator",
+    "canonical_name": "Ichimoku Kink\u014d Hy\u014d",
+    "aliases": [
+      "ichimoku",
+      "ichimoku cloud",
+      "ikh",
+      "ichimoku kinko hyo"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Ichimoku Kink\u014d Hy\u014d is a versatile technical analysis tool that defines support and resistance levels, identifies trend direction, and gauges momentum using multiple moving average lines. It provides a comprehensive 'cloud' visualization to help traders identify potential buy and sell signals based on price action relative to key historical highs and lows.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_indicator_mixin",
+    "type": "indicator",
+    "canonical_name": "Indicator Mixin",
+    "aliases": [
+      "indicator mixin",
+      "base indicator",
+      "indicator base class",
+      "mixin indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Indicator Mixin serves as a foundational base class designed to provide shared functionality and common methods for technical indicators within the library. It establishes the architectural framework required for defining and implementing various financial analysis calculations.",
+    "metadata": {
+      "category": "technical"
+    }
+  },
+  {
+    "id": "ind_kst",
+    "type": "indicator",
+    "canonical_name": "Know Sure Thing",
+    "aliases": [
+      "kst",
+      "kst oscillator",
+      "kst signal",
+      "know sure thing indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Know Sure Thing (KST) oscillator is a momentum-based indicator designed to identify major stock market cycle junctures by weighting different time spans. It utilizes smoothed rates of change to better reflect primary swings and dominant market trends.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_macd",
+    "type": "indicator",
+    "canonical_name": "Moving Average Convergence Divergence",
+    "aliases": [
+      "macd",
+      "moving average convergence divergence",
+      "macd indicator",
+      "macd oscillator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The MACD is a trend-following momentum indicator that identifies changes in the strength, direction, momentum, and duration of a trend by calculating the relationship between two moving averages of an asset's price.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_mass_index",
+    "type": "indicator",
+    "canonical_name": "Mass Index",
+    "aliases": [
+      "mi",
+      "mass index indicator",
+      "mass index technical indicator",
+      "mass indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Mass Index is a technical tool that analyzes the high-low price range to identify potential trend reversals. It specifically highlights range bulges, which indicate that volatility is expanding and a trend shift may be forthcoming.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_psar",
+    "type": "indicator",
+    "canonical_name": "Parabolic Stop and Reverse",
+    "aliases": [
+      "psar",
+      "parabolic sar",
+      "stop and reverse",
+      "sar indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Parabolic Stop and Reverse (SAR) is a trend-following indicator that plots dots above or below price bars to identify potential reversals in market direction. It utilizes an acceleration factor to adjust the sensitivity of the trailing stop as the trend progresses.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_sma",
+    "type": "indicator",
+    "canonical_name": "Simple Moving Average",
+    "aliases": [
+      "sma",
+      "simple moving average",
+      "simple ma",
+      "sma indicator",
+      "moving average"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Simple Moving Average (SMA) calculates the arithmetic mean of a given data series over a specified number of periods. It is widely used to smooth out price fluctuations and identify the underlying trend direction.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_stc",
+    "type": "indicator",
+    "canonical_name": "Schaff Trend Cycle",
+    "aliases": [
+      "stc",
+      "schaff trend",
+      "stc oscillator",
+      "schaff trend cycle indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Schaff Trend Cycle is an oscillator that identifies market trends and generates buy and sell signals based on the assumption that currency trends accelerate and decelerate in cyclical patterns. It combines elements of MACD and stochastic oscillators to provide a more responsive trend-following indicator.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_trix",
+    "type": "indicator",
+    "canonical_name": "Triple Exponentially Smoothed Moving Average",
+    "aliases": [
+      "trix",
+      "triple exponential moving average",
+      "trix indicator",
+      "triple smoothed moving average"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The TRIX indicator measures the percentage rate of change of a triple exponentially smoothed moving average. It is designed to filter out insignificant price movements by emphasizing momentum through long-term smoothing.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_vortex_indicator",
+    "type": "indicator",
+    "canonical_name": "Vortex Indicator",
+    "aliases": [
+      "vi",
+      "vortex indicator",
+      "vortex",
+      "vortex trend indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Vortex Indicator is a technical tool that uses two oscillators to capture positive and negative trend movements in price. It generates bullish signals when the positive trend line crosses above the negative trend line.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_wma",
+    "type": "indicator",
+    "canonical_name": "Weighted Moving Average",
+    "aliases": [
+      "wma",
+      "weighted moving average",
+      "weighted ma",
+      "wma indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Weighted Moving Average (WMA) is a trend-following indicator that calculates the average of a data series by assigning higher importance or weight to the most recent price points. It reduces the lag found in simple moving averages by giving more significance to current market activity.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_atr",
+    "type": "indicator",
+    "canonical_name": "Average True Range",
+    "aliases": [
+      "atr",
+      "average true range",
+      "volatility indicator",
+      "atr indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Average True Range (ATR) measures market volatility by calculating the degree of price movement over a specified period. It quantifies how strong price moves are by analyzing the range of price fluctuations, with larger ranges indicating higher volatility.",
+    "metadata": {
+      "category": "volatility"
+    }
+  },
+  {
+    "id": "ind_bollinger_bands",
+    "type": "indicator",
+    "canonical_name": "Bollinger Bands",
+    "aliases": [
+      "bollinger bands",
+      "bbands",
+      "bollinger",
+      "bb",
+      "bolinger bands"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Bollinger Bands measure market volatility and identify potential overbought or oversold conditions by plotting bands at a standard deviation level above and below a simple moving average. The indicator expands during periods of high volatility and contracts when volatility decreases.",
+    "metadata": {
+      "category": "volatility"
+    }
+  },
+  {
+    "id": "ind_donchian_channel",
+    "type": "indicator",
+    "canonical_name": "Donchian Channel",
+    "aliases": [
+      "donchian channels",
+      "donchian",
+      "dc",
+      "donchian channel indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Donchian Channel is a volatility-based indicator that identifies trend strength and potential breakouts by plotting the highest high and lowest low over a specified lookback period. It creates a channel that helps traders visualize market volatility and identify entry or exit points based on price extremes.",
+    "metadata": {
+      "category": "volatility"
+    }
+  },
+  {
+    "id": "ind_indicator_mixin",
+    "type": "indicator",
+    "canonical_name": "Indicator Mixin",
+    "aliases": [
+      "indicator mixin",
+      "base indicator",
+      "indicator base class",
+      "mixin indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Indicator Mixin serves as a foundational base class designed to provide shared functionality and common structure for technical indicators within the library. It establishes the interface and core logic required for consistent implementation across various analytical tools.",
+    "metadata": {
+      "category": "utility"
+    }
+  },
+  {
+    "id": "ind_keltner_channel",
+    "type": "indicator",
+    "canonical_name": "Keltner Channel",
+    "aliases": [
+      "keltner channels",
+      "kc",
+      "keltner",
+      "keltner channel indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Keltner Channels are a trend-following volatility-based indicator that uses moving averages and Average True Range (ATR) to define price channels. These channels help traders identify potential reversals, breakouts, and overbought or oversold conditions based on the asset's price behavior relative to the established bands.",
+    "metadata": {
+      "category": "volatility"
+    }
+  },
+  {
+    "id": "ind_ulcer_index",
+    "type": "indicator",
+    "canonical_name": "Ulcer Index",
+    "aliases": [
+      "ui",
+      "ulcer index indicator",
+      "ulcer index technical indicator",
+      "ulcer index volatility"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Ulcer Index is a technical indicator that measures the depth and duration of price declines to assess investment risk. It quantifies downside risk by calculating the percentage drawdown of a security's price relative to its recent high over a specified window.",
+    "metadata": {
+      "category": "volatility"
+    }
+  },
+  {
+    "id": "ind_acc_dist_index",
+    "type": "indicator",
+    "canonical_name": "Accumulation/Distribution Index",
+    "aliases": [
+      "adi",
+      "accumulation distribution",
+      "accumulation distribution line",
+      "a/d indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Accumulation/Distribution Index (ADI) is a volume-based indicator designed to measure the cumulative flow of money into and out of an asset. It serves as a leading indicator by identifying discrepancies between price action and volume to signal potential trend reversals.",
+    "metadata": {
+      "category": "volume"
+    }
+  },
+  {
+    "id": "ind_chaikin_money_flow",
+    "type": "indicator",
+    "canonical_name": "Chaikin Money Flow",
+    "aliases": [
+      "cmf",
+      "chaikin money flow indicator",
+      "cmf indicator",
+      "money flow volume"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Chaikin Money Flow (CMF) measures the accumulation and distribution of an asset by calculating the volume-weighted average of price movement over a specified period. It provides insight into buying and selling pressure by analyzing the relationship between price and volume data.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_eom",
+    "type": "indicator",
+    "canonical_name": "Ease of Movement",
+    "aliases": [
+      "eom",
+      "emv",
+      "ease of movement indicator",
+      "ease of movement value"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Ease of Movement relates an asset's price change to its trading volume to assess the ease with which price moves. It is primarily used by traders to gauge the strength of a trend and identify potential market turning points.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_force_index",
+    "type": "indicator",
+    "canonical_name": "Force Index",
+    "aliases": [
+      "fi",
+      "force index indicator",
+      "force index oscillator",
+      "elder force index"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Force Index measures the strength of buying and selling pressure by combining price changes and trading volume. High positive values indicate strong upward momentum, while low negative values signal strong downward pressure.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_mixin",
+    "type": "indicator",
+    "canonical_name": "Indicator Mixin",
+    "aliases": [
+      "indicator mixin",
+      "base indicator",
+      "indicator base class",
+      "mixin indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Indicator Mixin serves as a foundational base class providing core functionalities and utility methods for technical analysis indicators. It facilitates standardized implementation and data handling across various indicator modules.",
+    "metadata": {
+      "category": "technical"
+    }
+  },
+  {
+    "id": "ind_mfi",
+    "type": "indicator",
+    "canonical_name": "Money Flow Index",
+    "aliases": [
+      "mfi",
+      "money flow index",
+      "volume weighted rsi",
+      "mfi indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Money Flow Index is a volume-weighted oscillator that measures buying and selling pressure by comparing positive and negative money flow. It functions similarly to the Relative Strength Index but incorporates volume data to identify overbought or oversold conditions on a scale of 0 to 100.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_nvi",
+    "type": "indicator",
+    "canonical_name": "Negative Volume Index",
+    "aliases": [
+      "nvi",
+      "negative volume index",
+      "nvi indicator",
+      "neg volume index"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Negative Volume Index (NVI) is a cumulative technical indicator that focuses on days where trading volume decreases, helping to identify trends influenced by 'uninformed' traders. It is primarily used to track price movements during periods of low activity to confirm established market trends.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_obv",
+    "type": "indicator",
+    "canonical_name": "On-Balance Volume",
+    "aliases": [
+      "obv",
+      "on balance volume",
+      "on-balance volume indicator",
+      "cumulative volume indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "On-Balance Volume (OBV) is a momentum indicator that uses volume flow to predict changes in stock price. It tracks cumulative buying and selling pressure by adding volume on up days and subtracting it on down days.",
+    "metadata": {
+      "category": "volume"
+    }
+  },
+  {
+    "id": "ind_vpt",
+    "type": "indicator",
+    "canonical_name": "Volume-Price Trend",
+    "aliases": [
+      "vpt",
+      "volume price trend",
+      "vpt indicator",
+      "volume-price trend"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Volume-Price Trend (VPT) indicator tracks the relationship between price and volume by using a running cumulative sum of volume adjusted by the percentage change in price. It is used to identify the strength of price trends by analyzing whether volume flows are supporting upward or downward movements.",
+    "metadata": {
+      "category": "volume"
+    }
+  },
+  {
+    "id": "ind_vwap",
+    "type": "indicator",
+    "canonical_name": "Volume Weighted Average Price",
+    "aliases": [
+      "vwap",
+      "volume weighted average",
+      "volume-weighted average price",
+      "vwap indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Volume Weighted Average Price (VWAP) calculates the average price of an asset weighted by its trading volume throughout the current trading day. It provides traders with a benchmark to determine whether they are buying or selling at a fair price relative to the day's total market activity.",
+    "metadata": {
+      "category": "volume"
+    }
+  },
+  {
+    "id": "ind_cumulative_return",
+    "type": "indicator",
+    "canonical_name": "Cumulative Return",
+    "aliases": [
+      "cr",
+      "cumret",
+      "cumulative return indicator",
+      "cumulative performance"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Cumulative Return indicator measures the total percentage change in the price of an asset from a specific starting point over a given time period. It provides a view of the investment's historical growth or decline relative to its initial value.",
+    "metadata": {
+      "category": "performance"
+    }
+  },
+  {
+    "id": "ind_daily_log_return",
+    "type": "indicator",
+    "canonical_name": "Daily Log Return",
+    "aliases": [
+      "dlr",
+      "log return",
+      "logarithmic return",
+      "daily log returns"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Daily Log Return indicator calculates the natural logarithm of the ratio of current price to the previous price. It is commonly used in financial modeling because log returns are additive across time, making them mathematically convenient for time-series analysis.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_daily_return",
+    "type": "indicator",
+    "canonical_name": "Daily Return",
+    "aliases": [
+      "dr",
+      "daily return indicator",
+      "daily returns",
+      "pct change"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Daily Return indicator calculates the percentage change in an asset's closing price from one day to the next. It is a fundamental metric used to measure the daily price volatility and performance of a financial instrument.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_indicator_mixin",
+    "type": "indicator",
+    "canonical_name": "Indicator Mixin",
+    "aliases": [
+      "indicator mixin",
+      "base indicator",
+      "ind mixin",
+      "mixin class"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Indicator Mixin serves as a foundational base class designed to provide shared functionality and structured behavior for technical indicators. It facilitates the standardization of indicator implementation within the library's architecture.",
+    "metadata": {
+      "category": "utility"
+    }
+  }
+]

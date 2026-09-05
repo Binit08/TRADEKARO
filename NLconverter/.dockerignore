@@ -1,0 +1,5 @@
+# -------------------------------------------------
+# Do NOT send any local environment files to the Docker daemon
+# -------------------------------------------------
+frontend/.env.local
+frontend/.env.*

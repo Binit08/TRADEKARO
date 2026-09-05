@@ -1,0 +1,1123 @@
+"""
+AST Builder - deterministic Canonical JSON to AST transformation.
+
+This module contains no LLM calls and no strategy evaluation logic. It maps a
+validated canonical JSON document into a stable data-only AST.
+"""
+
+from __future__ import annotations
+
+import json
+import logging
+import re
+from typing import Any, Callable, Dict, List, Optional, Tuple, Type
+
+from .ast_nodes import (
+    ASTNode,
+    ASTNodeMetadata,
+    AddNode,
+    AndNode,
+    ArithmeticNode,
+    ASTNodeRegistry,
+    CapitalAllocationNode,
+    ConstantNode,
+    CrossAboveNode,
+    CrossBelowNode,
+    DateNode,
+    DayOfWeekNode,
+    DivideNode,
+    EntryNode,
+    EqualNode,
+    ExitNode,
+    FilterNode,
+    GreaterEqualNode,
+    GreaterThanNode,
+    IndicatorConfig,
+    IndicatorNode,
+    LessEqualNode,
+    LessThanNode,
+    MarketReferenceNode,
+    MaxDailyLossNode,
+    MaxDrawdownNode,
+    MaxNode,
+    MaxOpenTradesNode,
+    MinNode,
+    MultiplyNode,
+    NotEqualNode,
+    NotNode,
+    OrNode,
+    PatternConfig,
+    PatternNode,
+    PositionSizeConfig,
+    PositionSizeNode,
+    RiskNode,
+    RiskRewardNode,
+    SessionNode,
+    StopLossConfig,
+    StopLossNode,
+    StrategyRootNode,
+    OperationNode,
+    SubtractNode,
+    TakeProfitConfig,
+    TakeProfitNode,
+    TimeNode,
+    TrailingStopNode,
+    AbsNode,
+    MultipleNode,
+    ReferenceIndicatorNode,
+    SequenceNode,
+    VariableAssignmentNode,
+    VariableReferenceNode,
+)
+
+
+class ASTBuildError(ValueError):
+    """Raised when canonical JSON cannot be converted to an AST."""
+
+    def __init__(
+        self,
+        message: str,
+        source_path: str = "",
+        node_type: Optional[str] = None,
+    ) -> None:
+        self.source_path = source_path
+        self.node_type = node_type
+        details = message
+        if node_type:
+            details = f"{details} (node_type={node_type})"
+        if source_path:
+            details = f"{details} at {source_path}"
+        super().__init__(details)
+
+
+ConditionBuilder = Callable[[Dict[str, Any], str], ASTNode]
+OperandBuilder = Callable[[Dict[str, Any], str], ASTNode]
+RiskBuilder = Callable[[Dict[str, Any], str], ASTNode]
+
+
+class ASTBuilder:
+    """
+    Converts Canonical JSON to an AST.
+
+    The builder is deterministic:
+    - no LLM calls
+    - no timestamps
+    - stable node IDs from traversal order
+    - stable content hashes from sorted JSON
+    """
+
+    def __init__(self) -> None:
+        self.node_counter: Dict[str, int] = {}
+        self.signal_registry: Dict[str, Dict[str, Any]] = {}
+        self.deterministic_schema: Dict[str, Any] = {}
+        self.deterministic_indicator_registry: Dict[str, Dict[str, Any]] = {}
+
+        self.condition_builders: Dict[str, ConditionBuilder] = {}
+        self.operand_builders: Dict[str, OperandBuilder] = {}
+        self.risk_builders: Dict[str, RiskBuilder] = {}
+
+        self._register_builtin_builders()
+
+    def register_condition_builder(
+        self,
+        node_type: str,
+        builder: ConditionBuilder,
+    ) -> None:
+        """Register an extension condition builder."""
+        self.condition_builders[ASTNodeRegistry.normalize(node_type)] = builder
+
+    def register_operand_builder(self, node_type: str, builder: OperandBuilder) -> None:
+        """Register an extension operand builder."""
+        self.operand_builders[ASTNodeRegistry.normalize(node_type)] = builder
+
+    def register_risk_builder(self, node_type: str, builder: RiskBuilder) -> None:
+        """Register an extension risk builder."""
+        self.risk_builders[ASTNodeRegistry.normalize(node_type)] = builder
+
+    def build(
+        self,
+        canonical_json: Dict[str, Any],
+        strategy_id: Optional[str] = "default",
+        deterministic_schema: Optional[Dict[str, Any]] = None,
+        settings_json: Optional[Dict[str, Any]] = None,
+    ) -> StrategyRootNode:
+        """
+        Convert canonical JSON into a StrategyRootNode.
+
+        Args:
+            canonical_json: Validated canonical strategy JSON.
+            strategy_id: Optional externally supplied strategy identifier.
+            deterministic_schema: Deterministic schema JSON with timeframe, market_type, etc.
+            settings_json: Deprecated alias for deterministic_schema (backward compat).
+        """
+        if not isinstance(canonical_json, dict):
+            raise ASTBuildError("Canonical JSON must be an object")
+
+        resolved_det_schema = deterministic_schema or settings_json
+
+        self.node_counter = {}
+        self.signal_registry = self._build_signal_registry(canonical_json)
+        self.deterministic_schema = self._build_deterministic_context(resolved_det_schema)
+        self.deterministic_indicator_registry = self._build_deterministic_indicator_registry(self.deterministic_schema)
+
+        resolved_strategy_id = self._resolve_strategy_id(canonical_json, strategy_id)
+        root = StrategyRootNode(
+            node_id=f"strategy_{self._slug(resolved_strategy_id)}",
+            strategy_id=resolved_strategy_id,
+            metadata=self._metadata("", canonical_json),
+        )
+
+        # Check operation (new schema format)
+        operation_list = canonical_json.get("operation")
+        if isinstance(operation_list, list) and len(operation_list) > 0:
+            for op_idx, operation in enumerate(operation_list):
+                if not isinstance(operation, dict):
+                    continue
+
+                op_node = OperationNode(
+                    node_id=self._generate_node_id("OPERATION"),
+                    metadata=self._metadata(f"operation[{op_idx}]", operation),
+                )
+
+                # entry is a list of condition nodes in the new schema
+                entry_list = operation.get("entry") or []
+                if isinstance(entry_list, dict):
+                    entry_list = [entry_list]
+                for entry_idx, entry_data in enumerate(entry_list):
+                    if self._has_buildable_condition(entry_data) and isinstance(entry_data, dict):
+                        built_entry = self._build_core_wrapper(
+                            EntryNode,
+                            entry_data,
+                            f"operation[{op_idx}].entry[{entry_idx}]",
+                            "ENTRY",
+                        )
+                        op_node.entry_nodes.append(built_entry)
+
+                # exit is a list of condition nodes in the new schema
+                exit_list = operation.get("exit") or []
+                if isinstance(exit_list, dict):
+                    exit_list = [exit_list]
+                for exit_idx, exit_data in enumerate(exit_list):
+                    if self._has_buildable_condition(exit_data) and isinstance(exit_data, dict):
+                        built_exit = self._build_core_wrapper(
+                            ExitNode,
+                            exit_data,
+                            f"operation[{op_idx}].exit[{exit_idx}]",
+                            "EXIT",
+                        )
+                        op_node.exit_nodes.append(built_exit)
+
+                root.operation_nodes.append(op_node)
+
+            # Assign single references for backward compatibility only if not compiling operation nodes
+            # (Keeping them None to avoid duplicate entry/exit declarations floating in StrategyRootNode)
+            pass
+        else:
+            # Fallback to conditions (old format)
+            conditions = canonical_json.get("conditions") or {}
+            if not isinstance(conditions, dict):
+                raise ASTBuildError("'conditions' must be an object", "conditions")
+
+            entry_data = conditions.get("entry")
+            if self._has_buildable_condition(entry_data) and isinstance(entry_data, dict):
+                root.entry_node = self._build_core_wrapper(
+                    EntryNode,
+                    entry_data,
+                    "conditions.entry",
+                    "ENTRY",
+                )
+
+            exit_data = conditions.get("exit")
+            if self._has_buildable_condition(exit_data) and isinstance(exit_data, dict):
+                root.exit_node = self._build_core_wrapper(
+                    ExitNode,
+                    exit_data,
+                    "conditions.exit",
+                    "EXIT",
+                )
+
+        risk_data = canonical_json.get("risk") or {}
+        if risk_data:
+            root.risk_node = self._build_risk_tree(risk_data, "risk")
+
+        filters_data = canonical_json.get("filters") or []
+        if isinstance(filters_data, dict):
+            filters_data = [filters_data]
+        if not isinstance(filters_data, list):
+            raise ASTBuildError("'filters' must be a list or object", "filters")
+
+        for index, filter_data in enumerate(filters_data):
+            if self._has_buildable_condition(filter_data):
+                root.filter_nodes.append(
+                    self._build_core_wrapper(
+                        FilterNode,
+                        filter_data,
+                        f"filters[{index}]",
+                        "FILTER",
+                    )
+                )
+
+        variables_data = canonical_json.get("variables") or []
+        if isinstance(variables_data, dict):
+            variables_data = [variables_data]
+        if not isinstance(variables_data, list):
+            raise ASTBuildError("'variables' must be a list or object", "variables")
+
+        for index, var_data in enumerate(variables_data):
+            if isinstance(var_data, dict) and var_data.get("type", "").upper() == "VARIABLE_ASSIGNMENT":
+                root.variable_nodes.append(
+                    self._build_variable_assignment_node(
+                        var_data,
+                        f"variables[{index}]"
+                    )
+                )
+
+        return root
+
+    def _register_builtin_builders(self) -> None:
+        for node_type in ("AND", "OR", "NOT"):
+            self.register_condition_builder(node_type, self._build_logical_node)
+
+        for node_type in (
+            "GREATER_THAN",
+            "LESS_THAN",
+            "GREATER_THAN_EQUAL",
+            "LESS_THAN_EQUAL",
+            "EQUAL",
+            "NOT_EQUAL",
+            "GT",
+            "LT",
+            "GTE",
+            "LTE",
+            "EQ",
+            "NEQ",
+        ):
+            self.register_condition_builder(node_type, self._build_comparison_node)
+
+        for node_type in ("CROSS_ABOVE", "CROSS_BELOW"):
+            self.register_condition_builder(node_type, self._build_cross_node)
+
+        self.register_condition_builder("SEQUENCE", self._build_sequence_node)
+
+        for node_type in ("TIME", "DATE", "SESSION", "DAY_OF_WEEK"):
+            self.register_condition_builder(node_type, self._build_time_node)
+
+        for node_type in (
+            "INDICATOR",
+            "CONSTANT",
+            "MARKET_REFERENCE",
+            "MARKET_DATA",
+            "PATTERN",
+            "ARITHMETIC",
+            "ADD",
+            "SUBTRACT",
+            "MULTIPLY",
+            "DIVIDE",
+            "MIN",
+            "MAX",
+            "ABS",
+            "SUB",
+            "MUL",
+            "DIV",
+            "VARIABLE_REFERENCE",
+        ):
+            self.register_operand_builder(node_type, self._build_operand_by_type)
+
+        for node_type in (
+            "STOP_LOSS",
+            "TAKE_PROFIT",
+            "TRAILING_STOP",
+            "POSITION_SIZE",
+            "RISK_REWARD",
+            "MAX_DRAWDOWN",
+            "MAX_DAILY_LOSS",
+            "MAX_OPEN_TRADES",
+            "CAPITAL_ALLOCATION",
+        ):
+            self.register_risk_builder(node_type, self._build_risk_node_by_type)
+
+    def _build_core_wrapper(
+        self,
+        wrapper_class: type,
+        node_data: Dict[str, Any],
+        source_path: str,
+        id_type: str,
+    ) -> ASTNode:
+        wrapper = wrapper_class(
+            node_id=self._generate_node_id(id_type),
+            metadata=self._metadata(source_path, node_data),
+        )
+        wrapper.children.append(self._build_condition_tree(node_data, source_path))
+        return wrapper
+
+    def _build_condition_tree(self, node_data: Dict[str, Any], source_path: str) -> ASTNode:
+        """Recursively build a condition tree."""
+        if not isinstance(node_data, dict):
+            raise ASTBuildError("Condition node must be an object", source_path)
+
+        raw_type = node_data.get("type")
+        if not raw_type:
+            raise ASTBuildError("Missing required field 'type'", source_path)
+
+        node_type = ASTNodeRegistry.normalize(raw_type)
+        builder = self.condition_builders.get(node_type)
+        if not builder:
+            if node_type in self.operand_builders:
+                return self._build_operand(node_data, source_path)
+            raise ASTBuildError("Unknown condition type", source_path, node_type)
+
+        return builder(node_data, source_path)
+
+    def _build_logical_node(self, node_data: Dict[str, Any], source_path: str) -> ASTNode:
+        node_type = ASTNodeRegistry.normalize(node_data["type"])
+        node_class = {"AND": AndNode, "OR": OrNode, "NOT": NotNode}[node_type]
+        node = node_class(
+            node_id=self._generate_node_id(node_type),
+            metadata=self._metadata(source_path, node_data),
+        )
+
+        if node_type == "NOT":
+            child_data = node_data.get("child")
+            children_data = node_data.get("children")
+            if child_data is None and isinstance(children_data, list):
+                if len(children_data) != 1:
+                    raise ASTBuildError(
+                        "NOT node requires exactly one child",
+                        source_path,
+                        node_type,
+                    )
+                child_data = children_data[0]
+            if child_data is None:
+                raise ASTBuildError("NOT node requires 'child'", source_path, node_type)
+            node.children.append(self._build_condition_tree(child_data, f"{source_path}.child"))
+            return node
+
+        children = node_data.get("children")
+        if not isinstance(children, list) or not children:
+            raise ASTBuildError(
+                f"{node_type} node requires a non-empty 'children' list",
+                source_path,
+                node_type,
+            )
+
+        for index, child_data in enumerate(children):
+            node.children.append(
+                self._build_condition_tree(child_data, f"{source_path}.children[{index}]")
+            )
+        return node
+
+    def _build_comparison_node(self, node_data: Dict[str, Any], source_path: str) -> ASTNode:
+        node_type = ASTNodeRegistry.normalize(node_data["type"])
+        left_data, right_data = self._binary_operands(node_data, source_path)
+        node_class = {
+            "GREATER_THAN": GreaterThanNode,
+            "LESS_THAN": LessThanNode,
+            "GREATER_THAN_EQUAL": GreaterEqualNode,
+            "LESS_THAN_EQUAL": LessEqualNode,
+            "EQUAL": EqualNode,
+            "NOT_EQUAL": NotEqualNode,
+        }[node_type]
+        node = node_class(
+            node_id=self._generate_node_id(node_type),
+            metadata=self._metadata(source_path, node_data),
+        )
+        node.children = [
+            self._build_operand(left_data, f"{source_path}.operand_1"),
+            self._build_operand(right_data, f"{source_path}.operand_2"),
+        ]
+        return node
+
+    def _build_cross_node(self, node_data: Dict[str, Any], source_path: str) -> ASTNode:
+        node_type = ASTNodeRegistry.normalize(node_data["type"])
+        left_data, right_data = self._binary_operands(node_data, source_path)
+        node_class = CrossAboveNode if node_type == "CROSS_ABOVE" else CrossBelowNode
+        node = node_class(
+            node_id=self._generate_node_id(node_type),
+            metadata=self._metadata(source_path, node_data),
+            lookback_periods=int(node_data.get("lookback_periods") or 1),
+        )
+        node.children = [
+            self._build_operand(left_data, f"{source_path}.operand_1"),
+            self._build_operand(right_data, f"{source_path}.operand_2"),
+        ]
+        return node
+
+    def _build_sequence_node(self, node_data: Dict[str, Any], source_path: str) -> ASTNode:
+        metadata = self._metadata(source_path, node_data)
+        count = int(node_data.get("count") or 1)
+        direction = node_data.get("direction") or "BACKWARD"
+        
+        node = SequenceNode(
+            node_id=self._generate_node_id("SEQUENCE"),
+            metadata=metadata,
+            count=count,
+            direction=str(direction).upper()
+        )
+        
+        condition_data = node_data.get("condition")
+        if not condition_data:
+            raise ASTBuildError("SEQUENCE node requires 'condition'", source_path)
+            
+        node.children.append(self._build_condition_tree(condition_data, f"{source_path}.condition"))
+        return node
+
+    def _build_time_node(self, node_data: Dict[str, Any], source_path: str) -> ASTNode:
+        node_type = ASTNodeRegistry.normalize(node_data["type"])
+        metadata = self._metadata(source_path, node_data)
+        if node_type == "TIME":
+            return TimeNode(
+                node_id=self._generate_node_id("TIME"),
+                metadata=metadata,
+                start_time=node_data.get("start_time", ""),
+                end_time=node_data.get("end_time", ""),
+                timezone=node_data.get("timezone"),
+            )
+        if node_type == "DATE":
+            return DateNode(
+                node_id=self._generate_node_id("DATE"),
+                metadata=metadata,
+                start_date=node_data.get("start_date", ""),
+                end_date=node_data.get("end_date", ""),
+            )
+        if node_type == "SESSION":
+            return SessionNode(
+                node_id=self._generate_node_id("SESSION"),
+                metadata=metadata,
+                sessions=list(node_data.get("sessions", [])),
+            )
+        return DayOfWeekNode(
+            node_id=self._generate_node_id("DAY_OF_WEEK"),
+            metadata=metadata,
+            days=list(node_data.get("days", [])),
+        )
+
+    def _build_operand(self, operand_data: Dict[str, Any], source_path: str) -> ASTNode:
+        """Build an operand node or operand subtree."""
+        if not isinstance(operand_data, dict):
+            raise ASTBuildError("Operand must be an object", source_path)
+
+        raw_type = operand_data.get("type")
+        if not raw_type:
+            raise ASTBuildError("Missing operand 'type'", source_path)
+
+        node_type = self._normalize_operand_type(raw_type)
+        builder = self.operand_builders.get(node_type)
+        if not builder:
+            if node_type in self.condition_builders:
+                return self._build_condition_tree(operand_data, source_path)
+            raise ASTBuildError("Unknown operand type", source_path, node_type)
+
+        return builder(operand_data, source_path)
+
+    def _build_operand_by_type(self, operand_data: Dict[str, Any], source_path: str) -> ASTNode:
+        node_type = self._normalize_operand_type(operand_data["type"])
+
+        if node_type == "INDICATOR":
+            return self._build_indicator_node(operand_data, source_path)
+        if node_type == "CONSTANT":
+            return self._build_constant_node(operand_data, source_path)
+        if node_type == "MARKET_REFERENCE":
+            return self._build_market_reference_node(operand_data, source_path)
+        if node_type == "PATTERN":
+            return self._build_pattern_node(operand_data, source_path)
+        if node_type in {
+            "ARITHMETIC",
+            "ADD",
+            "SUBTRACT",
+            "MULTIPLY",
+            "DIVIDE",
+            "MIN",
+            "MAX",
+            "ABS",
+        }:
+            return self._build_arithmetic_node(operand_data, source_path)
+        if node_type == "VARIABLE_REFERENCE":
+            return self._build_variable_reference_node(operand_data, source_path)
+
+        raise ASTBuildError("Unsupported operand type", source_path, node_type)
+
+    def _build_indicator_node(
+        self,
+        indicator_data: Dict[str, Any],
+        source_path: str,
+    ) -> IndicatorNode:
+        signal_config = self._lookup_indicator_signal(indicator_data)
+        indicator_type = (
+            indicator_data.get("indicator_type")
+            or indicator_data.get("name")
+            or signal_config.get("indicator_type")
+            or signal_config.get("name")
+        )
+        if not indicator_type:
+            ref_val = indicator_data.get("indicator_ref") or indicator_data.get("indicator_id") or indicator_data.get("ref")
+            if ref_val:
+                raise ASTBuildError(f"Unknown indicator reference: '{ref_val}'", source_path)
+            raise ASTBuildError("Indicator requires 'indicator_type' or signal reference", source_path)
+
+        parameters = dict(signal_config.get("parameters") or signal_config.get("params") or {})
+        parameters.update(indicator_data.get("parameters") or indicator_data.get("params") or {})
+
+        output_property = (
+            indicator_data.get("property")
+            or indicator_data.get("output_property")
+            or signal_config.get("output_property")
+            or "value"
+        )
+        timeframe = (
+            self._lookup_deterministic_timeframe(indicator_data)
+            or self._get_execution_context("timeframe")
+            or "1d"
+        )
+
+        config = IndicatorConfig(
+            indicator_type=str(indicator_type).upper(),
+            parameters=parameters,
+            output_property=str(output_property),
+            timeframe=str(timeframe),
+        )
+        return IndicatorNode(
+            node_id=self._generate_node_id("INDICATOR"),
+            metadata=self._metadata(source_path, indicator_data),
+            indicator_config=config,
+        )
+
+    def _build_constant_node(
+        self,
+        constant_data: Dict[str, Any],
+        source_path: str,
+    ) -> ConstantNode:
+        if "value" not in constant_data:
+            raise ASTBuildError("Constant requires 'value'", source_path)
+        return ConstantNode(
+            node_id=self._generate_node_id("CONSTANT"),
+            metadata=self._metadata(source_path, constant_data),
+            value=constant_data.get("value"),
+        )
+
+    def _build_market_reference_node(
+        self,
+        market_data: Dict[str, Any],
+        source_path: str,
+    ) -> MarketReferenceNode:
+        data_type = market_data.get("data_type") or market_data.get("field")
+        if not data_type:
+            raise ASTBuildError("Market reference requires 'data_type'", source_path)
+        return MarketReferenceNode(
+            node_id=self._generate_node_id("MARKET_REFERENCE"),
+            metadata=self._metadata(source_path, market_data),
+            data_type=str(data_type).upper(),
+            lookback_periods=int(market_data.get("lookback_periods") or market_data.get("lookback") or 0),
+            timeframe=self._get_execution_context("timeframe") or "1d",
+        )
+
+    def _build_pattern_node(
+        self,
+        pattern_data: Dict[str, Any],
+        source_path: str,
+    ) -> PatternNode:
+        pattern_type = pattern_data.get("pattern_type") or pattern_data.get("name")
+        if not pattern_type:
+            raise ASTBuildError("Pattern requires 'pattern_type'", source_path)
+        config = PatternConfig(
+            pattern_type=str(pattern_type).upper(),
+            parameters=pattern_data.get("parameters") or pattern_data.get("params") or {},
+            lookback_periods=int(pattern_data.get("lookback_periods") or 50),
+        )
+        return PatternNode(
+            node_id=self._generate_node_id("PATTERN"),
+            metadata=self._metadata(source_path, pattern_data),
+            pattern_config=config,
+        )
+
+    def _build_arithmetic_node(
+        self,
+        arithmetic_data: Dict[str, Any],
+        source_path: str,
+    ) -> ArithmeticNode:
+        raw_operator = (
+            arithmetic_data.get("operator")
+            or arithmetic_data.get("operation")
+            or arithmetic_data.get("type")
+        )
+        operator = ASTNodeRegistry.normalize(str(raw_operator))
+        if operator == "ARITHMETIC":
+            raise ASTBuildError("Arithmetic node requires 'operator'", source_path)
+
+        node_classes = {
+            "ADD": AddNode,
+            "SUBTRACT": SubtractNode,
+            "MULTIPLY": MultiplyNode,
+            "DIVIDE": DivideNode,
+            "MIN": MinNode,
+            "MAX": MaxNode,
+            "ABS": AbsNode,
+        }
+        node_class = node_classes.get(operator)
+        if not node_class:
+            raise ASTBuildError("Unknown arithmetic operator", source_path, operator)
+
+        operands = arithmetic_data.get("operands")
+        if operands is None:
+            operands = arithmetic_data.get("children")
+        if operands is None:
+            if "operand_1" in arithmetic_data and "operand_2" in arithmetic_data:
+                operands = [arithmetic_data["operand_1"], arithmetic_data["operand_2"]]
+            elif "operand" in arithmetic_data:
+                operands = [arithmetic_data["operand"]]
+            elif "child" in arithmetic_data:
+                operands = [arithmetic_data["child"]]
+        if isinstance(operands, dict):
+            operands = [operands]
+        if not isinstance(operands, list) or not operands:
+            raise ASTBuildError("Arithmetic node requires operands", source_path, operator)
+        if operator == "ABS" and len(operands) != 1:
+            raise ASTBuildError("ABS requires exactly one operand", source_path, operator)
+
+        node = node_class(
+            node_id=self._generate_node_id(operator),
+            metadata=self._metadata(source_path, arithmetic_data),
+        )
+        node.children = [
+            self._build_operand(operand, f"{source_path}.operands[{index}]")
+            for index, operand in enumerate(operands)
+        ]
+        return node
+
+    def _build_variable_assignment_node(self, var_data: Dict[str, Any], source_path: str) -> ASTNode:
+        variable_name = var_data.get("variable_name") or var_data.get("name")
+        if not variable_name:
+            raise ASTBuildError("Variable assignment requires 'variable_name'", source_path)
+
+        node = VariableAssignmentNode(
+            node_id=self._generate_node_id("VARIABLE_ASSIGNMENT"),
+            metadata=self._metadata(source_path, var_data),
+            variable_name=str(variable_name),
+        )
+
+        condition_data = var_data.get("condition")
+        if not condition_data:
+            raise ASTBuildError("Variable assignment requires 'condition'", source_path)
+        node.children.append(self._build_condition_tree(condition_data, f"{source_path}.condition"))
+
+        value_data = var_data.get("value")
+        if not value_data:
+            raise ASTBuildError("Variable assignment requires 'value'", source_path)
+        node.children.append(self._build_operand(value_data, f"{source_path}.value"))
+
+        return node
+
+    def _build_variable_reference_node(self, var_data: Dict[str, Any], source_path: str) -> ASTNode:
+        variable_name = var_data.get("variable_name") or var_data.get("name")
+        if not variable_name:
+            raise ASTBuildError("Variable reference requires 'variable_name'", source_path)
+
+        return VariableReferenceNode(
+            node_id=self._generate_node_id("VARIABLE_REFERENCE"),
+            metadata=self._metadata(source_path, var_data),
+            variable_name=str(variable_name),
+        )
+
+    def _build_risk_tree(
+        self,
+        risk_data: Dict[str, Any],
+        source_path: str,
+    ) -> Optional[RiskNode]:
+        """Build the risk declaration subtree."""
+        if not isinstance(risk_data, dict):
+            raise ASTBuildError("'risk' must be an object", source_path)
+
+        risk_root = RiskNode(
+            node_id=self._generate_node_id("RISK"),
+            metadata=self._metadata(source_path, risk_data),
+        )
+
+        explicit_items = risk_data.get("items") or []
+        if isinstance(explicit_items, dict):
+            explicit_items = [explicit_items]
+        if not isinstance(explicit_items, list):
+            raise ASTBuildError("'risk.items' must be a list or object", f"{source_path}.items")
+
+        for index, item in enumerate(explicit_items):
+            risk_node = self._build_explicit_risk_item(item, f"{source_path}.items[{index}]")
+            if risk_node:
+                risk_root.children.append(risk_node)
+
+        keyed_builds = (
+            ("stop_loss", "STOP_LOSS"),
+            ("take_profit", "TAKE_PROFIT"),
+            ("trailing_stop", "TRAILING_STOP"),
+            ("position_size", "POSITION_SIZE"),
+            ("risk_reward", "RISK_REWARD"),
+        )
+        for key, node_type in keyed_builds:
+            value = risk_data.get(key)
+            if self._has_buildable_risk_value(value) and isinstance(value, dict):
+                risk_kind = value.get("type")
+                risk_root.children.append(
+                    self._build_risk_node_by_type(
+                        {**value, "kind": risk_kind, "type": node_type},
+                        f"{source_path}.{key}",
+                    )
+                )
+
+        constraints = risk_data.get("portfolio_constraints") or risk_data.get("constraints") or {}
+        if constraints:
+            if not isinstance(constraints, dict):
+                raise ASTBuildError(
+                    "'portfolio_constraints' must be an object",
+                    f"{source_path}.portfolio_constraints",
+                )
+            self._append_portfolio_constraints(risk_root, constraints, source_path)
+
+        if not risk_root.children:
+            return None
+        return risk_root
+
+    def _build_explicit_risk_item(
+        self,
+        risk_item: Dict[str, Any],
+        source_path: str,
+    ) -> Optional[ASTNode]:
+        if not isinstance(risk_item, dict):
+            raise ASTBuildError("Risk item must be an object", source_path)
+        raw_type = risk_item.get("type")
+        if not raw_type:
+            return None
+        node_type = ASTNodeRegistry.normalize(raw_type)
+        builder = self.risk_builders.get(node_type)
+        if not builder:
+            raise ASTBuildError("Unknown risk node type", source_path, node_type)
+        return builder(risk_item, source_path)
+
+    def _build_risk_node_by_type(self, risk_data: Dict[str, Any], source_path: str) -> ASTNode:
+        node_type = ASTNodeRegistry.normalize(risk_data["type"])
+        metadata = self._metadata(source_path, risk_data)
+
+        if node_type == "STOP_LOSS":
+            atr_mult = risk_data.get("atr_multiple")
+            indicator_ref = risk_data.get("indicator_ref")
+            config = StopLossConfig(
+                stop_loss_type=str(risk_data.get("stop_loss_type") or risk_data.get("kind") or risk_data.get("type", "")),
+                value=risk_data.get("value"),
+                reference=risk_data.get("reference", "entry_price"),
+                direction=risk_data.get("direction"),
+                atr_multiple=atr_mult,
+                price_level=risk_data.get("price_level"),
+                indicator_ref=indicator_ref,
+                trailing=bool(risk_data.get("trailing", False)),
+            )
+            node = StopLossNode(
+                node_id=self._generate_node_id("STOP_LOSS"),
+                metadata=metadata,
+                config=config,
+            )
+            # Add explicit child nodes to map StopLoss parameters (MULTIPLE and REFERENCE_INDICATOR)
+            if atr_mult is not None:
+                node.children.append(
+                    MultipleNode(
+                        node_id=self._generate_node_id("MULTIPLE"),
+                        metadata=metadata,
+                        value=float(atr_mult),
+                    )
+                )
+            if indicator_ref:
+                node.children.append(
+                    ReferenceIndicatorNode(
+                        node_id=self._generate_node_id("REFERENCE_INDICATOR"),
+                        metadata=metadata,
+                        indicator_ref=str(indicator_ref),
+                    )
+                )
+            return node
+
+        if node_type == "TAKE_PROFIT":
+            tp_config = TakeProfitConfig(
+                take_profit_type=str(risk_data.get("take_profit_type") or risk_data.get("kind") or risk_data.get("type", "")),
+                value=risk_data.get("value"),
+                target_indicator=risk_data.get("target_indicator"),
+                price_level=risk_data.get("price_level"),
+                risk_reward_ratio=risk_data.get("risk_reward_ratio"),
+                indicator_ref=risk_data.get("indicator_ref"),
+            )
+            node = TakeProfitNode(
+                node_id=self._generate_node_id("TAKE_PROFIT"),
+                metadata=metadata,
+                config=tp_config,
+            )
+            target_ind = risk_data.get("target_indicator") or risk_data.get("indicator_ref")
+            if target_ind:
+                indicator_node = self._build_indicator_node(
+                    {"indicator_ref": target_ind},
+                    f"{source_path}.target_indicator",
+                )
+                node.children.append(indicator_node)
+            return node
+
+        if node_type == "TRAILING_STOP":
+            indicator_ref = risk_data.get("indicator_ref")
+            node = TrailingStopNode(
+                node_id=self._generate_node_id("TRAILING_STOP"),
+                metadata=metadata,
+                trail_amount=risk_data.get("trail_amount", risk_data.get("value")),
+                trail_type=str(risk_data.get("trail_type") or risk_data.get("kind") or "PERCENTAGE"),
+                reference=risk_data.get("reference", "highest_price"),
+                indicator_ref=indicator_ref,
+            )
+            if indicator_ref:
+                indicator_node = self._build_indicator_node(
+                    {"indicator_ref": indicator_ref},
+                    f"{source_path}.indicator_ref",
+                )
+                node.children.append(indicator_node)
+            return node
+
+        if node_type == "POSITION_SIZE":
+            ps_config = PositionSizeConfig(
+                size_type=str(risk_data.get("size_type") or risk_data.get("kind") or risk_data.get("type", "")),
+                value=risk_data.get("value"),
+                max_size=risk_data.get("max_size"),
+                min_size=risk_data.get("min_size"),
+            )
+            return PositionSizeNode(
+                node_id=self._generate_node_id("POSITION_SIZE"),
+                metadata=metadata,
+                config=ps_config,
+            )
+
+        if node_type == "RISK_REWARD":
+            ratio = risk_data.get("ratio", risk_data.get("risk_reward_ratio", risk_data.get("value", 2.0)))
+            return RiskRewardNode(
+                node_id=self._generate_node_id("RISK_REWARD"),
+                metadata=metadata,
+                ratio=float(ratio),
+            )
+
+        if node_type == "MAX_DRAWDOWN":
+            return MaxDrawdownNode(
+                node_id=self._generate_node_id("MAX_DRAWDOWN"),
+                metadata=metadata,
+                max_drawdown_percent=risk_data.get("max_drawdown_percent", risk_data.get("value")),
+            )
+
+        if node_type == "MAX_DAILY_LOSS":
+            return MaxDailyLossNode(
+                node_id=self._generate_node_id("MAX_DAILY_LOSS"),
+                metadata=metadata,
+                max_loss_amount=risk_data.get("max_loss_amount", risk_data.get("value")),
+            )
+
+        if node_type == "MAX_OPEN_TRADES":
+            return MaxOpenTradesNode(
+                node_id=self._generate_node_id("MAX_OPEN_TRADES"),
+                metadata=metadata,
+                max_trades=risk_data.get("max_trades", risk_data.get("value")),
+            )
+
+        if node_type == "CAPITAL_ALLOCATION":
+            return CapitalAllocationNode(
+                node_id=self._generate_node_id("CAPITAL_ALLOCATION"),
+                metadata=metadata,
+                allocation_percent=risk_data.get("allocation_percent", risk_data.get("value")),
+            )
+
+        raise ASTBuildError("Unsupported risk node type", source_path, node_type)
+
+    def _append_portfolio_constraints(
+        self,
+        risk_root: RiskNode,
+        constraints: Dict[str, Any],
+        source_path: str,
+    ) -> None:
+        mappings = {
+            "max_drawdown": ("MAX_DRAWDOWN", "max_drawdown_percent"),
+            "max_drawdown_percent": ("MAX_DRAWDOWN", "max_drawdown_percent"),
+            "max_daily_loss": ("MAX_DAILY_LOSS", "max_loss_amount"),
+            "max_loss_amount": ("MAX_DAILY_LOSS", "max_loss_amount"),
+            "max_open_trades": ("MAX_OPEN_TRADES", "max_trades"),
+            "max_trades": ("MAX_OPEN_TRADES", "max_trades"),
+            "capital_allocation": ("CAPITAL_ALLOCATION", "allocation_percent"),
+            "allocation_percent": ("CAPITAL_ALLOCATION", "allocation_percent"),
+        }
+        for key, value in constraints.items():
+            if value is None or key not in mappings:
+                continue
+            node_type, value_key = mappings[key]
+            risk_root.children.append(
+                self._build_risk_node_by_type(
+                    {"type": node_type, value_key: value, "value": value},
+                    f"{source_path}.portfolio_constraints.{key}",
+                )
+            )
+
+    def _binary_operands(
+        self,
+        node_data: Dict[str, Any],
+        source_path: str,
+    ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        left = (
+            node_data.get("operand_1")
+            or node_data.get("left")
+            or node_data.get("lhs")
+        )
+        right = (
+            node_data.get("operand_2")
+            or node_data.get("right")
+            or node_data.get("rhs")
+        )
+
+        operands = node_data.get("operands")
+        if (left is None or right is None) and isinstance(operands, list):
+            if len(operands) != 2:
+                raise ASTBuildError("Binary node requires exactly two operands", source_path)
+            left, right = operands
+
+        if left is None:
+            raise ASTBuildError("Missing left operand", f"{source_path}.operand_1")
+        if right is None:
+            raise ASTBuildError("Missing right operand", f"{source_path}.operand_2")
+        return left, right
+
+    def _build_signal_registry(self, canonical_json: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
+        signals = canonical_json.get("signals") or {}
+        indicators = signals.get("indicators", []) if isinstance(signals, dict) else []
+        registry: Dict[str, Dict[str, Any]] = {}
+        if not isinstance(indicators, list):
+            return registry
+        for index, indicator in enumerate(indicators):
+            if not isinstance(indicator, dict):
+                continue
+            indicator_id = indicator.get("id") or indicator.get("indicator_id") or f"indicator_{index}"
+            registry[str(indicator_id)] = dict(indicator)
+        return registry
+
+    def _build_deterministic_context(
+        self,
+        deterministic_schema: Optional[Dict[str, Any]],
+    ) -> Dict[str, Any]:
+        if deterministic_schema is None:
+            return {}
+        if not isinstance(deterministic_schema, dict):
+            raise ASTBuildError("Deterministic schema must be an object")
+        return dict(deterministic_schema)
+
+    def _build_deterministic_indicator_registry(
+        self,
+        deterministic_schema: Dict[str, Any],
+    ) -> Dict[str, Dict[str, Any]]:
+        signals = deterministic_schema.get("signals") or {}
+        indicators: List[Dict[str, Any]] = []
+        if isinstance(signals, dict):
+            indicators = signals.get("indicators") or []
+        if not isinstance(indicators, list):
+            indicators = []
+        registry: Dict[str, Dict[str, Any]] = {}
+        if not isinstance(indicators, list):
+            return registry
+        for index, indicator in enumerate(indicators):
+            if not isinstance(indicator, dict):
+                continue
+            indicator_id = indicator.get("id") or indicator.get("indicator_id") or f"indicator_{index}"
+            registry[str(indicator_id)] = dict(indicator)
+        return registry
+
+    def _lookup_indicator_signal(self, indicator_data: Dict[str, Any]) -> Dict[str, Any]:
+        signal_ref = (
+            indicator_data.get("indicator_ref")
+            or indicator_data.get("indicator_id")
+            or indicator_data.get("ref")
+        )
+        if signal_ref is None:
+            return {}
+
+        signal = self.signal_registry.get(str(signal_ref))
+        if signal:
+            return signal
+        return self.deterministic_indicator_registry.get(str(signal_ref), {})
+
+    def _get_execution_context(self, key: str) -> Optional[Any]:
+        """Safely read a value from deterministic_schema.execution_context."""
+        ec = self.deterministic_schema.get("execution_context")
+        if isinstance(ec, dict):
+            return ec.get(key)
+        return None
+
+    def _lookup_deterministic_timeframe(self, indicator_data: Dict[str, Any]) -> Optional[str]:
+        """Look up timeframe from deterministic schema indicator registry."""
+        signal_ref = (
+            indicator_data.get("indicator_ref")
+            or indicator_data.get("indicator_id")
+            or indicator_data.get("ref")
+        )
+        if signal_ref:
+            det_indicator = self.deterministic_indicator_registry.get(str(signal_ref), {})
+            tf = det_indicator.get("timeframe")
+            if tf:
+                return str(tf)
+        return None
+
+    def _resolve_strategy_id(
+        self,
+        canonical_json: Dict[str, Any],
+        strategy_id: Optional[str],
+    ) -> str:
+        if strategy_id and strategy_id != "default":
+            return str(strategy_id)
+        metadata = canonical_json.get("metadata") or {}
+        return str(
+            canonical_json.get("strategy_id")
+            or canonical_json.get("id")
+            or metadata.get("strategy_id")
+            or metadata.get("id")
+            or strategy_id
+            or "default"
+        )
+
+    def _has_buildable_condition(self, node_data: Any) -> bool:
+        if not isinstance(node_data, dict):
+            return False
+        if not node_data.get("type"):
+            return False
+        parse_status = node_data.get("parse_status") or {}
+        if parse_status.get("state") == "NOT_APPLICABLE":
+            return False
+        return True
+
+    def _has_buildable_risk_value(self, value: Any) -> bool:
+        if not isinstance(value, dict):
+            return False
+        raw_type = value.get("type")
+        if raw_type is None:
+            return False
+        return str(raw_type).strip() != ""
+
+    def _normalize_operand_type(self, node_type: str) -> str:
+        raw = str(node_type).upper()
+        lower_aliases = {
+            "INDICATOR": "INDICATOR",
+            "MARKET_DATA": "MARKET_REFERENCE",
+            "MARKET_REFERENCE": "MARKET_REFERENCE",
+            "CONSTANT": "CONSTANT",
+            "PATTERN": "PATTERN",
+            "ARITHMETIC": "ARITHMETIC",
+        }
+        return lower_aliases.get(raw, ASTNodeRegistry.normalize(raw))
+
+    def _metadata(self, source_path: str, node_data: Optional[Dict[str, Any]] = None) -> ASTNodeMetadata:
+        nd = node_data or {}
+        metadata = ASTNodeMetadata(source_path=source_path)
+        existing_meta = nd.get("metadata")
+        if isinstance(existing_meta, dict):
+            metadata.created_at = str(existing_meta.get("created_at", ""))
+            metadata.version = str(existing_meta.get("version", "1.0.0"))
+            metadata.tags = dict(existing_meta.get("tags", {}))
+        return metadata
+
+    def _generate_node_id(self, node_type: str) -> str:
+        """Generate a stable node ID from normalized type and traversal order."""
+        normalized = ASTNodeRegistry.normalize(node_type)
+        counter = self.node_counter.get(normalized, 0)
+        self.node_counter[normalized] = counter + 1
+        return f"{self._slug(normalized)}_{counter}"
+
+    def _slug(self, value: str) -> str:
+        return re.sub(r"[^a-z0-9]+", "_", str(value).lower()).strip("_") or "node"

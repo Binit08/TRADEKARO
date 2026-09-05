@@ -1,0 +1,101 @@
+site_name: TradeKaro NLconverter
+site_description: Natural Language to AST Trading Strategy Compiler
+site_author: TradeKaro Team
+
+repo_name: TradeKaro/NLconverter
+repo_url: https://github.com/TradeKaro/NLconverter
+
+docs_dir: documentation
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+  palette:
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: ["."]
+          options:
+            docstring_style: google
+            show_root_heading: true
+            show_source: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - tables
+
+nav:
+  - Home: index.md
+  - Quick Start: QUICK_START.md
+  - Phase 1 — Foundation:
+      - PRD: PRD.md
+      - Architecture: ARCHITECTURE.md
+      - Contributing: CONTRIBUTING.md
+  - Phase 2 — Technical Reference:
+      - API Reference: API_REFERENCE.md
+      - Data Model: DATA_MODEL.md
+      - Security: SECURITY.md
+      - Deployment: DEPLOYMENT.md
+  - Phase 3 — User & Process Docs:
+      - User Guide: USER_GUIDE.md
+      - Testing Strategy: TESTING_STRATEGY.md
+      - Changelog: CHANGELOG.md
+      - ADRs:
+          - ADR Index: adr/README.md
+          - Template: adr/template.md
+          - ADR 0001: adr/0001-hybrid-retrieval-over-dense-only.md
+          - ADR 0002: adr/0002-sqlite-postgres-over-parquet.md
+  - Extra Docs:
+      - AST Architecture: AST_ARCHITECTURE_DESIGN.md
+      - Implementation Summary: IMPLEMENTATION_SUMMARY.md
+      - NL Limitations: NL_LIMITATIONS.md
+      - Pipeline: PIPELINE.md
+      - Strategy Parser README: STRATEGY_PARSER_README.md
+  - Phase 4 — Code Reference:
+      - API layer: code_reference/api.md
+      - Services layer: code_reference/services.md
+      - Strategy Parser Engine: code_reference/parser.md
+      - AST Models: code_reference/ast.md
+      - RAG Subsystem: code_reference/rag.md
+      - Database Models: code_reference/db.md

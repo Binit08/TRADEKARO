@@ -1,0 +1,1252 @@
+[
+  {
+    "id": "ind_cdltwocrows",
+    "type": "pattern",
+    "canonical_name": "Two Crows",
+    "aliases": [
+      "2 Crows",
+      "CDLTWOCROWS",
+      "Two Crows Pattern",
+      "Bearish Two Crows"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Two Crows is a bearish reversal candlestick pattern consisting of three candles where a long green candle is followed by a small gap up that closes lower, and a third candle that moves further downward. It signals a potential exhaustion of an uptrend and the onset of selling pressure.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3blackcrows",
+    "type": "pattern",
+    "canonical_name": "Three Black Crows",
+    "aliases": [
+      "3 Black Crows",
+      "Three Black Crows Pattern",
+      "3BC",
+      "Three Crows"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Three Black Crows is a bearish reversal candlestick pattern consisting of three consecutive long-bodied candles that close lower than the previous one. It signals a potential shift in market sentiment from bullish to bearish as sellers gain control.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3inside",
+    "type": "pattern",
+    "canonical_name": "Three Inside Up/Down",
+    "aliases": [
+      "3 Inside Up/Down",
+      "Three Inside",
+      "Inside Three",
+      "CDL3INSIDE"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Three Inside Up/Down is a three-candle reversal pattern where the second candle is contained within the body of the first, followed by a third candle that confirms the breakout direction. It signals a potential change in trend, with the 'Up' version suggesting a bullish reversal and the 'Down' version suggesting a bearish reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3linestrike",
+    "type": "pattern",
+    "canonical_name": "Three-Line Strike",
+    "aliases": [
+      "3 Line Strike",
+      "Three Line Strike pattern",
+      "3-Line Strike reversal",
+      "ThreeLineStrike"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Three-Line Strike is a four-candle candlestick pattern that indicates a potential reversal of the current trend. It consists of three candles following the trend direction followed by a large counter-trend candle that closes beyond the range of the previous three, signaling a strong shift in market sentiment.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3outside",
+    "type": "pattern",
+    "canonical_name": "Three Outside Up/Down",
+    "aliases": [
+      "3 Outside Up",
+      "3 Outside Down",
+      "Three Outside",
+      "CDL3OUTSIDE"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Three Outside pattern is a three-candle reversal formation that occurs when a bullish or bearish engulfing pattern is followed by a third candle that confirms the direction of the trend. It signals a potential change in market momentum and is used to identify trend reversals.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3starsinthesouth",
+    "type": "pattern",
+    "canonical_name": "Three Stars In The South",
+    "aliases": [
+      "3 Stars In The South",
+      "Three Stars South",
+      "3SIS",
+      "3 Stars South pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Three Stars In The South is a three-candle bearish reversal pattern characterized by a sequence of declining marubozu-like candles with progressively smaller bodies and lower shadows. It typically signals a potential exhaustion of a downtrend and a shift toward bullish sentiment.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3whitesoldiers",
+    "type": "pattern",
+    "canonical_name": "Three Advancing White Soldiers",
+    "aliases": [
+      "Three White Soldiers",
+      "3 White Soldiers",
+      "cdl3whitesoldiers",
+      "3ws"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Three Advancing White Soldiers is a bullish reversal candlestick pattern consisting of three consecutive long-bodied candles that close higher than the previous day. It indicates a strong shift in market sentiment from bearish to bullish and suggests the beginning of an upward trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlabandonedbaby",
+    "type": "pattern",
+    "canonical_name": "Abandoned Baby",
+    "aliases": [
+      "Abandoned Baby pattern",
+      "CDLABANDONEDBABY",
+      "Abandoned Baby candlestick",
+      "tri-star reversal"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Abandoned Baby is a rare three-candle reversal pattern characterized by a gap between a star and two surrounding candles, signaling a potential exhaustion of the current price trend. It acts as a significant indicator for a reversal in market direction, with the 'baby' star typically isolated from the preceding and following price ranges.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdladvanceblock",
+    "type": "pattern",
+    "canonical_name": "Advance Block",
+    "aliases": [
+      "Advance Block Pattern",
+      "Adv Block",
+      "CDLADVANCEBLOCK",
+      "Advance Block Candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Advance Block is a three-candle bearish reversal pattern characterized by three consecutive rising candles with progressively smaller real bodies and longer upper shadows. It typically signals that the current bullish trend is losing momentum and may be nearing a potential reversal to the downside.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlbelt-hold",
+    "type": "pattern",
+    "canonical_name": "Belt-hold",
+    "aliases": [
+      "Belt Hold Line",
+      "Yorikiri",
+      "Belt-hold pattern",
+      "BeltHold"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Belt-hold is a single-candle reversal pattern characterized by a long body with little to no shadow on the side of the open, signaling a potential shift in market sentiment. A bullish belt-hold occurs at market lows, while a bearish belt-hold appears at market highs, indicating exhaustion of the prevailing trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlbreakaway",
+    "type": "pattern",
+    "canonical_name": "Breakaway",
+    "aliases": [
+      "Breakaway Pattern",
+      "cdlbreakaway",
+      "Breakaway Candlestick",
+      "BEA"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Breakaway is a five-candle reversal pattern that signals a potential shift in market direction. It typically indicates an exhausted trend where the final candle closes into the previous price gap, suggesting a breakout or trend reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlclosingmarubozu",
+    "type": "pattern",
+    "canonical_name": "Closing Marubozu",
+    "aliases": [
+      "Marubozu Close",
+      "Closing Marubozu candlestick",
+      "ClsMarubozu",
+      "Marubozu"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Closing Marubozu is a single-candle pattern where the candle has no shadow on the side of the close, indicating that the asset finished the period at its extreme high or low. It signals strong momentum in the direction of the close, suggesting that buyers or sellers maintained total control until the end of the session.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlconcealingbabyswallow",
+    "type": "pattern",
+    "canonical_name": "Concealing Baby Swallow",
+    "aliases": [
+      "CBS",
+      "Concealing Baby Swallow Pattern",
+      "Baby Swallow",
+      "Concealing Baby Swallow candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Concealing Baby Swallow is a four-candle bearish reversal pattern that typically occurs in a downtrend, signaling potential exhaustion of selling pressure. It is characterized by two consecutive falling candles followed by a third that closes within the second, and a final candle that completely engulfs the third.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlcounterattack",
+    "type": "pattern",
+    "canonical_name": "Counterattack",
+    "aliases": [
+      "CDLCOUNTERATTACK",
+      "Counterattack candlestick",
+      "Counterattack pattern",
+      "Counter attack"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Counterattack is a two-candle reversal pattern where a second candle closes at or near the same level as the previous candle's close after moving in the opposite direction. It signals a potential exhaustion of the current trend and a likely change in market momentum.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdldarkcloudcover",
+    "type": "pattern",
+    "canonical_name": "Dark Cloud Cover",
+    "aliases": [
+      "DCC",
+      "Dark Cloud",
+      "Dark-Cloud-Cover",
+      "Bearish Dark Cloud Cover"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Dark Cloud Cover is a two-candle bearish reversal pattern that occurs during an uptrend, where a strong bullish candle is followed by a bearish candle that opens above the prior close and closes below the midpoint of the prior candle's body. It signals a potential exhaustion of buying pressure and an impending shift toward a downtrend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_doji",
+    "type": "pattern",
+    "canonical_name": "Doji",
+    "aliases": [
+      "Doji Star",
+      "Doji Candle",
+      "Neutral Candle",
+      "Indecision Candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Doji is a candlestick pattern characterized by having an open and close price that are virtually identical, resulting in a very small body. It signals market indecision and potential trend reversal, as neither buyers nor sellers were able to gain control during the period.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdldojistar",
+    "type": "pattern",
+    "canonical_name": "Doji Star",
+    "aliases": [
+      "DojiStar",
+      "CDLDOJISTAR",
+      "Doji Star pattern",
+      "Doji gap"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Doji Star is a Japanese candlestick pattern consisting of a long-bodied candle followed by a doji that gaps in the direction of the preceding trend. It is considered a warning signal of a potential trend reversal, indicating market indecision.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdldragonflydoji",
+    "type": "pattern",
+    "canonical_name": "Dragonfly Doji",
+    "aliases": [
+      "D-Doji",
+      "Bullish Dragonfly",
+      "Dragonfly Candle",
+      "T-shaped doji"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Dragonfly Doji is a single-candle pattern that occurs when the open, high, and close prices are identical or very close, with a long lower shadow. It typically signals a potential market reversal, suggesting that buyers have entered the market to push prices back up after a significant downtrend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlengulfing",
+    "type": "pattern",
+    "canonical_name": "Engulfing Pattern",
+    "aliases": [
+      "Bullish Engulfing",
+      "Bearish Engulfing",
+      "Engulfing Candle",
+      "Engulfing"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Engulfing pattern is a two-candle reversal signal where the second candle's real body completely covers the body of the previous candle. A bullish version signals potential upward momentum, while a bearish version indicates a likely downward trend reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdleveningdojistar",
+    "type": "pattern",
+    "canonical_name": "Evening Doji Star",
+    "aliases": [
+      "Evening Doji",
+      "ED Star",
+      "Evening Doji Star pattern",
+      "Bearish Doji Star"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Evening Doji Star is a three-candlestick bearish reversal pattern that occurs at the top of an uptrend, featuring a large bullish candle followed by a doji that gaps higher, and finally a third bearish candle that gaps lower. It signals a potential exhaustion of buying pressure and a subsequent shift toward a downward trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdleveningstar",
+    "type": "pattern",
+    "canonical_name": "Evening Star",
+    "aliases": [
+      "Evening Star Pattern",
+      "Bearish Evening Star",
+      "Evening Star Reversal",
+      "Evening Star Candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Evening Star is a three-candle bearish reversal pattern that occurs at the peak of an uptrend, consisting of a large bullish candle, a small-bodied gap candle, and a large bearish candle. It signals a loss of buying momentum and a potential shift toward a downtrend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlgapsidesidewhite",
+    "type": "pattern",
+    "canonical_name": "Up/Down-gap side-by-side white lines",
+    "aliases": [
+      "Side-by-side white lines",
+      "Gapping side-by-side white lines",
+      "CDLGAPSIDESIDEWHITE",
+      "Side by side white candles"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Up/Down-gap side-by-side white lines is a candlestick pattern consisting of two white candles of similar size that appear after a gap in the direction of the prevailing trend. It acts as a continuation signal, suggesting that the current market momentum is likely to persist.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlgravestonedoji",
+    "type": "pattern",
+    "canonical_name": "Gravestone Doji",
+    "aliases": [
+      "Grave Stone Doji",
+      "Gravestone",
+      "Grave-stone Doji",
+      "Gravestone Candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Gravestone Doji is a bearish reversal candlestick pattern that occurs when the open, low, and close are identical or near each other at the bottom of the trading range, with a long upper shadow. It signals that buyers were unable to sustain upward momentum and that a potential trend reversal to the downside may follow.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhammer",
+    "type": "pattern",
+    "canonical_name": "Hammer",
+    "aliases": [
+      "Bullish Hammer",
+      "Hammer Candlestick",
+      "HMR",
+      "Hammer Pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Hammer is a bullish reversal candlestick pattern that occurs when a security trades significantly lower than its opening, but rallies later in the day to close near the opening price. It signals a potential bottom in a downtrend and suggests that buyers are gaining control.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhangingman",
+    "type": "pattern",
+    "canonical_name": "Hanging Man",
+    "aliases": [
+      "Hanging Man Candlestick",
+      "Hangingman",
+      "Bearish Hanging Man",
+      "Hanging Man Pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hanging Man is a bearish reversal candlestick pattern that occurs during an uptrend, characterized by a small body and a long lower shadow. It signals that sellers are beginning to overpower buyers, suggesting a potential exhaustion of the current upward momentum.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlharami",
+    "type": "pattern",
+    "canonical_name": "Harami Pattern",
+    "aliases": [
+      "Harami",
+      "Inside Bar",
+      "Japanese Harami",
+      "CDLHARAMI"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Harami pattern is a two-candle reversal indicator where the second smaller candle is completely contained within the body of the first larger candle. It signals a potential loss of momentum in the current trend and a possible upcoming trend reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlharamicross",
+    "type": "pattern",
+    "canonical_name": "Harami Cross Pattern",
+    "aliases": [
+      "Harami Cross",
+      "Bullish Harami Cross",
+      "Bearish Harami Cross",
+      "Haramicross"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Harami Cross is a two-candlestick pattern where a large candle is followed by a doji that is contained entirely within the previous candle's body. It signals a potential reversal in the prevailing trend due to market indecision.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhighwave",
+    "type": "pattern",
+    "canonical_name": "High-Wave Candle",
+    "aliases": [
+      "High Wave",
+      "High-Wave Candlestick",
+      "HighWave",
+      "High-Wave Pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The High-Wave candle is a candlestick pattern characterized by a small real body and long upper and lower shadows, indicating significant indecision in the market. It signals a potential period of consolidation or a possible reversal in the prevailing trend as neither bulls nor bears have established dominance.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhikkake",
+    "type": "pattern",
+    "canonical_name": "Hikkake Pattern",
+    "aliases": [
+      "Hikkake",
+      "Hikkake candlestick pattern",
+      "Inside day false breakout",
+      "Hikkake setup"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hikkake pattern is a complex candlestick formation that begins as an inside day and indicates a potential false breakout. It serves as a short-term trend reversal or continuation signal, depending on whether the price breaks out in the direction of the initial move or reverses.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhikkakemod",
+    "type": "pattern",
+    "canonical_name": "Modified Hikkake Pattern",
+    "aliases": [
+      "Mod Hikkake",
+      "Modified Hikkake",
+      "Hikkake Mod",
+      "CDLHIKKAKEMOD"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Modified Hikkake Pattern is a technical analysis formation that identifies potential reversals or continuations based on an initial inside day or range followed by a price breakout. It signals a shift in market sentiment when price closes outside the previous range, suggesting a tactical entry opportunity for traders.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlhomingpigeon",
+    "type": "pattern",
+    "canonical_name": "Homing Pigeon",
+    "aliases": [
+      "CDLHOMINGPIGEON",
+      "Homing Pigeon Pattern",
+      "Bullish Homing Pigeon",
+      "HomingPigeon"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Homing Pigeon is a two-bar Japanese candlestick pattern where a smaller candle is contained within the body of a larger preceding candle of the same color. It is typically interpreted as a bullish reversal signal occurring during a downtrend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3identicalcrows",
+    "type": "pattern",
+    "canonical_name": "Identical Three Crows",
+    "aliases": [
+      "3 Identical Crows",
+      "Identical3Crows",
+      "Three Identical Crows Pattern",
+      "Identical Crows"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Identical Three Crows is a bearish reversal candlestick pattern consisting of three consecutive long-bodied red candles that open at the previous candle's close. It indicates significant selling pressure and signals a likely continuation of a downward trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlinneck",
+    "type": "pattern",
+    "canonical_name": "In-Neck Pattern",
+    "aliases": [
+      "inneck",
+      "in neck candlestick",
+      "in-neck formation",
+      "in-neck"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The In-Neck pattern is a two-candle bearish reversal formation where a small white candle closes slightly above the previous long black candle's closing price. It serves as a continuation signal for a downtrend, indicating that buyers are unable to push the price high enough to break the seller's momentum.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlinvertedhammer",
+    "type": "pattern",
+    "canonical_name": "Inverted Hammer",
+    "aliases": [
+      "inv hammer",
+      "invertedhammer",
+      "inverted-hammer",
+      "invhammer"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Inverted Hammer is a bullish reversal candlestick pattern that occurs at the bottom of a downtrend when the open, low, and close prices are near each other with a long upper shadow. It signals a potential exhaustion of selling pressure and a possible shift toward bullish momentum.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlkicking",
+    "type": "pattern",
+    "canonical_name": "Kicking",
+    "aliases": [
+      "CDLKICKING",
+      "Kicking Pattern",
+      "Marubozu Kicking",
+      "Kicking Candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Kicking pattern consists of two opposite-colored marubozu candlesticks that gap away from each other, indicating a sharp and significant reversal in trend. It is considered a strong signal of a trend change driven by a sudden shift in market sentiment.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlkicking",
+    "type": "pattern",
+    "canonical_name": "Kicking - bull/bear determined by the longer marubozu",
+    "aliases": [
+      "CDLKICKING",
+      "Kicking Pattern",
+      "Kicking Candlestick",
+      "Bullish Kicking",
+      "Bearish Kicking"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Kicking pattern is a two-candle reversal signal consisting of two opposite-colored marubozu candles with a gap between them. It indicates a sudden and strong shift in market sentiment, where the direction is determined by whether the second candle is bullish or bearish.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlladderbottom",
+    "type": "pattern",
+    "canonical_name": "Ladder Bottom",
+    "aliases": [
+      "Ladder Bottom Pattern",
+      "cdlladderbottom",
+      "Ladder Bottom reversal",
+      "Ladder Bottom candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Ladder Bottom is a five-candle bullish reversal pattern characterized by three consecutive lower closes followed by a gap up and a final strong bullish candle. It signals a potential exhaustion of downward momentum and a likely shift toward a bullish trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdllongleggeddoji",
+    "type": "pattern",
+    "canonical_name": "Long Legged Doji",
+    "aliases": [
+      "LLD",
+      "Long-legged Doji",
+      "Rickshaw Man",
+      "Long Legged Doji candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Long Legged Doji is a single-candlestick pattern characterized by a very small real body and exceptionally long upper and lower shadows. It signals high market indecision and suggests that a potential trend reversal or significant shift in momentum may be forthcoming.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdllongline",
+    "type": "pattern",
+    "canonical_name": "Long Line Candle",
+    "aliases": [
+      "CDLLONGLINE",
+      "Long Body Candle",
+      "Long Candle",
+      "Extended Range Candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Long Line Candle is a candlestick pattern characterized by a single candle with a significantly larger body than the preceding candles. It signals strong market momentum and high conviction in the current direction, often indicating a potential breakout or continuation of a trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlmarubozu",
+    "type": "pattern",
+    "canonical_name": "Marubozu",
+    "aliases": [
+      "Marubozu candle",
+      "Full body candle",
+      "Marabozu",
+      "Bald candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Marubozu is a single-candlestick pattern characterized by a long body with little or no wicks, indicating strong, unidirectional momentum. A bullish Marubozu signals dominant buying pressure, while a bearish Marubozu indicates significant selling conviction.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlmatchinglow",
+    "type": "pattern",
+    "canonical_name": "Matching Low",
+    "aliases": [
+      "CDLMATCHINGLOW",
+      "Matching Low Pattern",
+      "Matching Low Candlestick",
+      "Matching Low Cdl"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Matching Low is a two-candle bullish reversal pattern where two consecutive candles close at the same low price. It suggests that selling pressure has exhausted itself, indicating a potential upward price reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlmathold",
+    "type": "pattern",
+    "canonical_name": "Mat Hold",
+    "aliases": [
+      "Mathold",
+      "Mat Hold Pattern",
+      "Bullish Mat Hold",
+      "CDLMATHOLD"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Mat Hold is a bullish continuation candlestick pattern that begins with a long white candle followed by a gap higher and a short decline, eventually breaking out to continue the upward trend. It signals that the existing bullish momentum is pausing temporarily before resuming its previous trajectory.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlmorningdojistar",
+    "type": "pattern",
+    "canonical_name": "Morning Doji Star",
+    "aliases": [
+      "MDS",
+      "Morning Doji Star Pattern",
+      "Bullish Morning Doji Star",
+      "Morning Doji"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Morning Doji Star is a three-candlestick bullish reversal pattern that typically appears at the end of a downtrend. It consists of a long bearish candle followed by a doji that gaps lower, and a final bullish candle that closes well into the body of the first candle, signaling a potential shift in market sentiment.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlmorningstar",
+    "type": "pattern",
+    "canonical_name": "Morning Star",
+    "aliases": [
+      "MorningStar",
+      "Morning Star Pattern",
+      "Bullish Morning Star",
+      "Morning Star Candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Morning Star is a three-candle bullish reversal pattern consisting of a long bearish candle, a small-bodied candle that gaps down, and a long bullish candle. It signals a potential shift in market sentiment from bearish to bullish following a downward price trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlonneck",
+    "type": "pattern",
+    "canonical_name": "On-Neck Pattern",
+    "aliases": [
+      "On Neck",
+      "On-Neck",
+      "On Neck Candlestick",
+      "On-Neck Formation"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The On-Neck pattern is a two-candle bearish reversal formation where a long bearish candle is followed by a smaller bullish candle that closes near the previous candle's low. It typically indicates that while there is minor buying pressure, the existing downtrend is likely to continue.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlpiercing",
+    "type": "pattern",
+    "canonical_name": "Piercing Pattern",
+    "aliases": [
+      "Piercing Line",
+      "Piercing Candlestick",
+      "Bullish Piercing",
+      "Piercing Patter"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Piercing Pattern is a two-candlestick bullish reversal signal that occurs during a downtrend, where a long bullish candle closes above the midpoint of the preceding long bearish candle. It indicates that selling pressure has exhausted and buyers have taken control, signaling a potential upward price movement.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlrickshawman",
+    "type": "pattern",
+    "canonical_name": "Rickshaw Man",
+    "aliases": [
+      "Rickshawman",
+      "Long-legged Doji",
+      "High-wave Doji",
+      "CDLRICKSHAWMAN"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Rickshaw Man is a specific type of long-legged Doji candlestick pattern characterized by a very long upper and lower shadow with a small real body centered in the middle. It signals extreme indecision in the market and often suggests a potential reversal or a transition period in the prevailing price trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdl3methods",
+    "type": "pattern",
+    "canonical_name": "Rising/Falling Three Methods",
+    "aliases": [
+      "Three Methods",
+      "Rising Three Methods",
+      "Falling Three Methods",
+      "3 Methods Pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Rising and Falling Three Methods are five-candle continuation patterns where a long candle is followed by three small counter-trend candles contained within the range of the first, concluding with another long candle in the original direction. These patterns signal a temporary consolidation phase within an existing trend, suggesting that the prevailing market direction will likely resume.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlseparatinglines",
+    "type": "pattern",
+    "canonical_name": "Separating Lines",
+    "aliases": [
+      "CDLSEPARATINGLINES",
+      "Separating Lines pattern",
+      "Bullish Separating Lines",
+      "Bearish Separating Lines"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Separating Lines pattern is a trend continuation signal consisting of two candlesticks of opposite colors that share the same opening price. It suggests that the current market trend is likely to persist as the price maintains its original directional momentum.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlshootingstar",
+    "type": "pattern",
+    "canonical_name": "Shooting Star",
+    "aliases": [
+      "CDLSHOOTINGSTAR",
+      "inverted hammer bearish",
+      "bearish shooting star",
+      "shooting star candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Shooting Star is a bearish reversal candlestick pattern that occurs at the top of an uptrend, characterized by a small real body and a long upper shadow. It signals that buyers failed to sustain higher prices, often indicating an impending downward trend reversal.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlshortline",
+    "type": "pattern",
+    "canonical_name": "Short Line Candle",
+    "aliases": [
+      "CDLSHORTLINE",
+      "Short Line Candlestick",
+      "Short Line Pattern",
+      "Short Body Candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Short Line Candle is a candlestick pattern characterized by a relatively small real body compared to the surrounding price action, indicating a period of indecision or low volatility in the market. It often signals a potential pause in the current trend or a lack of strong conviction from either buyers or sellers.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlspinningtop",
+    "type": "pattern",
+    "canonical_name": "Spinning Top",
+    "aliases": [
+      "SpinningTop",
+      "CDLSPINNINGTOP",
+      "Spinning Top Candle",
+      "Neutral Spinning Top"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "A Spinning Top is a candlestick pattern characterized by a short real body centered between long upper and lower shadows, indicating market indecision. It signals a potential change in trend direction or a period of consolidation as buyers and sellers reach a temporary equilibrium.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlstalledpattern",
+    "type": "pattern",
+    "canonical_name": "Stalled Pattern",
+    "aliases": [
+      "Stalled Pattern",
+      "Deliberation Pattern",
+      "CDLSTALLEDPATTERN",
+      "Stalled candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Stalled Pattern is a bearish reversal signal characterized by three consecutive rising candles where the final candle has a small body that gaps away from the previous long white candle. It indicates that the prevailing bullish momentum is losing strength and a trend reversal may be imminent.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlsticksandwich",
+    "type": "pattern",
+    "canonical_name": "Stick Sandwich",
+    "aliases": [
+      "Stick Sandwich Pattern",
+      "CDLSTICKSANDWICH",
+      "Three Bar Sandwich"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Stick Sandwich is a three-bar reversal pattern characterized by a central bearish candle flanked by two bullish candles that close at the same price level. It signals a potential bullish reversal, suggesting that support has been established at the low of the middle candle.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdltakuri",
+    "type": "pattern",
+    "canonical_name": "Takuri (Dragonfly Doji with very long lower shadow)",
+    "aliases": [
+      "Takuri Line",
+      "Dragonfly Doji",
+      "Takuri Candle",
+      "Long-Legged Dragonfly"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Takuri is a Japanese candlestick pattern resembling a Dragonfly Doji characterized by an exceptionally long lower shadow and no upper shadow. It typically signals a potential bullish reversal at the end of a downtrend as it indicates that sellers pushed the price down significantly before buyers reclaimed the opening level.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdltasukigap",
+    "type": "pattern",
+    "canonical_name": "Tasuki Gap",
+    "aliases": [
+      "Tasuki Gap",
+      "CDLTASUKIGAP",
+      "Upward/Downward Tasuki Gap",
+      "Tasuki Gap Pattern",
+      "Gap Tasuki"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Tasuki Gap is a three-candle continuation pattern consisting of a gap in the direction of the trend followed by a closing candle that partially fills that gap. It typically signals that the current market trend is likely to persist.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlthrusting",
+    "type": "pattern",
+    "canonical_name": "Thrusting Pattern",
+    "aliases": [
+      "Thrusting Line",
+      "Thrusting Candlestick",
+      "Thrusting pattern indicator",
+      "CDLTHRUSTING"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Thrusting Pattern is a two-candlestick bearish continuation pattern where a small white candle closes near the midpoint of the previous long black candle. It signals that despite a minor attempt at a rally, bears remain in control of the downward trend.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdltristar",
+    "type": "pattern",
+    "canonical_name": "Tristar Pattern",
+    "aliases": [
+      "Tristar",
+      "CDLTRISTAR",
+      "Tri-Star pattern",
+      "Tristar candle"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Tristar pattern consists of three consecutive doji candles with a specific gap-based formation that suggests a potential market reversal. It serves as a visual indicator of market indecision, signaling that the current trend may be losing momentum and a pivot is imminent.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlunique3river",
+    "type": "pattern",
+    "canonical_name": "Unique 3 River",
+    "aliases": [
+      "Unique Three River",
+      "3 River Pattern",
+      "Unique 3-River Bottom",
+      "Unique Three River Candlestick"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Unique 3 River is a bullish reversal candlestick pattern consisting of three candles where a long down candle is followed by a lower opening but higher closing candle, and a final small bullish candle. It signals a potential exhaustion of downward momentum and an impending trend reversal to the upside.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlupsidegaptwocrows",
+    "type": "pattern",
+    "canonical_name": "Upside Gap Two Crows",
+    "aliases": [
+      "Upside Gap Two Crows Pattern",
+      "UGTTC",
+      "Two Crows",
+      "Upside Gap 2 Crows"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Upside Gap Two Crows is a three-candle bearish reversal pattern that occurs within an existing uptrend, featuring a large bullish candle followed by a gap up and two smaller bearish candles. It signals a potential exhaustion of upward momentum and a shift toward a bearish market correction.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_cdlgapthreesides",
+    "type": "pattern",
+    "canonical_name": "Upside/Downside Gap Three Methods",
+    "aliases": [
+      "CDLGAPTHREESIDES",
+      "Gap Three Methods",
+      "Upside Downside Gap Three",
+      "Gap 3 Methods Pattern"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Upside/Downside Gap Three Methods is a trend-continuation candlestick pattern consisting of three candles that suggests the existing trend will persist after a temporary pause. It involves a gap in the direction of the trend followed by a counter-trend candle that closes the gap, indicating a consolidation phase before the primary move resumes.",
+    "metadata": {
+      "category": "pattern"
+    }
+  },
+  {
+    "id": "ind_dema",
+    "type": "indicator",
+    "canonical_name": "Double Exponential Moving Average",
+    "aliases": [
+      "DEMA",
+      "Double EMA",
+      "D-EMA",
+      "DEMA indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Double Exponential Moving Average (DEMA) is a technical indicator that reduces lag in moving averages by applying a double-smoothed exponential calculation. It is primarily used to identify trend direction and momentum changes while responding more quickly to price reversals than a standard EMA.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_tema",
+    "type": "indicator",
+    "canonical_name": "Triple Exponential Moving Average",
+    "aliases": [
+      "TEMA",
+      "Triple EMA",
+      "Triple Exponential Moving Average indicator",
+      "T-EMA"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Triple Exponential Moving Average (TEMA) is a trend-following indicator that reduces lag by applying a triple smoothing process to price data. It is primarily used to identify trend direction and potential reversals with greater responsiveness than a standard simple moving average.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_trima",
+    "type": "indicator",
+    "canonical_name": "Triangular Moving Average",
+    "aliases": [
+      "TRIMA",
+      "Triangle Moving Average",
+      "Triangular MA",
+      "TRIMA indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Triangular Moving Average (TRIMA) is a technical analysis indicator that calculates a double-smoothed moving average, applying more weight to the central data points. It is primarily used to identify trend direction and filter out market noise, appearing as a smoother, lag-prone line compared to standard simple moving averages.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_mama",
+    "type": "indicator",
+    "canonical_name": "MESA Adaptive Moving Average",
+    "aliases": [
+      "MAMA",
+      "MESA Adaptive Moving Average",
+      "MESA AMA",
+      "MESA indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The MESA Adaptive Moving Average (MAMA) is a trend-following indicator that dynamically adjusts its smoothing factor based on the Hilbert Transform of price data. It is designed to reduce lag in trending markets while remaining stable in ranging conditions, signaling trend direction through its relationship with the associated FAMA line.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_t3",
+    "type": "indicator",
+    "canonical_name": "Triple Exponential Moving Average",
+    "aliases": [
+      "T3",
+      "T3 Moving Average",
+      "Tillson T3",
+      "T3 MA"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Triple Exponential Moving Average (T3) is a sophisticated trend-following indicator that reduces lag and filters out market noise by applying a series of exponential moving averages multiple times. It is primarily used to identify the direction of a trend while providing smoother and more responsive signals than traditional moving averages.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_apo",
+    "type": "indicator",
+    "canonical_name": "Absolute Price Oscillator",
+    "aliases": [
+      "APO",
+      "Absolute Price Osc",
+      "APO indicator",
+      "Absolute Price Oscillator technical indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Absolute Price Oscillator is a momentum indicator calculated by the difference between two moving averages of different lengths. It signals trend direction and strength by showing when the shorter-term momentum crosses above or below the longer-term trend baseline.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_chandemomentumoscillator",
+    "type": "indicator",
+    "canonical_name": "Chande Momentum Oscillator",
+    "aliases": [
+      "CMO",
+      "Chande Momentum",
+      "Chande Oscillator",
+      "CMO indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Chande Momentum Oscillator is a technical indicator that calculates the difference between the sum of recent gains and the sum of recent losses, normalized to a range of -100 to +100. It is used to identify overbought conditions above +50 and oversold conditions below -50, signaling potential trend reversals or strength.",
+    "metadata": {
+      "category": "momentum"
+    }
+  },
+  {
+    "id": "ind_dx",
+    "type": "indicator",
+    "canonical_name": "Directional Movement Index",
+    "aliases": [
+      "DX",
+      "Directional Movement",
+      "DMI-DX",
+      "Directional Index"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Directional Movement Index (DX) quantifies the strength of a financial instrument's trend by calculating the absolute difference between the plus and minus directional indicators. It is primarily used to identify the presence of a strong trend regardless of its direction.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_minusdi",
+    "type": "indicator",
+    "canonical_name": "Minus Directional Indicator",
+    "aliases": [
+      "MINUS_DI",
+      "-DI",
+      "Minus DI",
+      "Negative Directional Indicator"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Minus Directional Indicator (MINUS_DI) is a component of the Directional Movement System that measures the strength of downward price movement. It is used to identify bearish trends and potential sell signals when it rises relative to the Plus Directional Indicator.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_minusdm",
+    "type": "indicator",
+    "canonical_name": "Minus Directional Movement",
+    "aliases": [
+      "MINUS_DM",
+      "Negative Directional Movement",
+      "MinusDM",
+      "DMI-",
+      "Minus Directional Indicator component"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Minus Directional Movement (MINUS_DM) indicator measures the downward price movement by calculating the difference between the current low and the previous low when the price drops. It is a core component of the Directional Movement System used to identify the strength and direction of a bearish trend.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_plusdi",
+    "type": "indicator",
+    "canonical_name": "Plus Directional Indicator",
+    "aliases": [
+      "PLUS_DI",
+      "Positive Directional Indicator",
+      "DI+",
+      "Plus DI"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Plus Directional Indicator (PLUS_DI) is a component of the Directional Movement System that measures the strength of upward price movement. It is typically used in conjunction with the Minus Directional Indicator (MINUS_DI) to identify trend direction and potential entry or exit points based on crossover signals.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_plus_dm",
+    "type": "indicator",
+    "canonical_name": "Plus Directional Movement",
+    "aliases": [
+      "PLUS_DM",
+      "Positive Directional Movement",
+      "Plus DI Movement",
+      "PlusDM"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "Plus Directional Movement (PLUS_DM) measures the upward component of price movement by calculating the difference between the current high and the previous high when the upward move exceeds the downward move. It is a fundamental building block of the ADX indicator used to help identify the strength of an existing uptrend.",
+    "metadata": {
+      "category": "trend"
+    }
+  },
+  {
+    "id": "ind_hilberttransformdominantcycleperiod",
+    "type": "indicator",
+    "canonical_name": "Hilbert Transform - Dominant Cycle Period",
+    "aliases": [
+      "HT_DCPERIOD",
+      "Hilbert Period",
+      "Dominant Cycle Period",
+      "HT Cycle Period"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hilbert Transform - Dominant Cycle Period is a technical indicator that uses the Hilbert Transform to identify the wavelength of the underlying dominant cycle in a time series. It is primarily used to determine the frequency at which the market is oscillating, helping traders calibrate the look-back periods of other indicators.",
+    "metadata": {
+      "category": "cycle"
+    }
+  },
+  {
+    "id": "ind_hilberttransformdominantcyclephase",
+    "type": "indicator",
+    "canonical_name": "Hilbert Transform - Dominant Cycle Phase",
+    "aliases": [
+      "HT_DCPHASE",
+      "Hilbert Dominant Cycle Phase",
+      "Dominant Cycle Phase",
+      "HT Phase"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hilbert Transform - Dominant Cycle Phase is a technical analysis indicator that measures the current phase of the dominant cycle in a price series. It is used to identify cycle progression, providing insights into potential turning points and market timing based on periodic oscillations.",
+    "metadata": {
+      "category": "cycle"
+    }
+  },
+  {
+    "id": "ind_hilbertphasor",
+    "type": "indicator",
+    "canonical_name": "Hilbert Transform - Phasor Components",
+    "aliases": [
+      "HT_PHASOR",
+      "Hilbert Phasor",
+      "Phasor Components",
+      "Hilbert Transform Phasor"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hilbert Transform - Phasor Components indicator decomposes a price series into its instantaneous InPhase and Quadrature components to determine the underlying cyclical nature of the market. It is used to identify phase shifts and dominant cycle lengths, helping traders anticipate potential trend reversals or cyclical turning points.",
+    "metadata": {
+      "category": "cycle"
+    }
+  },
+  {
+    "id": "ind_hilbert_sinewave",
+    "type": "indicator",
+    "canonical_name": "Hilbert Transform - SineWave",
+    "aliases": [
+      "HT_SINE",
+      "Hilbert Sine Wave",
+      "Hilbert Transform Sine",
+      "HT_SINEWAVE"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hilbert Transform SineWave is a cycle indicator that uses the Hilbert Transform to isolate the cyclical component of a price series. It generates sine and lead sine waves to identify cycle turning points and market trend transitions.",
+    "metadata": {
+      "category": "cycle"
+    }
+  },
+  {
+    "id": "ind_ht_trendmode",
+    "type": "indicator",
+    "canonical_name": "Hilbert Transform - Trend vs Cycle Mode",
+    "aliases": [
+      "HT_TRENDMODE",
+      "Hilbert Transform Trend Cycle",
+      "Trend vs Cycle",
+      "HT Trend Mode"
+    ],
+    "maps_to_field": null,
+    "embedding_text": "The Hilbert Transform - Trend vs Cycle Mode indicator determines whether a market is currently in a trending state or a cyclical state based on analytical signal processing. It outputs a binary value of 1 for a trending market and 0 for a cyclical market, helping traders choose appropriate strategies for the current price behavior.",
+    "metadata": {
+      "category": "trend"
+    }
+  }
+]

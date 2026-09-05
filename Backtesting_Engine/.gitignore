@@ -1,0 +1,49 @@
+# Python bytecode and caches
+__pycache__/
+.py[cod]
+**/__pycache__/
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+request.json
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+site/
+
+# Editor / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated market data and storage outputs
+market_data/*
+!market_data/.gitkeep
+app/storage/parquet/*
+!app/storage/parquet/.gitkeep
+app/storage/duckdb/*
+!app/storage/duckdb/.gitkeep
+
+# Local-only runtime files
+*.log
+
+# Environments
+.env
+.env.*
+!.env.example
+
+pyrightconfig.json
+crash_log.txt
+strategy_ast_dump.json

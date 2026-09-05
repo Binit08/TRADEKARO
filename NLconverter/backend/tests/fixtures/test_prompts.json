@@ -1,0 +1,77 @@
+  [
+    {
+      "id": "STRAT_001",
+      "name": "Impulse Base Retest Strategy",
+      "prompt": "Track a continuous upward movement of 20% or more on a 1D timeframe. There should be no red candle close in between this movement. Mark the base level from where the impulse started and the top level where the green candles peaked. Whenever the price retraces back to the base level, purchase the stock. Sell when price touches the top level. Stop loss is 2% below the entry price. Trade only Nifty 50 stocks on 1D timeframe."
+    },
+    {
+      "id": "STRAT_002",
+      "name": "Triple SMA Stack Alignment Strategy",
+      "prompt": "Consider 3 simple moving averages: SMA(20), SMA(50) and SMA(100). Purchase the stock when the closing price is below SMA(20), SMA(20) is below SMA(50), and SMA(50) is below SMA(100) \u2014 a bullish stack with price at the bottom. Sell the stock when the closing price is above SMA(20), SMA(20) is above SMA(50), and SMA(50) is above SMA(100) \u2014 a bearish stack with price at the top. Stop loss is 2% below the entry price. Trade only Nifty 50 stocks on 1D timeframe."
+    },
+    {
+      "id": "STRAT_003",
+      "name": "Knoxville Divergence Strategy",
+      "prompt": "Use Rob Booker Knoxville Divergence indicator. Pu  rchase and sell only after the closing of candles, never intrabar. Purchase when the Knoxville Divergence signals upward divergence and the candle closes above the level where the Knoxville signal started. Sell when the Knoxville Divergence signals downward divergence and the candle closes below the level where the Knoxville signal started. Stop loss is 2% below the entry price. Trade only Nifty 50 stocks on 1D timeframe."
+    },
+    {
+      "id": "STRAT_004",
+      "name": "50 Percent Below All Time High Strategy",
+      "prompt": "Whenever a Nifty 50 stock is trading below 50% of its all-time high price, purchase the stock. Stop loss is 5% below the entry price. Keep selling 10% of the held position at every 10% gain from the purchase price. Final target is 10% below the all-time high price. Trade on 1D timeframe."
+    },
+    {
+      "id": "STRAT_005",
+      "name": "Cup and Handle Breakout Strategy",
+      "prompt": "If any stock hits a resistance line at least 3 times and a cup and handle pattern has been formed. The stock will be purchased when a green candle breaks the resistance line and the next candle is also green and it closes above the previous green candle. Target price will be equal percentage above the resistance line as it was below the resistance line to the cup. Trade only stocks of market valuation above 50k cr. Stoploss will be 2% below the buying point."
+    },
+    {
+      "id": "STRAT_007",
+      "name": "Turtle Channel Breakout Strategy",
+      "prompt": "Entry: Buy when price breaks a 20-day high (short-term) or 55-day high (long-term). Target: Trail and ride \u2014 exit on a 10-day or 20-day low. Stop Loss: 2\u00d7 ATR (Average True Range) below entry. Position Size: Risk exactly 1% of capital per trade."
+    },
+    {
+      "id": "STRAT_008",
+      "name": "Institutional Manipulation Breakout Strategy",
+      "prompt": "Price needs to take liquidity on one side. If it then rejects and regains the origin of the last push that took that liquidity, it\u2019s a clear sign for me that the move was institutional manipulation.\nIf price were truly weak, it shouldn\u2019t be able to come back and reclaim the origin of that move. Regaining it shows strength, and suggests the move was mainly to create fear and match institutional buy orders with retail\u2019s panic sell orders.\n(For short setups, just assume the opposite of everything I\u2019m saying.\n\nDefining quarterly levels on the chart also gives strong confirmation and, most of the time, a clear narrative. You can clearly see how price respects these levels on the chart.\n\nA very important part:\nIf you catch this type of move on the monthly chart, you should define your target on the weekly timeframe.\nIf you catch it on the weekly chart, define your target on the daily chart (and so on).\n\nStop loss should be at the previous low/high for safety. You shouldn't set tight stop-loss to increase risk reward ratio. This would be very irrational, because this strategy gave me the highest win-rate over the years and tight stop-loss could get triggered easily."
+    },
+    {
+      "id": "STRAT_009",
+      "name": "Liquidity Reclaim Institutional Strategy",
+      "prompt": "Price needs to take liquidity on one side. If it then rejects and regains the origin of the last push that took that liquidity, it's a sign of institutional manipulation. If price were truly weak, it shouldn't be able to reclaim the origin of that move; regaining it shows strength. For short setups assume the opposite. Define quarterly levels for confirmation. Stop loss should be at the previous low/high; avoid tight stop-losses."
+    },
+    {
+      "id": "STRAT_010",
+      "name": "20/50 EMA Pullback Trend Strategy",
+      "prompt": "Buy stocks that are already in an uptrend: the 20-day EMA must be above the 50-day EMA. If price pulls back close to the 20-day EMA and then resumes upward movement, enter a long position. Hold while price stays above the 20-day EMA; exit if it closes below it."
+    },
+    {
+      "id": "STRAT_011",
+      "name": "EMA Trend RSI Dip Strategy",
+      "prompt": "When the 50-day EMA is above the 200-day EMA consider the market bullish. If RSI falls below 40 and then starts rising, buy the dip. Take profits when RSI reaches overbought levels around 70 or if the trend weakens."
+    },
+    {
+      "id": "STRAT_012",
+      "name": "Breakout With Volume Confirmation Strategy",
+      "prompt": "Enter on breakouts: if a stock has been consolidating and then closes above its highest price from the last 20 trading sessions with unusually high volume, enter the trade. Strong volume confirms institutional participation. Exit if the breakout fails or use a predefined risk-reward target."
+    },
+    {
+      "id": "STRAT_013",
+      "name": "Multiple Indicator Confluence Strategy",
+      "prompt": "Trade only when multiple indicators agree: 50-day EMA above 200-day EMA, RSI above 55, MACD bullish, and volume higher than average. Enter long when trend, momentum, and participation are aligned. Exit when momentum fades (bearish MACD crossover or significant RSI drop)."
+    },
+    {
+      "id": "STRAT_014",
+      "name": "Retest After Breakout Strategy",
+      "prompt": "Wait for a stock to break above a resistance level and then pull back to retest that level. If the old resistance acts as support and price resumes upward movement, enter the trade to avoid chasing breakouts and improve risk-reward."
+    },
+    {
+      "id": "STRAT_015",
+      "name": "Multi-Timeframe Trend Confluence Strategy",
+      "prompt": "Trade long only when weekly, daily, and 4-hour trends align: weekly 50 EMA above weekly 200 EMA, daily MACD bullish, and 4-hour RSI recovering from a pullback. Enter only if volume is above average and ATR indicates sufficient volatility. Exit if any higher timeframe trend breaks down or momentum diverges."
+    },
+    {
+      "id": "STRAT_016",
+      "name": "Bollinger Consolidation Breakout Strategy",
+      "prompt": "Find stocks consolidating after a strong move: Bollinger Bands narrowing, ATR near monthly lows, and decreasing volume during consolidation. Enter when price breaks above resistance with significant volume expansion and RSI not yet overbought. Invalidate the trade if the breakout fails within a few candles."
+    }
+  ]

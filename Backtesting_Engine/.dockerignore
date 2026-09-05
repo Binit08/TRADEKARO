@@ -1,0 +1,24 @@
+# 1. Prevent secrets from being copied into the Docker image!
+.env
+.env.*
+**/.env
+**/.env.*
+
+# 2. Ignore Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.coverage
+
+# 3. Ignore virtual environments
+.venv/
+venv/
+env/
+
+# 4. Ignore Git and OS files
+.git
+.gitignore
+.vscode/
+.DS_Store

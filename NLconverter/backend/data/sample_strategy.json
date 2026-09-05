@@ -1,0 +1,51 @@
+{
+  "compilation_status": {
+    "state": "complete",
+    "blockers_count": 0,
+    "assumptions_count": 0,
+    "blocking_fields": []
+  },
+  "signals": {
+    "indicators": [
+      {
+        "id": "rsi_daily",
+        "indicator_type": "RSI",
+        "parameters": {
+          "period": 14
+        },
+        "timeframe": "1D",
+        "output_property": "value"
+      }
+    ]
+  },
+  "conditions": {
+    "entry": {
+      "type": "LESS_THAN",
+      "operand_1": {
+        "type": "indicator",
+        "indicator_id": "rsi_daily"
+      },
+      "operand_2": {
+        "type": "constant",
+        "value": 30
+      }
+    },
+    "exit": {
+      "type": "GREATER_THAN",
+      "operand_1": {
+        "type": "indicator",
+        "indicator_id": "rsi_daily"
+      },
+      "operand_2": {
+        "type": "constant",
+        "value": 70
+      }
+    }
+  },
+  "risk": {
+    "stop_loss": {
+      "type": "PERCENTAGE",
+      "value": 2.0
+    }
+  }
+}

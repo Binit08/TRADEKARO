@@ -1,0 +1,158 @@
+{
+  "signals": {
+    "indicators": [
+      {
+        "id": "indicator_1",
+        "name": "SMA",
+        "params": {
+          "period": 20
+        },
+        "input_node": {
+          "type": "arithmetic",
+          "operator": "MULTIPLY",
+          "operand_1": {
+            "type": "market_data",
+            "data_type": "CLOSE"
+          },
+          "operand_2": {
+            "type": "constant",
+            "value": 1.5
+          }
+        }
+      }
+    ]
+  },
+  "operation": [
+    {
+      "entry": [
+        {
+          "id": "entry_1",
+          "type": "FOLLOWED_BY",
+          "max_bars_between": 5,
+          "setup_condition": {
+            "id": "setup_1",
+            "type": "GREATER_THAN",
+            "operand_1": {
+              "type": "indicator",
+              "indicator_id": "indicator_1",
+              "property": "value"
+            },
+            "operand_2": {
+              "type": "constant",
+              "value": 0
+            },
+            "lookback_periods": 1
+          },
+          "trigger_condition": {
+            "id": "trigger_1",
+            "type": "CROSS_ABOVE",
+            "operand_1": {
+              "type": "market_data",
+              "data_type": "CLOSE"
+            },
+            "operand_2": {
+              "type": "indicator",
+              "indicator_id": "indicator_1",
+              "property": "value"
+            },
+            "lookback_periods": 1
+          },
+          "lookback_periods": 1
+        },
+        {
+          "id": "entry_2",
+          "type": "AND",
+          "children": [
+            {
+              "id": "condition_1",
+              "type": "GREATER_THAN",
+              "operand_1": {
+                "type": "indicator",
+                "indicator_id": "indicator_1",
+                "property": "value"
+              },
+              "operand_2": {
+                "type": "constant",
+                "value": 0
+              },
+              "lookback_periods": 1
+            }
+          ],
+          "operand_1": null,
+          "operand_2": null,
+          "lookback_periods": 1
+        }
+      ],
+      "exit": [
+        {
+          "id": "exit_1",
+          "type": "AND",
+          "children": [
+            {
+              "id": "condition_2",
+              "type": "LESS_THAN",
+              "operand_1": {
+                "type": "market_data",
+                "data_type": "CLOSE",
+                "lookback": 0
+              },
+              "operand_2": {
+                "type": "indicator",
+                "indicator_id": "indicator_1",
+                "property": "value"
+              },
+              "lookback_periods": 1
+            },
+            {
+              "id": "condition_3",
+              "type": "EQUAL",
+              "operand_1": {
+                "type": "pattern",
+                "pattern_type": null,
+                "parameters": {},
+                "lookback_periods": 50
+              },
+              "operand_2": {
+                "type": "constant",
+                "value": 1
+              },
+              "lookback_periods": 1
+            }
+          ],
+          "operand_1": null,
+          "operand_2": null,
+          "lookback_periods": 1
+        }
+      ]
+    }
+  ],
+  "risk": {
+    "stop_loss": {
+      "type": null,
+      "value": null,
+      "reference": null,
+      "direction": null,
+      "atr_multiple": null,
+      "price_level": null,
+      "indicator_ref": null
+    },
+    "take_profit": {
+      "type": null,
+      "value": null,
+      "target_indicator": null,
+      "price_level": null,
+      "risk_reward_ratio": null
+    },
+    "trailing_stop": {
+      "type": null,
+      "value": null,
+      "trail_amount": null,
+      "reference": null
+    },
+    "risk_reward": {
+      "type": null,
+      "ratio": null,
+      "value": null
+    }
+  }
+}

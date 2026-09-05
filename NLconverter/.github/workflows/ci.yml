@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_GEMINI_API_KEY: ${{ secrets.GOOGLE_GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify API key is available
+        run: |
+          if [ -z "$GOOGLE_GEMINI_API_KEY" ]; then
+            echo "GOOGLE_GEMINI_API_KEY is not set"
+            exit 1
+          fi
+          echo "Gemini API key is configured via GitHub Secrets."

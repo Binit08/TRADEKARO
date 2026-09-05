@@ -1,0 +1,626 @@
+/* ===== CSS Variables & Reset ===== */
+.container {
+  /* Default (Light) Colors */
+  --color-bg-outer: #f0f0f0;
+  --color-bg-inner: #ffffff;
+  --color-bg-characters: #e6e6e6;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #737373;
+  --color-text-muted: #a3a3a3;
+  --color-border: #d4d4d4;
+  --color-btn-primary-bg: #1a1a1a;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-google-bg: #f7f7f7;
+  --color-btn-google-hover: #e5e5e5;
+  --color-checkbox: #d4d4d4;
+
+  /* Character Colors */
+  --char-blue: #623cef;
+  --char-orange: #ff7e36;
+  --char-black: #1a1a1a;
+  --char-yellow: #fcc914;
+
+  /* Spacing */
+  --radius-pill: 100px;
+  --transition-fast: 0.2s ease-out;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-outer);
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  color: var(--color-text-primary);
+  transition: background-color 0.3s ease;
+}
+
+/* Dark Mode Variables (using prefers-color-scheme OR global .dark class) */
+@media (prefers-color-scheme: dark) {
+  .container {
+    --color-bg-outer: #0a0a0a;
+    --color-bg-inner: #121212;
+    --color-bg-characters: #1e1e1e;
+    --color-text-primary: #f0f0f0;
+    --color-text-secondary: #a3a3a3;
+    --color-text-muted: #737373;
+    --color-border: #404040;
+    --color-btn-primary-bg: #ffffff;
+    --color-btn-primary-text: #1a1a1a;
+    --color-btn-google-bg: #1e1e1e;
+    --color-btn-google-hover: #2a2a2a;
+    --color-checkbox: #404040;
+    
+    /* Slightly adjust character colors for dark mode to make them pop */
+    --char-black: #2a2a2a; 
+  }
+}
+
+/* Also support global .dark class */
+:global(.dark) .container {
+    --color-bg-outer: #0a0a0a;
+    --color-bg-inner: #121212;
+    --color-bg-characters: #1e1e1e;
+    --color-text-primary: #f0f0f0;
+    --color-text-secondary: #a3a3a3;
+    --color-text-muted: #737373;
+    --color-border: #404040;
+    --color-btn-primary-bg: #ffffff;
+    --color-btn-primary-text: #1a1a1a;
+    --color-btn-google-bg: #1e1e1e;
+    --color-btn-google-hover: #2a2a2a;
+    --color-checkbox: #404040;
+    --char-black: #2a2a2a; 
+}
+
+
+.loginCard {
+  display: flex;
+  width: 900px;
+  min-height: 680px;
+  background: var(--color-bg-inner);
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ===== Characters Section (Left) ===== */
+.charactersSection {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-characters);
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+.charactersWrapper {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  transform: translateX(40px) translateY(20px);
+}
+
+.character {
+  position: absolute;
+  transition: transform 0.1s ease-out;
+  transform-origin: bottom center;
+  will-change: transform;
+}
+
+.face {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye {
+  position: relative;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease-out;
+}
+
+.blueRectangle .eye,
+.blackPenguin .eye {
+  overflow: hidden;
+}
+
+.pupil {
+  width: 40%;
+  height: 40%;
+  background: #1a1a1a;
+  border-radius: 50%;
+  transition: transform 80ms ease-out;
+  position: relative;
+}
+
+.orangeSemicircle {
+  width: 180px;
+  height: 90px;
+  background: var(--char-orange);
+  border-radius: 90px 90px 0 0;
+  bottom: 50px;
+  left: 20px;
+  z-index: 5;
+}
+
+.orangeSemicircle .face {
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  gap: 30px;
+  width: 60px;
+  height: 20px;
+}
+
+.orangeSemicircle .eye {
+  width: 8px;
+  height: 8px;
+  background: #7a2a0d;
+}
+
+.orangeSemicircle .pupil {
+  display: none;
+}
+
+.orangeSemicircle .mouth {
+  position: absolute;
+  width: 10px;
+  height: 5px;
+  border-bottom: 2px solid #7a2a0d;
+  border-radius: 0 0 10px 10px;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.blueRectangle {
+  width: 110px;
+  height: 280px;
+  background: var(--char-blue);
+  border-radius: 4px;
+  bottom: 50px;
+  left: 55px;
+  z-index: 2;
+}
+
+.blueRectangle .face {
+  top: 50px;
+  left: 60%;
+  transform: translateX(-50%);
+  gap: 16px;
+}
+
+.blueRectangle .eye {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+}
+
+.blueRectangle .pupil {
+  width: 4px;
+  height: 4px;
+}
+
+.blueRectangle::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 2px;
+  background: #332085;
+  top: 65px;
+  left: 60%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.blackPenguin {
+  width: 70px;
+  height: 180px;
+  background: var(--char-black);
+  border-radius: 4px;
+  bottom: 50px;
+  left: 175px;
+  z-index: 3;
+}
+
+.blackPenguin .face {
+  top: 50px;
+  left: 45%;
+  transform: translateX(-50%);
+  gap: 8px;
+}
+
+.blackPenguin .eye {
+  width: 14px;
+  height: 14px;
+  background: #ffffff;
+}
+
+.blackPenguin .pupil {
+  width: 6px;
+  height: 6px;
+}
+
+.yellowBird {
+  width: 90px;
+  height: 150px;
+  background: var(--char-yellow);
+  border-radius: 45px 45px 0 0;
+  bottom: 50px;
+  left: 235px;
+  z-index: 4;
+}
+
+.beak {
+  position: absolute;
+  width: 20px;
+  height: 4px;
+  background: #1a1a1a;
+  left: 26px;
+  top: 70px;
+  border-radius: 2px;
+}
+
+.yellowBird .face {
+  top: 56px;
+  left: 45%;
+  transform: translateX(-50%);
+  gap: 18px;
+  width: 40px;
+  height: 12px;
+}
+
+.yellowBird .eye {
+  width: 6px;
+  height: 6px;
+  background: #1a1a1a;
+}
+
+.yellowBird .pupil {
+  display: none;
+}
+
+.lookingAway .eye {
+  height: 2px;
+  border-radius: 0;
+  background: var(--color-text-primary);
+  width: 8px !important;
+}
+
+.lookingAway .pupil {
+  opacity: 0;
+}
+
+.blueRectangle.lookingAway .eye,
+.blackPenguin.lookingAway .eye {
+  background: #ffffff;
+}
+
+.blackPenguin.lookingAway .eye {
+  width: 14px !important;
+}
+
+/* ===== Form Section (Right) ===== */
+.formSection {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-inner);
+  padding: 40px 60px;
+  transition: background-color 0.3s ease;
+}
+
+.formContainer {
+  width: 100%;
+  max-width: 380px;
+}
+
+.logo {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.logo path {
+  fill: var(--color-text-primary);
+  transition: fill 0.3s ease;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+  letter-spacing: -0.8px;
+  color: var(--color-text-primary);
+  transition: color 0.3s ease;
+}
+
+.subtitle {
+  color: var(--color-text-secondary);
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 32px;
+  transition: color 0.3s ease;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.formGroup label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 4px;
+  transition: color 0.3s ease;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  background: transparent;
+  transition: all var(--transition-fast);
+  outline: none;
+  border-radius: 0;
+  color: var(--color-text-primary);
+}
+
+.formGroup input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.6;
+}
+
+.formGroup input:focus {
+  border-color: var(--color-text-primary);
+}
+
+.passwordWrapper {
+  position: relative;
+}
+
+.passwordWrapper input {
+  padding-right: 48px;
+}
+
+.togglePassword {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast);
+}
+
+.togglePassword:hover {
+  color: var(--color-text-primary);
+}
+
+.formOptions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  margin-top: -8px;
+}
+
+.forgotLink {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  font-size: 13px;
+}
+
+.forgotLink:hover {
+  color: var(--color-text-primary);
+}
+
+.btnPrimary {
+  width: 100%;
+  padding: 16px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-btn-primary-text);
+  background: var(--color-btn-primary-bg);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnPrimary:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  width: 100%;
+  padding: 16px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnSecondary:hover {
+  background: var(--color-btn-google-bg);
+  transform: scale(1.02);
+}
+
+.btnSecondary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 16px 0 0 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.divider span {
+  padding: 0 10px;
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.btnGoogle {
+  width: 100%;
+  padding: 16px 32px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  background: var(--color-btn-google-bg);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all var(--transition-fast);
+  margin-top: 16px;
+}
+
+.btnGoogle:hover {
+  background: var(--color-btn-google-hover);
+}
+
+.signupLink {
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 32px;
+  transition: color 0.3s ease;
+}
+
+.signupLink button {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.signupLink button:hover {
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 900px) {
+  .loginCard {
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .charactersSection {
+    flex: 0 0 350px;
+  }
+
+  .charactersWrapper {
+    transform: scale(0.8) translateY(20px);
+  }
+}
+
+.customCursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-3px, -3px);
+  will-change: transform;
+}
+
+.customCursor path {
+  fill: var(--color-text-primary);
+  stroke: var(--color-bg-inner);
+}
+
+:global(body.hovering) .customCursor {
+  transform: translate(-3px, -3px) rotate(-10deg) scale(1.1);
+}
+
+/* Hide default cursor globally */
+:global(body) {
+  cursor: none !important;
+}
+
+.errorMsg {
+  color: #ef4444;
+  font-size: 13px;
+  margin-top: -16px;
+  margin-bottom: 16px;
+  text-align: center;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.successMsg {
+  color: #22c55e;
+  font-size: 13px;
+  margin-top: -16px;
+  margin-bottom: 16px;
+  text-align: center;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 8px;
+  border-radius: 6px;
+}
